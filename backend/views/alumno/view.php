@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'ALUMNO' => $model->ALUMNO], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'ALUMNO' => $model->ALUMNO], [
+        <?= Html::a('Actualizar', ['update', 'ALUMNO' => $model->ALUMNO], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'ALUMNO' => $model->ALUMNO], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Estas seguro/a de eliminarlo?',
                 'method' => 'post',
             ],
         ]) ?>

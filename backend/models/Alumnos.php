@@ -80,7 +80,7 @@ class Alumnos extends \yii\db\ActiveRecord
             'PROFESION_PADRE' => 'Profesion Padre',
             'MADRE' => 'Madre',
             'PROFESION_MADRE' => 'Profesion Madre',
-            'CIUDADRES' => 'Ciudadres',
+            'CIUDADRES' => 'Ciudad de residencia',
             'DIRECCION' => 'Direccion',
             'TELEFONO' => 'Telefono',
             'CONTACTO' => 'Contacto',
