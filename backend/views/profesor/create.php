@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var backend\models\Profesor $model */
 
-$this->title = 'Create Profesor';
-$this->params['breadcrumbs'][] = ['label' => 'Profesors', 'url' => ['index']];
+$this->title = 'Ingresar un Profesor';
+$this->params['breadcrumbs'][] = ['label' => 'Profesores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="profesor-create">

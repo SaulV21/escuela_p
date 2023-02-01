@@ -57,6 +57,7 @@ AppAsset::register($this);
             )
             . Html::endForm();
     }
+   
     NavBar::end();
     ?>
 </header>

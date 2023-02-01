@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var backend\models\Periodo $model */
 
-$this->title = 'Create Periodo';
+$this->title = 'Crear un nuevo Periodo Lectivo';
 $this->params['breadcrumbs'][] = ['label' => 'Periodos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

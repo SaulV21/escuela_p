@@ -26,18 +26,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'FECHA_NACIMIENTO')->textInput() ?>
 
-    <?= $form->field($model, 'FOTO')->textInput() ?>
+    <!-- <?= $form->field($model, 'FOTO')->textInput() ?> -->
+
+    <?= $form->field($model, 'archivo')->fileInput() ?>
 
     <?= $form->field($model, 'CORREO')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'CLAVE')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'HOJAVIDA')->textInput() ?>
+    <!-- <?= $form->field($model, 'HOJAVIDA')->textInput() ?> -->
+
+    <?= $form->field($model, 'documento')->fileInput() ?>
 
     <?= $form->field($model, 'AREA')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ESTADO')->textInput(['maxlength' => true]) ?>
-
+    <!-- <?= $form->field($model, 'ESTADO')->textInput(['maxlength' => true]) ?> -->
+    <?= $form->field($model, 'ESTADO')->dropDownList(['prompt'=>'Seleccione el estado', 'ACTIVO' => 'Activo','INACTIVO'=>'Inactivo']) ?>
+    
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

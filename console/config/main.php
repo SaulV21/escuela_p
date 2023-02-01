@@ -10,6 +10,7 @@ $params = array_merge(
 return [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
+    'name'=>'Software Escuela',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [

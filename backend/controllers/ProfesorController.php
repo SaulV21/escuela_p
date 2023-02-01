@@ -7,6 +7,7 @@ use backend\models\ProfesorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProfesorController implements the CRUD actions for Profesor model.
@@ -69,13 +70,7 @@ class ProfesorController extends Controller
     {
         $model = new Profesor();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'PROFESOR' => $model->PROFESOR]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+        $this->subirFoto($model);
 
         return $this->render('create', [
             'model' => $model,
@@ -93,9 +88,7 @@ class ProfesorController extends Controller
     {
         $model = $this->findModel($PROFESOR);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'PROFESOR' => $model->PROFESOR]);
-        }
+        $this->subirFoto($model);
 
         return $this->render('update', [
             'model' => $model,
@@ -111,8 +104,11 @@ class ProfesorController extends Controller
      */
     public function actionDelete($PROFESOR)
     {
-        $this->findModel($PROFESOR)->delete();
-
+        $model=$this->findModel($PROFESOR);
+        if(file_exists($model->FOTO)){
+            unlink($model->FOTO);
+        }
+        $model->delete();
         return $this->redirect(['index']);
     }
 
@@ -131,4 +127,41 @@ class ProfesorController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    protected function subirFoto(Profesor $model){
+    
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->archivo=UploadedFile::getInstance($model,'archivo');
+                $model->documento=UploadedFile::getInstance($model,'documento');
+                if($model->validate()){
+                $imageName=$model->PROFESOR;
+
+                //
+                $docName=$model->PROFESOR;
+                    if($model->archivo && $model->documento){
+                        if(file_exists($model->FOTO) && file_exists($model->HOJAVIDA)){
+                        unlink($model->FOTO);
+                        unlink($model->HOJAVIDA);
+                        }
+        
+                        if($model->archivo->saveAs('uploads/'.time()."_".$imageName.".".$model->archivo->extension)
+                        && $model->documento->saveAs('hojavida/'.time()."_".$docName.".".$model->documento->extension)){
+                            $model->FOTO='uploads/'.time()."_".$imageName.".".$model->archivo->extension;
+                            $model->HOJAVIDA='hojavida/'.time()."_".$docName.".".$model->documento->extension;
+                        }
+                    }
+                }
+             
+
+                if($model->save(false)){
+                return $this->redirect(['index']);}
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+        }
 }

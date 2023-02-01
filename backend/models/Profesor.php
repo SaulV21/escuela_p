@@ -25,6 +25,8 @@ use Yii;
  */
 class Profesor extends \yii\db\ActiveRecord
 {
+    public $archivo;
+    public $documento;
     /**
      * {@inheritdoc}
      */
@@ -42,6 +44,8 @@ class Profesor extends \yii\db\ActiveRecord
             [['PROFESOR', 'CEDULA'], 'required'],
             [['FECHA_NACIMIENTO'], 'safe'],
             [['FOTO', 'HOJAVIDA'], 'string'],
+            [['archivo'], 'file', 'extensions'=>'jpg, png'],
+            [['documento'], 'file', 'extensions'=>'pdf, png, jpg'],
             [['PROFESOR', 'NOMBRES', 'DIRECCION', 'TELEFONO', 'AREA'], 'string', 'max' => 45],
             [['CEDULA'], 'string', 'max' => 25],
             [['DESCRIPCION'], 'string', 'max' => 205],
@@ -65,10 +69,10 @@ class Profesor extends \yii\db\ActiveRecord
             'DIRECCION' => 'Direccion',
             'TELEFONO' => 'Telefono',
             'FECHA_NACIMIENTO' => 'Fecha Nacimiento',
-            'FOTO' => 'Foto',
+            'archivo' => 'Foto',
             'CORREO' => 'Correo',
             'CLAVE' => 'Clave',
-            'HOJAVIDA' => 'Hojavida',
+            'documento' => 'Hoja de vida',
             'AREA' => 'Area',
             'ESTADO' => 'Estado',
         ];

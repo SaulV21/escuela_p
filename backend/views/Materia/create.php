@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var backend\models\Materias $model */
 
-$this->title = 'Create Materias';
+$this->title = 'Ingresar Materias';
 $this->params['breadcrumbs'][] = ['label' => 'Materias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

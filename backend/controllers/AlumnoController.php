@@ -69,38 +69,10 @@ class AlumnoController extends Controller
     public function actionCreate()
     {
         $model = new Alumnos();
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->archivo=UploadedFile::getInstance($model,'archivo');
-                if($model->validate()){
-                $imageName=$model->ALUMNO;
-                //$model->archivo->saveAs('uploads/'.time()."_".$imageName.".".$model->archivo->extension);
-                // $model->FOTO='uploads/'.time()."_".$imageName.".".$model->archivo->extension;
-                // $model->SISFECHA=date('Y-m-d h:m:s');
-                //
-                    if($model->archivo){
-                        if(file_exists($model->FOTO)){
-                        unlink($model->FOTO);
-                        }
-                   // $rutaArchivo='uploads/'.time()."_".$model->archivo->baseName.".".$model->archivo->extension;
-                        if($model->archivo->saveAs('uploads/'.time()."_".$imageName.".".$model->archivo->extension)){
-                            $model->FOTO='uploads/'.time()."_".$imageName.".".$model->archivo->extension;
-                            $model->SISFECHA=date('Y-m-d h:m:s');
-                        }
-                    }
-                }
-
-                //
-                if($model->save(false)){
-                return $this->redirect(['index']);}
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+        $this->subirFoto($model);
         return $this->render('create', [
             'model' => $model,
         ]);
-        
     }
 
     /**

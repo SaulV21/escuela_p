@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var backend\models\ProfesorSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Profesors';
+$this->title = 'Profesores';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="profesor-index">
@@ -37,6 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
             //'TELEFONO',
             //'FECHA_NACIMIENTO',
             //'FOTO',
+            [
+                'format'=>'html',
+                'value'=>function($data){
+                    return Html::img($data->FOTO,['width'=>'60px']);
+                },
+            ],
+            //
+            [
+                'format'=>'html',
+                'value'=>function($data){
+                    return Html::img($data->HOJAVIDA,['width'=>'60px']);
+                },
+            ],
             //'CORREO',
             //'CLAVE',
             //'HOJAVIDA',

@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'NOMBRES') ?>
 
-    <?= $form->field($model, 'DESCRIPCION') ?>
+    <?php // echo $form->field($model, 'DESCRIPCION') ?> 
 
     <?= $form->field($model, 'DIRECCION') ?>
 
@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'FECHA_NACIMIENTO') ?>
 
-    <?php // echo $form->field($model, 'FOTO') ?>
+    <?php  $form->field($model, 'FOTO') ?>
 
     <?php // echo $form->field($model, 'CORREO') ?>
 
