@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Periodo $model */
@@ -14,18 +15,24 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'PERIODO')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Fecha_ini_periodo')->textInput() ?>
+    <!-- Fecha inicio -->
+    <?=$form->field($model, 'Fecha_ini_periodo')->widget(DatePicker::className(), [
+    'dateFormat' => 'yyyy-MM-dd'
+    ])?>
 
-    <?= $form->field($model, 'Fecha_fin_periodo')->textInput() ?>
-
-    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
+    <!-- Fecha_fin_periodo -->
+    <?=$form->field($model, 'Fecha_fin_periodo')->widget(DatePicker::className(), [
+    'dateFormat' => 'yyyy-MM-dd'
+    ])?>
+    <!-- Estado -->
+    <?= $form->field($model, 'estado')->dropDownList(['prompt'=>'Seleccione el estado', 'ABIERTO' => 'Abierto','CERRADO'=>'Cerrado']) ?>
 
     <?= $form->field($model, 'rector')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'secretario')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

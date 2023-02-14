@@ -21,7 +21,10 @@
         "kartik-v/yii2-widget-select2": "@dev",
         "conquer/select2": "*",
         "yiisoft/yii2-bootstrap": "@dev",
-        "yiisoft/yii2-jui": "^2.0" 
+        "yiisoft/yii2-jui": "^2.0",
+        "kartik-v/yii2-editable": "@dev",
+        "yii2mod/yii2-editable": "*",
+        "kartik-v/yii2-grid": "dev-master" 
         
     },
     "require-dev": {
@@ -38,7 +41,9 @@
         "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
         "kartik-v/yii2-widget-select2": "@dev",
         "conquer/select2": "*",
-        "yiisoft/yii2-bootstrap": "@dev" 
+        "yiisoft/yii2-bootstrap": "@dev",
+        "yii2mod/yii2-editable": "*",
+        "kartik-v/yii2-grid": "dev-master"
     },
     "autoload-dev": {
         "psr-4": {

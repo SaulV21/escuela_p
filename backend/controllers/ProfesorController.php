@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use backend\models\validaciones;
 
 /**
  * ProfesorController implements the CRUD actions for Profesor model.
@@ -133,22 +134,24 @@ class ProfesorController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->archivo=UploadedFile::getInstance($model,'archivo');
-                $model->documento=UploadedFile::getInstance($model,'documento');
+               // $model->documento=UploadedFile::getInstance($model,'documento');
                 if($model->validate()){
                 $imageName=$model->PROFESOR;
 
                 //
                 $docName=$model->PROFESOR;
-                    if($model->archivo && $model->documento){
-                        if(file_exists($model->FOTO) && file_exists($model->HOJAVIDA)){
+                    //if($model->archivo && $model->documento){
+                        if($model->archivo){
+                        // if(file_exists($model->FOTO) && file_exists($model->HOJAVIDA)){
+                        if(file_exists($model->FOTO)){
                         unlink($model->FOTO);
-                        unlink($model->HOJAVIDA);
+                        //unlink($model->HOJAVIDA);
                         }
         
-                        if($model->archivo->saveAs('uploads/'.time()."_".$imageName.".".$model->archivo->extension)
-                        && $model->documento->saveAs('hojavida/'.time()."_".$docName.".".$model->documento->extension)){
+                        if($model->archivo->saveAs('uploads/'.time()."_".$imageName.".".$model->archivo->extension)){
+                       // && $model->documento->saveAs('hojavida/'.time()."_".$docName.".".$model->documento->extension)){
                             $model->FOTO='uploads/'.time()."_".$imageName.".".$model->archivo->extension;
-                            $model->HOJAVIDA='hojavida/'.time()."_".$docName.".".$model->documento->extension;
+                          //  $model->HOJAVIDA='hojavida/'.time()."_".$docName.".".$model->documento->extension;
                         }
                     }
                 }

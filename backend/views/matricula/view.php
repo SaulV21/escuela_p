@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Matriculas $model */
@@ -16,11 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA], [
+        <?= Html::a('Actualizar', ['update', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Esta seguro de eliminar esta matricula?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -31,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'NUMEROMATRICULA',
             'ALUMNO',
+            //
             'PERIODO',
             'CURSO',
             'CICLO',

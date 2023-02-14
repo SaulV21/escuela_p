@@ -53,6 +53,7 @@ class Profesor extends \yii\db\ActiveRecord
             [['CLAVE'], 'string', 'max' => 50],
             [['ESTADO'], 'string', 'max' => 10],
             [['PROFESOR'], 'unique'],
+            [['CEDULA'], 'unique', 'targetClass' => '\backend\models\Profesor', 'message' => 'La cedula ya existe.'],
         ];
     }
 

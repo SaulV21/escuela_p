@@ -41,7 +41,7 @@ use yii\jui\DatePicker;
         ['prompt'=>'Seleccione el curso']
     ) ?>
 
-    <!-- <?= $form->field($model, 'CICLO')->textInput(['maxlength' => true]) ?> -->
+    <!-- CICLO -->
     <?= $form->field($model, 'CICLO')->dropDownList(['prompt'=>'Seleccione el ciclo', 'DIVERSIFICADO' => 'Diversificado','BASICO'=>'Basico']) ?>
 
     <!-- Especialidad -->
@@ -49,7 +49,7 @@ use yii\jui\DatePicker;
 
     <!-- FECHA -->
     <?=$form->field($model, 'FECHA')->widget(DatePicker::className(), [
-    'dateFormat' => 'dd-MM-yyyy'
+    'dateFormat' => 'yyyy-MM-dd'
     ])?>
 
     <?= $form->field($model, 'OBSERVACION')->textInput(['maxlength' => true]) ?>

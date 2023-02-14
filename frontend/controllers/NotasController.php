@@ -1,17 +1,17 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
-use backend\models\Materias;
-use backend\models\MateriaSearch;
+use frontend\models\Notas;
+use frontend\models\NotasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MateriaController implements the CRUD actions for Materias model.
+ * NotasController implements the CRUD actions for Notas model.
  */
-class MateriaController extends Controller
+class NotasController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class MateriaController extends Controller
     }
 
     /**
-     * Lists all Materias models.
+     * Lists all Notas models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new MateriaSearch();
+        $searchModel = new NotasSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,30 +48,31 @@ class MateriaController extends Controller
     }
 
     /**
-     * Displays a single Materias model.
+     * Displays a single Notas model.
+     * @param int $MATRICULA Matricula
      * @param string $MATERIA Materia
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($MATERIA)
+    public function actionView($MATRICULA, $MATERIA)
     {
         return $this->render('view', [
-            'model' => $this->findModel($MATERIA),
+            'model' => $this->findModel($MATRICULA, $MATERIA),
         ]);
     }
 
     /**
-     * Creates a new Materias model.
+     * Creates a new Notas model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Materias();
+        $model = new Notas();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'MATERIA' => $model->MATERIA]);
+                return $this->redirect(['view', 'MATRICULA' => $model->MATRICULA, 'MATERIA' => $model->MATERIA]);
             }
         } else {
             $model->loadDefaultValues();
@@ -83,18 +84,19 @@ class MateriaController extends Controller
     }
 
     /**
-     * Updates an existing Materias model.
+     * Updates an existing Notas model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $MATRICULA Matricula
      * @param string $MATERIA Materia
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($MATERIA)
+    public function actionUpdate($MATRICULA, $MATERIA)
     {
-        $model = $this->findModel($MATERIA);
+        $model = $this->findModel($MATRICULA, $MATERIA);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'MATRICULA' => $model->MATRICULA, 'MATERIA' => $model->MATERIA]);
         }
 
         return $this->render('update', [
@@ -103,29 +105,31 @@ class MateriaController extends Controller
     }
 
     /**
-     * Deletes an existing Materias model.
+     * Deletes an existing Notas model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param int $MATRICULA Matricula
      * @param string $MATERIA Materia
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($MATERIA)
+    public function actionDelete($MATRICULA, $MATERIA)
     {
-        $this->findModel($MATERIA)->delete();
+        $this->findModel($MATRICULA, $MATERIA)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Materias model based on its primary key value.
+     * Finds the Notas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $MATRICULA Matricula
      * @param string $MATERIA Materia
-     * @return Materias the loaded model
+     * @return Notas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($MATERIA)
+    protected function findModel($MATRICULA, $MATERIA)
     {
-        if (($model = Materias::findOne(['MATERIA' => $MATERIA])) !== null) {
+        if (($model = Notas::findOne(['MATRICULA' => $MATRICULA, 'MATERIA' => $MATERIA])) !== null) {
             return $model;
         }
 

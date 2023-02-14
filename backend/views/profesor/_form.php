@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
 
     <!-- <?= $form->field($model, 'HOJAVIDA')->textInput() ?> -->
 
-    <?= $form->field($model, 'documento')->fileInput() ?>
+    <!-- <?= $form->field($model, 'documento')->fileInput() ?> -->
 
     <?= $form->field($model, 'AREA')->textInput(['maxlength' => true]) ?>
 

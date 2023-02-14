@@ -25,7 +25,7 @@ use Yii;
  * @property Materias[] $mATERIAs0
  * @property MatriculaDetalle[] $matriculaDetalles
  * @property Notasql[] $notasqls
- * @property Periodos $pERIODO
+ * @property Periodo $pERIODO
  * @property Parcial[] $parcials
  * @property Quimestres[] $quimestres
  */
@@ -50,7 +50,7 @@ class Matriculas extends \yii\db\ActiveRecord
             [['ESPECIALIDAD'], 'string', 'max' => 200],
             [['OBSERVACION'], 'string', 'max' => 250],
             [['SYSRES'], 'string', 'max' => 150],
-            [['PERIODO'], 'exist', 'skipOnError' => true, 'targetClass' => Periodos::class, 'targetAttribute' => ['PERIODO' => 'PERIODO']],
+            [['PERIODO'], 'exist', 'skipOnError' => true, 'targetClass' => Periodo::class, 'targetAttribute' => ['PERIODO' => 'PERIODO']],
             [['ALUMNO'], 'exist', 'skipOnError' => true, 'targetClass' => Alumnos::class, 'targetAttribute' => ['ALUMNO' => 'ALUMNO']],
             [['CURSO'], 'exist', 'skipOnError' => true, 'targetClass' => Cursos::class, 'targetAttribute' => ['CURSO' => 'CURSO']],
         ];
@@ -62,7 +62,7 @@ class Matriculas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'NUMEROMATRICULA' => 'Numeromatricula',
+            'NUMEROMATRICULA' => 'Numero de matricula',
             'ALUMNO' => 'Alumno',
             'PERIODO' => 'Periodo',
             'CURSO' => 'Curso',
@@ -71,7 +71,7 @@ class Matriculas extends \yii\db\ActiveRecord
             'FECHA' => 'Fecha',
             'OBSERVACION' => 'Observacion',
             'REFERENCIA' => 'Referencia',
-            'SYSRES' => 'Sysres',
+            'SYSRES' => 'Registrador',
         ];
     }
 
@@ -173,5 +173,17 @@ class Matriculas extends \yii\db\ActiveRecord
     public function getQuimestres()
     {
         return $this->hasMany(Quimestres::class, ['MATRICULA' => 'NUMEROMATRICULA']);
+    }
+
+
+
+    public function search($params){
+        $query=new \yii\db\Query();
+        $query->join(['ALUMNOS']);
+        $this->load($params);
+        if($this->validate()){
+
+        }
+        return $dataProvider;
     }
 }

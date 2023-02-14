@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'CORREO',
             //'FOTO',
             [
+                'header'=>'Foto',
                 'format'=>'html',
                 'value'=>function($data){
                     return Html::img($data->FOTO,['width'=>'60px']);
@@ -57,12 +58,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //'SISFECHA',
             //'CSLTKO',
             [
+                'header'=>'Acciones',
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Alumnos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'ALUMNO' => $model->ALUMNO]);
                  }
             ],
         ],
+        'layout'=>"{summary}\n{items}\n{pager}"
     ]); ?>
 
 

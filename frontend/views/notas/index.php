@@ -1,24 +1,24 @@
 <?php
 
-use backend\models\Materias;
+use frontend\models\Notas;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var backend\models\MateriaSearch $searchModel */
+/** @var frontend\models\NotasSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Materias';
+$this->title = 'Notas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="materias-index">
+<div class="notas-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Ingresar Materias', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Ingresar Notas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,20 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
+            'MATRICULA',
             'MATERIA',
-            'NOMBRE',
-            'DESCRIPCION',
-            'HORAS',
-            'NIVEL',
-            //'TIPO',
-            //'ABREVIATURA',
-            //'PRIORIDAD',
-            //'AREA',
+            'QUIM1',
+            'QUIM2',
+            'TOTAL',
+            //'PROMF',
+            //'EQUIV',
+            //'SUM_TOT',
+            //'PROM_GE',
+            //'SUPLETORIO',
+            //'REMEDIAL',
+            //'GRACIA',
+            //'PROMOCION',
             [
-                'header'=>'Acciones',
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Materias $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'MATERIA' => $model->MATERIA]);
+                'urlCreator' => function ($action, Notas $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'MATRICULA' => $model->MATRICULA, 'MATERIA' => $model->MATERIA]);
                  }
             ],
         ],

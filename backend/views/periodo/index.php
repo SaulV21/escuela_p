@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var backend\models\PeriodoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Periodos';
+$this->title = 'Periodo Lectivo';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="periodo-index">
@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'rector',
             //'secretario',
             [
+                'header'=>'Acciones',
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Periodo $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'PERIODO' => $model->PERIODO]);

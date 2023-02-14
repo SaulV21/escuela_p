@@ -37,10 +37,13 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Notas Finales', 'url' => ['/notas/index']],
+        ['label' => 'Asistencia', 'url' => ['/asistencia/index']],
+        ['label' => 'Registrar Notas', 'url' => ['/notasql/index']]
+       
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems=[ ['label' => 'Signup', 'url' => ['/site/signup']]];
     }
 
     echo Nav::widget([

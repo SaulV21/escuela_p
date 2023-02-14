@@ -1,24 +1,24 @@
 <?php
 
-use backend\models\Matriculas;
+use frontend\models\Asistencia;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var backend\models\MatriculaSearch $searchModel */
+/** @var frontend\models\AsistenciaSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Matriculas';
+$this->title = 'Asistencias';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="matriculas-index">
+<div class="asistencia-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Ingresar nueva Matricula', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Registrar Asistencia', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,21 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'NUMEROMATRICULA',
             'ALUMNO',
-            'PERIODO',
             'CURSO',
-            'CICLO',
-            //'ESPECIALIDAD',
-            //'FECHA',
-            //'OBSERVACION',
-            //'REFERENCIA',
-            //'SYSRES',
+            'MATRICULA',
+            'fecha',
+            'asiste',
             [
-                'header'=>'Acciones',
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Matriculas $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
+                'urlCreator' => function ($action, Asistencia $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'ALUMNO' => $model->ALUMNO, 'CURSO' => $model->CURSO]);
                  }
             ],
         ],

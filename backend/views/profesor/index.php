@@ -38,24 +38,20 @@ $this->params['breadcrumbs'][] = $this->title;
             //'FECHA_NACIMIENTO',
             //'FOTO',
             [
+                'header'=>'Foto',
                 'format'=>'html',
                 'value'=>function($data){
                     return Html::img($data->FOTO,['width'=>'60px']);
                 },
             ],
-            //
-            [
-                'format'=>'html',
-                'value'=>function($data){
-                    return Html::img($data->HOJAVIDA,['width'=>'60px']);
-                },
-            ],
+
             //'CORREO',
             //'CLAVE',
             //'HOJAVIDA',
             //'AREA',
             //'ESTADO',
             [
+                'header'=>'Acciones',
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Profesor $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'PROFESOR' => $model->PROFESOR]);

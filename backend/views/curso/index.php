@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'DESCRIPCION',
             //'PROMOVIDO',
             [
+                'header'=>'Acciones',
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Cursos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'CURSO' => $model->CURSO]);

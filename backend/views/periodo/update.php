@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var backend\models\Periodo $model */
 
-$this->title = 'Update Periodo: ' . $model->PERIODO;
+$this->title = 'Actualizar el Periodo: ' . $model->PERIODO;
 $this->params['breadcrumbs'][] = ['label' => 'Periodos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->PERIODO, 'url' => ['view', 'PERIODO' => $model->PERIODO]];
 $this->params['breadcrumbs'][] = 'Update';
