@@ -4,15 +4,21 @@ namespace frontend\controllers;
 
 use frontend\models\Notasql;
 use frontend\models\NotasqlSearch;
+use backend\models\Materias;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
+use yii\data\ActiveDataProvider;
+use Yii;
+use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 /**
  * NotasqlController implements the CRUD actions for Notasql model.
  */
 class NotasqlController extends Controller
 {
+
     /**
      * @inheritDoc
      */
@@ -38,17 +44,51 @@ class NotasqlController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new NotasqlSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+       
+        /*
+        $MATERIA = Yii::$app->request->post('MATERIA');
+
+        $query = \backend\models\Materias::find()->where(['MATERIA' => $MATERIA]);
+    
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        $query = \backend\models\Alumnos::find();
+        $paginas=new Pagination([
+            'defaultPageSize'=>10,
+            'totalCount'=>$query->count(),
+        ]);
+        $alumnos=$query->orderBy('NOMBRES')->offset($paginas->offset)
+        ->limit($paginas->limit)->all();*/
+        //
+        // $searchModel = new NotasqlSearch();
+        // $dataProvider = $searchModel->search($this->request->queryParams);
+        $model = new NotasqlSearch();
+        $dataProvider = $model->search(Yii::$app->request->queryParams);
+    
+        $materias = Materias::find()->all();
+        $materias = ArrayHelper::map($materias, 'MATERIA', 'NOMBRE');
+    
+        return $this->render('index', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,
+            'materias' => $materias,
+        ]);
+        // return $this->render('index', [
+        //     //'alumnos'=>$alumnos,
+        //     //'paginas'=>$paginas,
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
         // $dataProvider = new Query;
         // $dataProvider ->select('A.NOMBRES, A.APELLIDOS')
         // ->from('ALUMNOS A, MATRICULAS M, notasql N')
         // ->where('M.ALUMNO=A.ALUMNO AND
         // N.MATRICULA=M.NUMEROMATRICULA');
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
     }
 
     /**
@@ -148,5 +188,36 @@ class NotasqlController extends Controller
             'modelClass' => UserModel::class,
         ],
     ];
+}
+
+public function actionMateria($category_id)
+{
+    $dataProvider = new ActiveDataProvider([
+        'query' => Materias::find()->where(['MATERIA' => $category_id])->all(),
+        'pagination' => false,
+    ]);
+    
+    return $this->renderPartial('_item_table', [
+        'dataProvider' => $dataProvider,
+    ]);
+}
+
+public function actionList($id){
+    $countMats=Materias::find()
+    ->where(['MATERIA'=>$id])
+    ->count();
+
+    $Mats=Materias::find()
+    ->where(['MATERIA'=>$id])
+    ->all();
+}
+public function actionMat()
+{
+    $category_id = Yii::$app->request->get('NotasqlSearch')['MATERIA'];
+    $items = Item::find()->where(['MATERIA' => $category_id])->all();
+
+    return $this->renderPartial('_items', [
+        'items' => $items,
+    ]);
 }
 }

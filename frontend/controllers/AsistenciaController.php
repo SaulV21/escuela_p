@@ -7,6 +7,8 @@ use frontend\models\AsistenciaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
+use backend\models\Matriculas;
 
 /**
  * AsistenciaController implements the CRUD actions for Asistencia model.
@@ -38,11 +40,22 @@ class AsistenciaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AsistenciaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        // $searchModel = new AsistenciaSearch();
+        // $dataProvider = $searchModel->search($this->request->queryParams);
 
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
+        $materia = Yii::$app->request->post('categoria');
+
+        $query = \backend\models\Materias::find()->where(['MATERIA' => $materia]);
+    
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -135,4 +148,16 @@ class AsistenciaController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+//Probar
+    public function actionItems($category_id)
+{
+    $dataProvider = new ActiveDataProvider([
+        'query' => \backend\models\Matricula::find()->where(['NUMEROMATRICULA' => $category_id]),
+        'pagination' => false,
+    ]);
+    
+    return $this->renderPartial('_item_table', [
+        'dataProvider' => $dataProvider,
+    ]);
+}
 }

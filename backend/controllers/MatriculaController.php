@@ -3,11 +3,13 @@
 namespace backend\controllers;
 
 use backend\models\Matriculas;
+use backend\models\Alumnos;
 use backend\models\MatriculaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\data\ActiveDataProvider;
+use Yii;
 /**
  * MatriculaController implements the CRUD actions for Matriculas model.
  */
@@ -39,11 +41,22 @@ class MatriculaController extends Controller
     public function actionIndex()
     {
         $searchModel = new MatriculaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+       $dataProvider = $searchModel->search($this->request->queryParams);
+       $dataProvider2 = new ActiveDataProvider([
+        'query' => Alumnos::find(),
+    ]);
 
+    // Agregar el nombre completo del alumno a los datos de la tabla
+    foreach ($dataProvider2->models as $model) {
+        $model->nombreCompleto = $model->NOMBRES . ' ' . $model->APELLIDOS;
+    }
+        //agrego la instancia de matricula
+        //$model = new Matriculas();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProvider2' => $dataProvider2,
+            'model'=>$model,
         ]);
     }
 
@@ -69,14 +82,23 @@ class MatriculaController extends Controller
     {
         $model = new Matriculas();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+        // if ($this->request->isPost) {
+        //     if ($model->load($this->request->post()) && $model->save()) {
+        //         return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
+        //     }
+        // } else {
+        //     $model->loadDefaultValues();
+        // }
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $count = Matriculas::find()->where(['ALUMNO' => $model->ALUMNO])->count();
+            if ($count > 0) {
+                Yii::$app->session->setFlash('error', 'El estudiante ya esta matriculado.');
+                return $this->refresh();
+            }
+            if ($model->save()) {
                 return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -131,4 +153,10 @@ class MatriculaController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function getListnombre(){
+        $model = Alumnos::findOne($id);
+        return $this->hasOne(Alumnos::className(),['ALUMNO'=>'ALUMNO']);
+    }
+
 }

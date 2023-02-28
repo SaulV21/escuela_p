@@ -31,6 +31,7 @@ use Yii;
  */
 class Matriculas extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -62,7 +63,7 @@ class Matriculas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'NUMEROMATRICULA' => 'Numero de matricula',
+            'NUMEROMATRICULA' => '# matricula',
             'ALUMNO' => 'Alumno',
             'PERIODO' => 'Periodo',
             'CURSO' => 'Curso',
@@ -185,5 +186,9 @@ class Matriculas extends \yii\db\ActiveRecord
 
         }
         return $dataProvider;
+    }
+//Creamos la relacion con alumnos 
+    public function getListnombre(){
+        return $this->hasOne(Alumnos::className(),['ALUMNO'=>'ALUMNO']);
     }
 }

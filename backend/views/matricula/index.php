@@ -9,6 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var backend\models\MatriculaSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var backend\models\Matriculas $model */
 
 $this->title = 'Matriculas';
 $this->params['breadcrumbs'][] = $this->title;
@@ -29,11 +30,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'NUMEROMATRICULA',
-            'ALUMNO',
-            'PERIODO',
-            'CURSO',
-            'CICLO',
+            [
+                'attribute'=>'NUMEROMATRICULA',
+                'contentOptions' => [
+                    'style' => 'width: 10px;
+                    text-align: center;'
+                    ]
+            ],
+            [
+                'attribute'=>'ALUMNO',
+                'value'=> function ($model) {
+                    return $model->listnombre->NOMBRES . ' ' . $model->listnombre->APELLIDOS;
+                },
+                'contentOptions' => ['style' => 'width: 300px;']
+            ],
+            [
+                'attribute'=>'PERIODO',
+                'contentOptions' => ['style' => 'text-align: center;']
+            ],
+            [
+                'attribute'=>'CURSO',
+                'contentOptions' => ['style' => 'text-align: center;']
+            ],
+            
+            [
+                'attribute'=>'CICLO',
+                'contentOptions' => ['style' => 'width: 300px;']
+            ],
             //'ESPECIALIDAD',
             //'FECHA',
             //'OBSERVACION',
@@ -41,13 +64,16 @@ $this->params['breadcrumbs'][] = $this->title;
             //'SYSRES',
             [
                 'header'=>'Acciones',
+                'contentOptions' => [
+                    'text-align: center;'
+                ],
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Matriculas $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
                  }
             ],
         ],
+        'headerRowOptions' => ['style' => 'text-align:center;'],
     ]); ?>
-
 
 </div>

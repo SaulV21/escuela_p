@@ -34,6 +34,13 @@ use Yii;
 class Alumnos extends \yii\db\ActiveRecord
 {
     public $archivo;
+    public $nombreCompleto;
+    public $id;
+    public function getNombreCompleto()
+    {
+        return $this->listnombre->NOMBRES . ' ' . $this->listnombre->APELLIDOS;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -48,7 +55,7 @@ class Alumnos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ALUMNO'], 'required'],
+            [['ALUMNO'], 'safe'],
             [['FECHA_NACIMIENTO', 'SISFECHA'], 'safe'],
             [['DIRECCION', 'FOTO'], 'string'],
             //[['DIRECCION'], 'string'],
@@ -69,7 +76,7 @@ class Alumnos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ALUMNO' => 'Alumno',
+            'ALUMNO' => 'ID',
             'CEDULA' => 'Cedula',
             'NOMBRES' => 'Nombres',
             'APELLIDOS' => 'Apellidos',
@@ -88,8 +95,8 @@ class Alumnos extends \yii\db\ActiveRecord
             'CORREO' => 'Correo',
             //'FOTO' => 'Foto',
             'archivo' => 'Foto',
-            'SISRES' => 'Sisres',
-            'SISFECHA' => 'Sisfecha',
+            'SISRES' => 'Registrador',
+            'SISFECHA' => 'Fecha registro',
             'CSLTKO' => 'Csltko',
         ];
     }
@@ -103,4 +110,37 @@ class Alumnos extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Matriculas::class, ['ALUMNO' => 'ALUMNO']);
     }
+
+    public function beforeSave($insert)
+    {
+        if ($this->isNewRecord) {
+            // Incrementar el contador de ID en 1
+            $count = Alumnos::find()->count();
+            $this->ALUMNO = 'UEC-' . ($count + 1);
+        }
+
+        return parent::beforeSave($insert);
+    }
+    // public function beforeSave($insert)
+    // {
+    //     if (parent::beforeSave($insert)) {
+    //         if ($this->isNewRecord) {
+    //             // Obtener el último registro
+    //             $lastRecord = Alumnos::find()->orderBy(['ALUMNO' => SORT_DESC])->one();
+
+    //             // Obtener el último número de ID y agregar 1
+    //             $lastNumber = 1;
+    //             if ($lastRecord) {
+    //                 $lastNumber = substr($lastRecord->ALUMNO, 4) + 1;
+    //             }
+
+    //             // Crear el nuevo ID
+    //             $this->ALUMNO = 'UEC-' . $lastNumber;
+    //         }
+
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }

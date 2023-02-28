@@ -138,4 +138,9 @@ class Materias extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Quimestres::class, ['MATERIA' => 'MATERIA']);
     }
+
+    public static function getList()
+    {
+        return self::find()->select(['NOMBRE', 'MATERIA'])->indexBy('MATERIA')->column();
+    }
 }

@@ -28,9 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'ALUMNO',
-            'CEDULA',
+            [
+                'attribute'=>'ALUMNO',
+                'contentOptions' => ['style' => 'text-align: center; width: 95px;']
+            ],
+            [
+                'attribute'=>'CEDULA',
+                'contentOptions' => ['style' => 'text-align: center; width: 45px;']
+            ],
             'NOMBRES',
             'APELLIDOS',
            //'FECHA_NACIMIENTO',
@@ -42,10 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
             //'PROFESION_MADRE',
             //'CIUDADRES',
             //'DIRECCION:ntext',
-            //'TELEFONO',
+            'TELEFONO',
             //'CONTACTO',
             //'REFERENCIA',
-            //'CORREO',
+            'CORREO',
             //'FOTO',
             [
                 'header'=>'Foto',
@@ -65,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'headerRowOptions' => ['style' => 'text-align:center;'],
         'layout'=>"{summary}\n{items}\n{pager}"
     ]); ?>
 

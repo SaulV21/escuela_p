@@ -73,5 +73,43 @@ class NotasqlSearch extends Notasql
             ->andFilterWhere(['like', 'NF', $this->NF]);
 
         return $dataProvider;
+    //     $query = Materias::find();
+
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' => $query,
+    //     ]);
+    
+    //     $this->load($params);
+    
+    //     if (!$this->validate()) {
+    //         return $dataProvider;
+    //     }
+    
+    //     $query->andFilterWhere([
+    //         'MATERIA' => $this->MATERIA,
+    //     ]);
+    
+    //     return $dataProvider;
+    //     }
+    
+    //     public function search2($params)
+    // {
+    //     $query = Item::find();
+    
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' => $query,
+    //     ]);
+    
+    //     $this->load($params);
+    
+    //     if (!$this->validate()) {
+    //         return $dataProvider;
+    //     }
+    
+    //     $query->andFilterWhere([
+    //         'MATERIA' => $this->MATERIA,
+    //     ]);
+    
+    //     return $dataProvider;
     }
 }

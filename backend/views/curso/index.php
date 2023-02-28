@@ -29,13 +29,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'CURSO',
-            'CUPO',
-            'INICIAL',
-            'CICLO',
+            [
+                'attribute'=>'CURSO',
+                'contentOptions' => ['style' => 'text-align: center;']
+            ],
+            [
+                'attribute'=>'CUPO',
+                'contentOptions' => ['style' => 'text-align: center; width: 10px;']
+            ],
+            [
+                'attribute'=>'INICIAL',
+                'contentOptions' => ['style' => 'text-align: center; width: 10px;']
+            ],
+            [
+            'attribute'=>'CICLO',
+            'contentOptions' => ['style' => 'text-align: center;']
+            ],
+
             'ESPECIALIDAD',
-            //'DESCRIPCION',
-            //'PROMOVIDO',
+            'DESCRIPCION',
+            'PROMOVIDO',
             [
                 'header'=>'Acciones',
                 'class' => ActionColumn::className(),
@@ -44,6 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'headerRowOptions' => ['style' => 'text-align:center;'],
     ]); ?>
 
 

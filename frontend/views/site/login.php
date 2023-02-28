@@ -6,6 +6,7 @@
 
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\captcha\Captcha;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <?=  $form->field($model, 'captcha')->widget(Captcha::class)?>
 
                 <div class="my-1 mx-0" style="color:#999;">
                 Si olvidaste tu contraseña puedes <?= Html::a('reset it', ['site/request-password-reset']) ?>.
