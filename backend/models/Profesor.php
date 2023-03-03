@@ -1,7 +1,6 @@
 <?php
 
 namespace backend\models;
-
 use Yii;
 
 /**
@@ -41,7 +40,8 @@ class Profesor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PROFESOR', 'CEDULA'], 'required'],
+            [['PROFESOR'], 'safe'],
+            [['CEDULA'], 'required', 'message' => 'Debe ingresar el numero de cedula'],
             [['FECHA_NACIMIENTO'], 'safe'],
             [['FOTO', 'HOJAVIDA'], 'string'],
             [['archivo'], 'file', 'extensions'=>'jpg, png'],
@@ -51,9 +51,11 @@ class Profesor extends \yii\db\ActiveRecord
             [['DESCRIPCION'], 'string', 'max' => 205],
             [['CORREO'], 'string', 'max' => 200],
             [['CLAVE'], 'string', 'max' => 50],
+            [['CORREO'], 'autocompleteOff'],
             [['ESTADO'], 'string', 'max' => 10],
-            [['PROFESOR'], 'unique'],
-            [['CEDULA'], 'unique', 'targetClass' => '\backend\models\Profesor', 'message' => 'La cedula ya existe.'],
+            [['CEDULA'], 'unique','message' => 'El numero de cédula {value} ya esta registrada en el sistema.'],
+            [['PROFESOR'], 'unique','message' => 'Esta ID del profesor ya esta registrada en el sistema.'],
+            
         ];
     }
 
@@ -64,8 +66,8 @@ class Profesor extends \yii\db\ActiveRecord
     {
         return [
             'PROFESOR' => 'Profesor',
-            'CEDULA' => 'Cedula',
-            'NOMBRES' => 'Nombres',
+            'CEDULA' => 'Cédula',
+            'NOMBRES' => 'Nombres y Apellidos',
             'DESCRIPCION' => 'Descripcion',
             'DIRECCION' => 'Direccion',
             'TELEFONO' => 'Telefono',
@@ -88,4 +90,22 @@ class Profesor extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Materiasxcurso::class, ['PROFESOR' => 'PROFESOR']);
     }
+
+    public function beforeSave($insert)
+    {
+        if ($this->isNewRecord) {
+            // Incrementar el contador de ID en 1
+            $count = Profesor::find()->count();
+            $this->PROFESOR = 'PROF-' . ($count + 1);
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+    //Para evitar el auto completado del navegador
+    public function autocompleteOff($attribute, $params)
+{
+    $this->$attribute->getInputId(true); // Garantizar que se establezca la propiedad 'id' del campo
+    $this->$attribute->options['autocomplete'] = 'off';
+}
 }

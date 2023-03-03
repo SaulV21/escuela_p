@@ -34,7 +34,7 @@ use yii\jui\DatePicker;
         return $model['DESCRIPCION'];
     }),
     'language' => 'en',
-    'options' => ['placeholder' => 'Seleccione el alumno'],
+    'options' => ['placeholder' => 'Seleccione el curso'],
     'pluginOptions' => [
         'allowClear' => true
     ],
@@ -42,11 +42,10 @@ use yii\jui\DatePicker;
     <?= $form->field($model, 'MATRICULA')->textInput() ?>
    
     <!-- <?= $form->field($model, 'fecha')->textInput() ?> -->
-    <?=$form->field($model, 'fecha')->widget(DatePicker::className(), [
-    'dateFormat' => 'yyyy-MM-dd'
-    ])?>
+    <?=$form->field($model, 'fecha')->textInput(['readonly' => true, 'value' => date('Y-m-d')])?>
+
     <!-- <?= $form->field($model, 'asiste')->textInput(['maxlength' => true]) ?> -->
-    <?= $form->field($model, 'asiste')->dropDownList(['prompt'=>'Seleccione el estado', 'SI' => 'Si','NO'=>'no']) ?>
+    <?= $form->field($model, 'asiste')->dropDownList(['prompt'=>'Seleccione el estado', 'SI' => 'Si','NO'=>'No']) ?>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>

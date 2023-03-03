@@ -1,5 +1,11 @@
 <?php
+use yii\helpers\Html;
+use yii\bootstrap\BootstrapAsset;
+use yii\web\YiiAsset;
+use backend\assets\AppAsset;
 
+// Cargar tus propios CSS personalizados
+AppAsset::register($this);
 /** @var yii\web\View $this */
 
 $this->title = 'Escuela';
@@ -7,7 +13,7 @@ $this->title = 'Escuela';
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
+        <h1 class="display-4">BIENVENIDOS!</h1>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 

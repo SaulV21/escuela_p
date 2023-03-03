@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var backend\models\Cursos $model */
 
 $this->title = 'Crear un Curso';
-$this->params['breadcrumbs'][] = ['label' => 'Cursos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Cursos Registrados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cursos-create">

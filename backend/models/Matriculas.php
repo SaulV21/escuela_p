@@ -70,7 +70,7 @@ class Matriculas extends \yii\db\ActiveRecord
             'CICLO' => 'Ciclo',
             'ESPECIALIDAD' => 'Especialidad',
             'FECHA' => 'Fecha',
-            'OBSERVACION' => 'Observacion',
+            'OBSERVACION' => 'Observación',
             'REFERENCIA' => 'Referencia',
             'SYSRES' => 'Registrador',
         ];

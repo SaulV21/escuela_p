@@ -23,18 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Registrar Asistencia', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
-    echo Html::dropDownList('category', null, $category_id, [
-        'prompt' => 'Seleccione el grado',
-        'onchange' => '
-            $.get( "'.Yii::$app->urlManager->createUrl(['frontend/site/items']).'", { category_id: $(this).val() } )
-                .done(function( data ) {
-                    $("#item-table").html(data);
-                }
-            );
-        '
-    ]);
-    ?>
+    <!-- <?php
+    echo $this->render('_search', ['model' => $searchModel]); 
+    ?> -->
 
     <?= GridView::widget([
         //'id' => 'item-table',
@@ -42,8 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'ALUMNO',
+            [
+                'attribute'=>'ALUMNO',
+                'value'=> function ($model) {
+                    return $model->listnombre->NOMBRES . ' ' . $model->listnombre->APELLIDOS;
+                },
+                'contentOptions' => ['style' => 'width: 300px;']
+            ],
             'CURSO',
             'MATRICULA',
             'fecha',

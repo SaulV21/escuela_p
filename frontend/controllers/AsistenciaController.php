@@ -9,7 +9,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 use backend\models\Matriculas;
-
+use Yii;
+use yii\data\ActiveDataProvider;
+use backend\models\Alumnos;
 /**
  * AsistenciaController implements the CRUD actions for Asistencia model.
  */
@@ -40,20 +42,30 @@ class AsistenciaController extends Controller
      */
     public function actionIndex()
     {
-        // $searchModel = new AsistenciaSearch();
-        // $dataProvider = $searchModel->search($this->request->queryParams);
-
-        // return $this->render('index', [
-        //     'searchModel' => $searchModel,
-        //     'dataProvider' => $dataProvider,
-        // ]);
-        $materia = Yii::$app->request->post('categoria');
-
-        $query = \backend\models\Materias::find()->where(['MATERIA' => $materia]);
-    
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+        $searchModel = new AsistenciaSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+//
+        $dataProvider2 = new ActiveDataProvider([
+        'query' => Alumnos::find(),
         ]);
+
+        // Agregar el nombre completo del alumno a los datos de la tabla
+        foreach ($dataProvider2->models as $model) {
+        $model->nombreCompleto = $model->NOMBRES . ' ' . $model->APELLIDOS;
+        }
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'dataProvider2' => $dataProvider2,
+            'model'=>$model,
+        ]);
+        // $materia = Yii::$app->request->post('categoria');
+
+        // $query = \backend\models\Materias::find()->where(['MATERIA' => $materia]);
+    
+        // $dataProvider = new ActiveDataProvider([
+        //     'query' => $query,
+        // ]);
     
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -160,4 +172,5 @@ class AsistenciaController extends Controller
         'dataProvider' => $dataProvider,
     ]);
 }
+
 }

@@ -41,7 +41,9 @@ class Materias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['MATERIA', 'ABREVIATURA', 'AREA'], 'required'],
+            [['ABREVIATURA'], 'required', 'message'=>'Debe agregar una abreviatura para la materia'],
+            [['MATERIA'], 'safe', 'message'=>'Debe agregar un identificador para la materia'],
+            [['AREA'], 'required', 'message'=>'Debe escoger el area a que pertenece la materia'],
             [['HORAS', 'PRIORIDAD'], 'integer'],
             [['MATERIA', 'NOMBRE', 'NIVEL', 'TIPO'], 'string', 'max' => 45],
             [['DESCRIPCION'], 'string', 'max' => 200],
@@ -142,5 +144,23 @@ class Materias extends \yii\db\ActiveRecord
     public static function getList()
     {
         return self::find()->select(['NOMBRE', 'MATERIA'])->indexBy('MATERIA')->column();
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                // Extrae las primeras letras del campo "nombre"
+                $this->NOMBRE=ucwords($this->NOMBRE);
+                $primeras_letras = substr($this->NOMBRE, 0, 3);
+
+                // Crea un identificador único a partir de las primeras letras y un número
+                $MATERIA = $primeras_letras . rand(100, 999);
+                // Asigna el identificador al campo correspondiente
+                $this->MATERIA = $MATERIA;
+            }
+            return true;
+        }
+        return false;
     }
 }

@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var backend\models\AlumnoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Alumnos';
+$this->title = 'Listado de los Alumnos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alumnos-index">

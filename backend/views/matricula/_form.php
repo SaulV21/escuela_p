@@ -31,7 +31,7 @@ use yii\jui\DatePicker;
 
     <!-- PERIODOS -->
     <?= $form->field($model, 'PERIODO')->dropDownList(
-        ArrayHelper::map(Periodo::find()->all(),'PERIODO', 'PERIODO'),
+        ArrayHelper::map(Periodo::find()->where(['ESTADO' => 'ABIERTO'])->all(),'PERIODO', 'PERIODO'),
         ['prompt'=>'Seleccione el periodo']
     ) ?>
 
@@ -48,10 +48,11 @@ use yii\jui\DatePicker;
     <?= $form->field($model, 'ESPECIALIDAD')->dropDownList(['prompt'=>'Seleccione la especialidad', 'GENERAL UNIFICADO' => 'General Unificado','GENERAL UNIFICADO TECNICO'=>'General Unificado Tecnico']) ?>
 
     <!-- FECHA -->
-    <?=$form->field($model, 'FECHA')->widget(DatePicker::className(), [
+    <!-- <?=$form->field($model, 'FECHA')->widget(DatePicker::className(), [
     'dateFormat' => 'yyyy-MM-dd'
-    ])?>
-
+    ])
+    ?> -->
+    <?=$form->field($model, 'FECHA')->textInput(['readonly' => true, 'value' => date('Y-m-d')])?>
     <?= $form->field($model, 'OBSERVACION')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'REFERENCIA')->textInput(['maxlength' => true]) ?>

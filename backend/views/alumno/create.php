@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var backend\models\Alumnos $model */
 
 $this->title = 'Ingresar Alumnos';
-$this->params['breadcrumbs'][] = ['label' => 'Alumnos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Listado de Alumnos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alumnos-create">

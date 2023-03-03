@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Matriculas;
 use backend\models\Alumnos;
+use backend\models\Periodo;
 use backend\models\MatriculaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -91,6 +92,7 @@ class MatriculaController extends Controller
         // }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $count = Matriculas::find()->where(['ALUMNO' => $model->ALUMNO])->count();
+           
             if ($count > 0) {
                 Yii::$app->session->setFlash('error', 'El estudiante ya esta matriculado.');
                 return $this->refresh();

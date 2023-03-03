@@ -34,7 +34,9 @@ class Cursos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CURSO', 'DESCRIPCION', 'PROMOVIDO'], 'required'],
+            [['CURSO'], 'required', 'message'=>'Debe ingresar las iniciales de un curso. Ejemplo: CUARTO EGB'],
+            [['DESCRIPCION'], 'required','message'=>'Debe ingresar la descripcion del curso'],
+            [['PROMOVIDO'], 'required','message'=>'Debe ingresar el curso al que haya sido promovido el estudiante'],
             [['CURSO', 'CUPO', 'INICIAL', 'CICLO', 'ESPECIALIDAD'], 'string', 'max' => 45],
             [['DESCRIPCION'], 'string', 'max' => 200],
             [['PROMOVIDO'], 'string', 'max' => 100],
@@ -53,7 +55,7 @@ class Cursos extends \yii\db\ActiveRecord
             'INICIAL' => 'Inicial',
             'CICLO' => 'Ciclo',
             'ESPECIALIDAD' => 'Especialidad',
-            'DESCRIPCION' => 'Descripcion',
+            'DESCRIPCION' => 'Descripción',
             'PROMOVIDO' => 'Promovido',
         ];
     }

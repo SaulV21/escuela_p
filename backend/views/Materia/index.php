@@ -29,15 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'MATERIA',
+            [
+                'attribute'=>'MATERIA',
+                'contentOptions' => ['style' => 'width: 100px; text-align: center;']
+            ],
             'NOMBRE',
             'DESCRIPCION',
-            'HORAS',
+            [
+                'attribute'=>'HORAS',
+                'contentOptions' => ['style' => 'width: 100px; text-align: center;']
+            ],
             'NIVEL',
             //'TIPO',
             //'ABREVIATURA',
             //'PRIORIDAD',
-            //'AREA',
+            'AREA',
             [
                 'header'=>'Acciones',
                 'class' => ActionColumn::className(),
@@ -46,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'headerRowOptions' => ['style' => 'text-align:center;'],
     ]); ?>
 
 

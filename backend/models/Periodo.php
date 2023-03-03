@@ -32,11 +32,15 @@ class Periodo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PERIODO', 'rector', 'secretario'], 'required'],
+            [['PERIODO'], 'required', 'message' => 'Debe ingresar el año lectivo. Ejemplo: 2023-2024'],
+            [['rector'], 'required', 'message' =>'Debe ingresar los nombres del Rector'],
+            [['secretario'], 'required', 'message' =>'Debe ingresar los nombres del Secretario'],
             [['Fecha_ini_periodo', 'Fecha_fin_periodo'], 'safe'],
             [['PERIODO', 'estado'], 'string', 'max' => 45],
             [['rector', 'secretario'], 'string', 'max' => 150],
             [['PERIODO'], 'unique'],
+            [['Fecha_fin_periodo'], 'compare', 'compareAttribute' => 'Fecha_ini_periodo', 'operator' => '>=',
+            'message' => 'La fecha de finalización del periodo no puede ser anterior a la fecha de inicio'],
         ];
     }
 

@@ -28,11 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute'=>'PROFESOR',
+                'contentOptions' => ['style' => 'width: 80px; text-align: center;']
+            ],
 
-            'PROFESOR',
-            'CEDULA',
-            'NOMBRES',
-            'DESCRIPCION',
+            [
+                'attribute'=>'CEDULA',
+                'contentOptions' => ['style' => 'width: 100px; text-align: center;']
+            ],
+            [
+                'attribute'=>'NOMBRES',
+                'contentOptions' => ['style' => 'width: 200px;']
+            ],
+            //'DESCRIPCION',
             'DIRECCION',
             //'TELEFONO',
             //'FECHA_NACIMIENTO',
@@ -45,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
 
-            //'CORREO',
+            'CORREO',
             //'CLAVE',
             //'HOJAVIDA',
             //'AREA',
@@ -58,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'headerRowOptions' => ['style' => 'text-align:center;'],
     ]); ?>
 
 

@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use backend\models\validaciones;
-
+use Yii;
 /**
  * ProfesorController implements the CRUD actions for Profesor model.
  */
@@ -72,7 +72,7 @@ class ProfesorController extends Controller
         $model = new Profesor();
 
         $this->subirFoto($model);
-
+       
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -156,13 +156,14 @@ class ProfesorController extends Controller
                     }
                 }
              
-
-                if($model->save(false)){
+                if ($model->hasErrors('CEDULA')) {
+                    Yii::$app->session->setFlash('error', 'La cedula ya esta registrada');
+                }elseif($model->save(false)){
                 return $this->redirect(['index']);}
             }
-        } else {
-            $model->loadDefaultValues();
         }
+            
+        
         return $this->render('create', [
             'model' => $model,
         ]);
