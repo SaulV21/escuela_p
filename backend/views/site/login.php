@@ -6,6 +6,7 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
+use yii\captcha\Captcha;
 
 $this->title = 'Iniciar Sesion';
 ?>
@@ -22,7 +23,7 @@ $this->title = 'Iniciar Sesion';
             <?= $form->field($model, 'password')->passwordInput() ?>
 
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            
+
             <?=  $form->field($model, 'captcha')->widget(Captcha::class)?>
 
             <div class="form-group">
