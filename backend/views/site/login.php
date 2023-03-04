@@ -22,6 +22,8 @@ $this->title = 'Iniciar Sesion';
             <?= $form->field($model, 'password')->passwordInput() ?>
 
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            
+            <?=  $form->field($model, 'captcha')->widget(Captcha::class)?>
 
             <div class="form-group">
                 <?= Html::submitButton('Iniciar Sesion', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
