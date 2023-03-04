@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
+
                 <?=  $form->field($model, 'captcha')->widget(Captcha::class)?>
 
                 <div class="my-1 mx-0" style="color:#999;">

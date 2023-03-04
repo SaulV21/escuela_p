@@ -8,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\captcha\Captcha;
 
-$this->title = 'Iniciar Sesion';
+$this->title = 'Iniciar Sesión';
 ?>
 <div class="site-login">
     <div class="mt-5 offset-lg-3 col-lg-6">
