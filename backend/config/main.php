@@ -44,11 +44,14 @@ return [
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
-            'rules' => [
+            'rules' =>  [
+                //agrego la ruta del controlador del api
+                'class' => 'yii\rest\UrlRule', 'controller' => 'alumnorest',
             ],
-        ],
-        */
+        ],*/
+        
     ],
     'params' => $params,
 ];

@@ -71,7 +71,7 @@ class ProfesorController extends Controller
     {
         $model = new Profesor();
 
-        $this->subirFoto($model);
+        $this->guardar($model);
        
         return $this->render('create', [
             'model' => $model,
@@ -87,13 +87,65 @@ class ProfesorController extends Controller
      */
     public function actionUpdate($PROFESOR)
     {
-        $model = $this->findModel($PROFESOR);
+        $model = Profesor::findOne(['PROFESOR' => $PROFESOR]);
 
-        $this->subirFoto($model);
+    if (!$model) {
+        throw new NotFoundHttpException('El profesor no existe.');
+    }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+    if ($this->request->isPost) {
+        $model->load($this->request->post());
+        $model->archivo = UploadedFile::getInstance($model, 'archivo');
+        $model->documento = UploadedFile::getInstance($model, 'documento');
+
+        // Verificar si se cargaron nuevos archivos
+        if ($model->archivo && $model->documento) {
+            // Eliminar archivos antiguos si ya existen
+            if (file_exists($model->FOTO)) {
+                unlink($model->FOTO);
+            }
+            if (file_exists($model->HOJAVIDA)) {
+                unlink($model->HOJAVIDA);
+            }
+
+            // Generar nombres únicos para los archivos
+            $imageName = uniqid() . '.' . $model->archivo->extension;
+            $docName = uniqid() . '.' . $model->documento->extension;
+
+            // Crear la carpeta 'uploads' si no existe
+            $uploadDir = 'uploads/';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            // Crear la carpeta 'hojavida' si no existe
+            $hojaVidaDir = 'hojavida/';
+            if (!file_exists($hojaVidaDir)) {
+                mkdir($hojaVidaDir, 0777, true);
+            }
+
+            // Guardar los nuevos archivos
+            $model->archivo->saveAs($uploadDir . $imageName);
+            $model->documento->saveAs($hojaVidaDir . $docName);
+
+            // Actualizar los nombres de los archivos en el modelo
+            $model->FOTO = $uploadDir . $imageName;
+            $model->HOJAVIDA = $hojaVidaDir . $docName;
+        }
+
+        // Validar y guardar el modelo
+        if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', 'El profesor ha sido actualizado exitosamente.');
+            return $this->redirect(['view', 'PROFESOR' => $model->PROFESOR]);
+        } else {
+            Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar el profesor.');
+        }
+    }
+
+    return $this->render('update', [
+        'model' => $model,
+    ]);
+  
     }
 
     /**
@@ -105,11 +157,9 @@ class ProfesorController extends Controller
      */
     public function actionDelete($PROFESOR)
     {
-        $model=$this->findModel($PROFESOR);
-        if(file_exists($model->FOTO)){
-            unlink($model->FOTO);
-        }
-        $model->delete();
+        //$model=$this->findModel($PROFESOR);
+        $this->findModel($PROFESOR)->delete();
+
         return $this->redirect(['index']);
     }
 
@@ -129,43 +179,75 @@ class ProfesorController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function subirFoto(Profesor $model){
     
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->archivo=UploadedFile::getInstance($model,'archivo');
-               // $model->documento=UploadedFile::getInstance($model,'documento');
-                if($model->validate()){
-                $imageName=$model->PROFESOR;
+        //
+public function guardar(Profesor $model){
 
-                //
-                $docName=$model->PROFESOR;
-                    //if($model->archivo && $model->documento){
-                        if($model->archivo){
-                        // if(file_exists($model->FOTO) && file_exists($model->HOJAVIDA)){
-                        if(file_exists($model->FOTO)){
-                        unlink($model->FOTO);
-                        //unlink($model->HOJAVIDA);
-                        }
-        
-                        if($model->archivo->saveAs('uploads/'.time()."_".$imageName.".".$model->archivo->extension)){
-                       // && $model->documento->saveAs('hojavida/'.time()."_".$docName.".".$model->documento->extension)){
-                            $model->FOTO='uploads/'.time()."_".$imageName.".".$model->archivo->extension;
-                          //  $model->HOJAVIDA='hojavida/'.time()."_".$docName.".".$model->documento->extension;
-                        }
-                    }
-                }
-             
-                if ($model->hasErrors('CEDULA')) {
-                    Yii::$app->session->setFlash('error', 'La cedula ya esta registrada');
-                }elseif($model->save(false)){
-                return $this->redirect(['index']);}
+    if ($this->request->isPost) {
+        $model->load($this->request->post());
+        $model->archivo = UploadedFile::getInstance($model, 'archivo');
+        $model->documento = UploadedFile::getInstance($model, 'documento');
+
+        // Verificar si se cargaron los archivos correctamente
+        if ($model->archivo && $model->documento) {
+            // Verificar que los archivos sean de imagen y de documento, respectivamente
+            if ($model->archivo->type !== 'image/jpeg' && $model->archivo->type !== 'image/png') {
+                Yii::$app->session->setFlash('error', 'El archivo debe ser de tipo JPEG o PNG');
+                return $this->redirect(['create']);
             }
+            if ($model->documento->type !== 'application/pdf') {
+                Yii::$app->session->setFlash('error', 'El documento debe ser de tipo PDF');
+                return $this->redirect(['create']);
+            }
+
+            // Crear la carpeta 'uploads' si no existe
+            $uploadDir = 'uploads/';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            // Crear la carpeta 'hojavida' si no existe
+            $hojaVidaDir = 'hojavida/';
+            if (!file_exists($hojaVidaDir)) {
+                mkdir($hojaVidaDir, 0777, true);
+            }
+
+            // Generar nombres únicos para los archivos
+            $imageName = uniqid() . '.' . $model->archivo->extension;
+            $docName = uniqid() . '.' . $model->documento->extension;
+
+            // Eliminar archivos antiguos si ya existen
+            if (file_exists($model->FOTO)) {
+                unlink($model->FOTO);
+            }
+            if (file_exists($model->HOJAVIDA)) {
+                unlink($model->HOJAVIDA);
+            }
+
+            // Guardar los nuevos archivos
+            $model->archivo->saveAs($uploadDir . $imageName);
+            $model->documento->saveAs($hojaVidaDir . $docName);
+
+            // Actualizar los nombres de los archivos en el modelo
+            $model->FOTO = $uploadDir . $imageName;
+            $model->HOJAVIDA = $hojaVidaDir . $docName;
+
+            // Validar y guardar el modelo
+            if ($model->save(false)) {
+                Yii::$app->session->setFlash('success', 'El profesor ha sido creado exitosamente.');
+                return $this->redirect(['view', 'PROFESOR' => $model->PROFESOR]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar el profesor.');
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Debe cargar ambos archivos.');
         }
-            
-        
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-        }
+    }
+
+    return $this->render('create', [
+        'model' => $model,
+    ]);
+}
+
+
 }

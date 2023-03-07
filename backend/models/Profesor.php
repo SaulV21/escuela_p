@@ -45,13 +45,13 @@ class Profesor extends \yii\db\ActiveRecord
             [['FECHA_NACIMIENTO'], 'safe'],
             [['FOTO', 'HOJAVIDA'], 'string'],
             [['archivo'], 'file', 'extensions'=>'jpg, png'],
-            [['documento'], 'file', 'extensions'=>'pdf, png, jpg'],
+            [['documento'], 'file', 'extensions'=>'pdf'],
             [['PROFESOR', 'NOMBRES', 'DIRECCION', 'TELEFONO', 'AREA'], 'string', 'max' => 45],
             [['CEDULA'], 'string', 'max' => 25],
             [['DESCRIPCION'], 'string', 'max' => 205],
             [['CORREO'], 'string', 'max' => 200],
             [['CLAVE'], 'string', 'max' => 50],
-            [['CORREO'], 'autocompleteOff'],
+            // [['CORREO'], 'autocompleteOff'],
             [['ESTADO'], 'string', 'max' => 10],
             [['CEDULA'], 'unique','message' => 'El numero de cédula {value} ya esta registrada en el sistema.'],
             [['PROFESOR'], 'unique','message' => 'Esta ID del profesor ya esta registrada en el sistema.'],
@@ -93,19 +93,45 @@ class Profesor extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        if ($this->isNewRecord) {
-            // Incrementar el contador de ID en 1
-            $count = Profesor::find()->count();
-            $this->PROFESOR = 'PROF-' . ($count + 1);
-        }
-
+        // if ($this->isNewRecord) {
+        //     // Incrementar el contador de ID en 1
+        //     $count = Profesor::find()->count();
+        //     $this->PROFESOR = 'PROF-' . ($count + 1);
+        // }
+//
+if ($this->isNewRecord) {
+    $count = Profesor::find()->where(['like', 'PROFESOR', 'PROF-'])->count();
+    if ($count > 0) {
+        // Si el valor generado ya existe, agregar un sufijo numérico al final del valor
+        $this->PROFESOR .= 'PROF-0' . ($count + 1);
+    } else {
+        // Si el valor generado no existe, utilizar el valor generado por defecto
+        $this->PROFESOR = 'PROF-' . ($count + 1);
+    }}
+//
         return parent::beforeSave($insert);
     }
 
     //Para evitar el auto completado del navegador
     public function autocompleteOff($attribute, $params)
 {
-    $this->$attribute->getInputId(true); // Garantizar que se establezca la propiedad 'id' del campo
+    $this->$attribute->getInputId(false); // Garantizar que se establezca la propiedad 'id' del campo
     $this->$attribute->options['autocomplete'] = 'off';
+}
+//para eliminar fotos y pdf de profesor
+
+public function beforeDelete()
+{
+    if (parent::beforeDelete()) {
+        if (file_exists($this->FOTO)) {
+            unlink($this->FOTO);
+        }
+        if (file_exists($this->HOJAVIDA)) {
+            unlink($this->HOJAVIDA);
+        }
+        return true;
+    } else {
+        return false;
+    }
 }
 }

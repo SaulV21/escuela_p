@@ -45,8 +45,8 @@ use yii\jui\DatePicker;
     <button id="toggle-password" type="button">Mostrar</button>
 
     <!-- <?= $form->field($model, 'HOJAVIDA')->textInput() ?> -->
-
-    <!-- <?= $form->field($model, 'documento')->fileInput() ?> -->
+<!-- Hoja de vida -->
+    <?= $form->field($model, 'documento')->fileInput() ?>
     <div class="form-group" style="margin-top: 20px;">
     <?= $form->field($model, 'AREA')->textInput(['maxlength' => true, 'placeholder'=>'Nombre del area de educación que imparte el profesor']) ?>
     </div>
