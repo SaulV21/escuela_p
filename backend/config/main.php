@@ -7,7 +7,9 @@ $params = array_merge(
 );
 
 return [
+ //Pongo el nombre
     'id' => 'app-backend',
+    'name' => 'Escuela',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],

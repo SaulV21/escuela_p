@@ -24,9 +24,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'DESCRIPCION')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese una descripcion. Ejemplo: CUARTO AÑO DE EDUCACION GENERAL BASICA']) ?>
 
-    <?= $form->field($model, 'PROMOVIDO')->textInput(['maxlength' => true, 'placeholder' => 'promovido/a a ']) ?>
+    <?= $form->field($model, 'PROMOVIDO')->textInput(['maxlength' => true, 'value' => 'promovido/a a ']) ?>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 20px;">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 

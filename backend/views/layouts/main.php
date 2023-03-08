@@ -28,12 +28,19 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+        //'brandImage' => Yii::getAlias('@web/imagenes/logo.png'),
+        // 'brandLabel' => Yii::$app->name,
+        // 'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
+    echo Html::a(
+        Html::img(Yii::getAlias('@web/imagenes/logo.png'), ['alt' => 'Logo', 'width' => '100']),
+
+        Yii::$app->homeUrl,
+        ['class' => 'navbar-brand']
+    );
     $menuItems = [
         ['label' => 'Inicio', 'url' => ['/site/index']],
         ['label' => 'Alumno', 'url' => ['/alumno/index']],
