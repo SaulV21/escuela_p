@@ -27,19 +27,21 @@ AppAsset::register($this);
 
 <header>
     <?php
+    $this->registerCssFile('@web/css/site.css');
     NavBar::begin([
         //'brandImage' => Yii::getAlias('@web/imagenes/logo.png'),
         // 'brandLabel' => Yii::$app->name,
         // 'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => 'navbar navbar-expand-md navbar-dark  fixed-top',
+            'style' => 'background-color: #2d572c;',
         ],
     ]);
     echo Html::a(
-        Html::img(Yii::getAlias('@web/imagenes/logo.png'), ['alt' => 'Logo', 'width' => '100']),
+        Html::img(Yii::getAlias('@web/imagenes/logo.png'), ['alt' => 'Logo', 'width' => '45']),
 
         Yii::$app->homeUrl,
-        ['class' => 'navbar-brand']
+        ['class' => 'navbar-inverse navbar-fixed-top, style="font-weight:bold; color:black;"']
     );
     $menuItems = [
         ['label' => 'Inicio', 'url' => ['/site/index']],

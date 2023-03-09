@@ -93,3 +93,8 @@ a.desc:after {
     background-image: url('https://blog.bosquedefantasias.com/wp-content/uploads/2015/11/escuela.jpg');
     background-size: cover;
 }
+
+a[href$="logout"] {
+    color: red !important; /* Cambiar a tu color deseado */
+    font-weight: bold; /* Agregar negrita */
+}
