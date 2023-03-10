@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use backend\models\validaciones;
+use common\models\User;
 use Yii;
 /**
  * ProfesorController implements the CRUD actions for Profesor model.
@@ -248,6 +249,25 @@ public function guardar(Profesor $model){
         'model' => $model,
     ]);
 }
-
+//
+// public function actionSignup()
+//     {
+//         $model = new Profesor();
+//         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//             // Crear un nuevo registro en la tabla user con el username y password_hash del profesor
+//             $user = new User();
+//             $user->username = $model->username;
+//             $user->email = $model->CORREO;
+//             $user->password_hash = $model->password_hash;
+//             $user->auth_key = $model->auth_key;
+//             $user->verification_token = $model->verification_token;
+//             $user->save();
+//             return $this->redirect(['view', 'id' => $model->id]);
+//         } else {
+//             return $this->render('signup', [
+//                 'model' => $model,
+//             ]);
+//         }
+//     }
 
 }

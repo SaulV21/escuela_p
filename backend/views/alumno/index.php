@@ -13,6 +13,8 @@ use yii\grid\GridView;
 $this->title = 'Listado de los Alumnos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
 <div class="alumnos-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

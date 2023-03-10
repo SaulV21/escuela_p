@@ -2,6 +2,8 @@
 
 namespace backend\models;
 use Yii;
+use common\models\User;
+use yii\base\Security;
 
 /**
  * This is the model class for table "profesores".
@@ -26,6 +28,7 @@ class Profesor extends \yii\db\ActiveRecord
 {
     public $archivo;
     public $documento;
+    public $password;
     /**
      * {@inheritdoc}
      */
@@ -71,7 +74,7 @@ class Profesor extends \yii\db\ActiveRecord
             'DESCRIPCION' => 'Descripcion',
             'DIRECCION' => 'Direccion',
             'TELEFONO' => 'Telefono',
-            'FECHA_NACIMIENTO' => 'Fecha Nacimiento',
+            'FECHA_NACIMIENTO' => 'Fecha de Nacimiento',
             'archivo' => 'Foto',
             'CORREO' => 'Correo',
             'CLAVE' => 'Clave',
@@ -93,12 +96,7 @@ class Profesor extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        // if ($this->isNewRecord) {
-        //     // Incrementar el contador de ID en 1
-        //     $count = Profesor::find()->count();
-        //     $this->PROFESOR = 'PROF-' . ($count + 1);
-        // }
-//
+  
 if ($this->isNewRecord) {
     $count = Profesor::find()->where(['like', 'PROFESOR', 'PROF-'])->count();
     if ($count > 0) {
@@ -109,6 +107,8 @@ if ($this->isNewRecord) {
         $this->PROFESOR = 'PROF-' . ($count + 1);
     }}
 //
+ // Llamada al método beforeSaveCustom
+        $this->beforeSaveCustom($insert);
         return parent::beforeSave($insert);
     }
 
@@ -134,4 +134,31 @@ public function beforeDelete()
         return false;
     }
 }
+
+//Enviar usuario y contraseña
+public function beforeSaveCustom($insert)
+{
+    $security = new Security();
+    if (parent::beforeSave($insert)) {
+        if ($this->isNewRecord) {
+            $user = new User();
+            $user->email = $this->CORREO;
+            $user->username = $this->CEDULA;
+            $user->password_hash = $security->generatePasswordHash($this->CLAVE);
+            $user->status = User::STATUS_ACTIVE;
+            $user->auth_key = $security->generateRandomKey();
+            $user->verification_token =$security->generateRandomKey() . '_' . time(); 
+            $user->save();
+        } else {
+            $user = $this->user;
+            if (!empty($this->CLAVE)) {
+                $user->password_hash = $security->generatePasswordHash($this->CLAVE);
+                $user->save();
+            }
+        }
+        return true;
+    }
+    return false;
+  }
+
 }

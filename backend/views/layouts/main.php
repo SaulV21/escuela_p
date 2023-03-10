@@ -44,6 +44,7 @@ AppAsset::register($this);
         ['class' => 'navbar-inverse navbar-fixed-top, style="font-weight:bold; color:black;"']
     );
     $menuItems = [
+        //Llama al controlador
         ['label' => 'Inicio', 'url' => ['/site/index']],
         ['label' => 'Alumno', 'url' => ['/alumno/index']],
         ['label' => 'Profesor', 'url' => ['/profesor/index']],
@@ -51,6 +52,7 @@ AppAsset::register($this);
         ['label' => 'Materia', 'url' => ['/materia/index']],
         ['label' => 'Periodo', 'url' => ['/periodo/index']],
         ['label' => 'Matricula', 'url' => ['/matricula/index']],
+        ['label' => 'Asignación', 'url' => ['/materiacurso/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Iniciar Sesion', 'url' => ['/site/login']];

@@ -19,6 +19,7 @@ return [
         ],
 
     'id' => 'app-frontend',
+    'name' => 'Escuela',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',

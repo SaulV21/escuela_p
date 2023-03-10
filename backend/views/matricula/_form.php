@@ -59,7 +59,7 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'SYSRES')->textInput(['maxlength' => true]) ?>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 20px;">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 

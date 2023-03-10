@@ -33,10 +33,15 @@ AppAsset::register($this);
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
-    ]);
+    ]);echo Html::a(
+        Html::img(Yii::getAlias('@web/imagenes/profesor.png'), ['alt' => 'Profesor', 'width' => '45']),
+
+        Yii::$app->homeUrl,
+        ['class' => 'navbar-inverse navbar-fixed-top, style="font-weight:bold; color:black;"']
+    );
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
+        ['label' => 'Inicio', 'url' => ['/site/index']],
+       // ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Notas Finales', 'url' => ['/notas/index']],
         ['label' => 'Asistencia', 'url' => ['/asistencia/index']],
         ['label' => 'Registrar Notas', 'url' => ['/notasql/index']]

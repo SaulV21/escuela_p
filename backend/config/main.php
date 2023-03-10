@@ -15,7 +15,9 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'api' => [
-            'class' => 'backend\modules\api\API',
+            'class' => 'yii\rest\UrlRule',
+            'controller' => 'alumnos-api',
+            'pluralize' => false,
         ],
     ],
     'components' => [
@@ -43,14 +45,16 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
+        
+       /* 'urlManager' => [
+            
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' =>  [
                 //agrego la ruta del controlador del api
-                'class' => 'yii\rest\UrlRule', 'controller' => 'alumnorest',
+                'class' => 'yii\rest\UrlRule',
+                'controller' => 'api/alumnos-api',
             ],
         ],*/
         
