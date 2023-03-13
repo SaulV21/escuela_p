@@ -1,7 +1,7 @@
 <?php
 
 namespace backend\models;
-
+use backend\models\Profesor;
 use Yii;
 
 /**
@@ -9,12 +9,12 @@ use Yii;
  *
  * @property string $CURSO
  * @property string $MATERIA
- * @property string|null $PROFESOR
+ * @property string $PROFESOR
  * @property string $PERIODO
  *
  * @property Cursos $cURSO
  * @property Materias $mATERIA
- * @property Profesores $pROFESOR
+ * @property Profesor $pROFESOR
  */
 class MateriaCurso extends \yii\db\ActiveRecord
 {
@@ -32,16 +32,15 @@ class MateriaCurso extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CURSO', 'MATERIA', 'PERIODO'], 'required'],
             [['CURSO', 'MATERIA', 'PROFESOR', 'PERIODO'], 'string', 'max' => 45],
-            [['CURSO'], 'message'=> 'Debe elegir un curso'],
-            [['MATERIA'], 'string', 'max' => 45],
-            [['CURSO', 'MATERIA', 'PROFESOR', 'PERIODO'], 'string', 'max' => 45],
-            [['CURSO', 'MATERIA', 'PROFESOR', 'PERIODO'], 'string', 'max' => 45],
+            [['CURSO'],'required', 'message'=> 'Debe elegir un curso'],
+            [['MATERIA'],'required', 'message'=> 'Debe elegir una materia'],
+            [['PERIODO'],'required', 'message'=> 'Debe elegir un periodo'],
+            [['PROFESOR'],'required', 'message'=> 'Debe elegir un profesor'],
             [['CURSO', 'MATERIA', 'PERIODO'], 'unique', 'targetAttribute' => ['CURSO', 'MATERIA', 'PERIODO']],
             [['CURSO'], 'exist', 'skipOnError' => true, 'targetClass' => Cursos::class, 'targetAttribute' => ['CURSO' => 'CURSO']],
             [['MATERIA'], 'exist', 'skipOnError' => true, 'targetClass' => Materias::class, 'targetAttribute' => ['MATERIA' => 'MATERIA']],
-            [['PROFESOR'], 'exist', 'skipOnError' => true, 'targetClass' => Profesores::class, 'targetAttribute' => ['PROFESOR' => 'PROFESOR']],
+            [['PROFESOR'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::class, 'targetAttribute' => ['PROFESOR' => 'PROFESOR']],
         ];
     }
 
@@ -85,6 +84,13 @@ class MateriaCurso extends \yii\db\ActiveRecord
      */
     public function getPROFESOR()
     {
-        return $this->hasOne(Profesores::class, ['PROFESOR' => 'PROFESOR']);
+        return $this->hasOne(Profesor::class, ['PROFESOR' => 'PROFESOR']);
     }
+
+    //TRAER EL NOMBRE DEL PROFESOR
+    public function getNombreProfesor()
+    {
+        return $this->hasOne(Profesor::className(), ['PROFESOR' => 'NOMBRES']);
+    }
+
 }

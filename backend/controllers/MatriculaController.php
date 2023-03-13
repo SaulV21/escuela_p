@@ -156,9 +156,9 @@ class MatriculaController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function getListnombre(){
-        $model = Alumnos::findOne($id);
-        return $this->hasOne(Alumnos::className(),['ALUMNO'=>'ALUMNO']);
-    }
+    // public function getListnombre(){
+    //     $model = Alumnos::findOne($id);
+    //     return $this->hasOne(Alumnos::className(),['ALUMNO'=>'ALUMNO']);
+    // }
 
 }
