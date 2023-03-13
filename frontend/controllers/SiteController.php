@@ -1,7 +1,9 @@
 <?php
 
 namespace frontend\controllers;
+use backend\models\Profesor;
 use frontend\models\Cursos;
+use frontend\models\Materiasxcurso;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -80,8 +82,17 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         }
+        //Extraigo codigo del profe>
+       // var_dump(Yii::$app->user->identity->username);exit();
+        $profe=new Profesor();
+        $profe= Profesor::findOne(['CEDULA' => Yii::$app->user->identity->username]);
+         $squery=Materiasxcurso::find()->select('CURSO')->where(['PROFESOR'=>$profe->PROFESOR]);
+
+        //var_dump($profe->PROFESOR);exit();
         $dataProvider = new ActiveDataProvider([
-            'query' => Cursos::find(),
+
+            'query' => Cursos::find()->where(['IN','CURSO',$squery]),
+            //'query' => Cursos::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
