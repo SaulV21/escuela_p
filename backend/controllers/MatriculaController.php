@@ -34,6 +34,23 @@ class MatriculaController extends Controller
         );
     }
 
+    //BUSCAR DATOS MATRICULA
+public function actionBuscar($matri)
+{
+    // if (Yii::$app->user->isGuest) {
+    //     return $this->redirect(['site/login']);
+    // }
+    $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
+        ->where(["NUMEROMATRICULA"=>$matri])->asArray()->one();
+    return json_encode($model);
+}
+
+public function actionListar()
+{
+    $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
+    ->asArray()->all();
+    return json_encode($model);
+}
     /**
      * Lists all Matriculas models.
      *

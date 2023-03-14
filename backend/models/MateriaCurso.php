@@ -90,7 +90,7 @@ class MateriaCurso extends \yii\db\ActiveRecord
     //TRAER EL NOMBRE DEL PROFESOR
     public function getNombreProfesor()
     {
-        return $this->hasOne(Profesor::className(), ['PROFESOR' => 'NOMBRES']);
+        return $this->hasOne(Profesor::className(), ['PROFESOR' => 'PROFESOR']);
     }
 
 }

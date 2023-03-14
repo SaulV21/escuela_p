@@ -31,6 +31,22 @@ class MateriacursoController extends Controller
         );
     }
 
+         //BUSCAR DATOS MATERIAxCURSO
+public function actionBuscar($mat)
+{
+
+    $model=MateriaCurso::find()->select(["MATERIA","PROFESOR","PERIODO"])
+        ->where(["CURSO"=>$mat])->asArray()->one();
+    return json_encode($model);
+}
+
+public function actionListar()
+{
+    $model=MateriaCurso::find()->select(["MATERIA","PROFESOR","PERIODO"])
+    ->asArray()->all();
+    return json_encode($model);
+}
+
     /**
      * Lists all MateriaCurso models.
      *

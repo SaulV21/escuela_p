@@ -34,9 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
             //'Profesor.NOMBRES',
             [
                 'attribute' => 'PROFESOR',
-                'value' => function ($model) {
+                'value' =>('nombreProfesor.NOMBRES')
+                /*'value' => function ($model) {
                     return $model->pROFESOR->NOMBRES;
-                },
+                },*/
             ],
             'PERIODO',
             [

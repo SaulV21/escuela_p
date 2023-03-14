@@ -4,6 +4,7 @@ namespace backend\models;
 use Yii;
 use common\models\User;
 use yii\base\Security;
+use yii\validators\EmailValidator;
 
 /**
  * This is the model class for table "profesores".
@@ -52,7 +53,8 @@ class Profesor extends \yii\db\ActiveRecord
             [['PROFESOR', 'NOMBRES', 'DIRECCION', 'TELEFONO', 'AREA'], 'string', 'max' => 45],
             [['CEDULA'], 'string', 'max' => 25],
             [['DESCRIPCION'], 'string', 'max' => 205],
-            [['CORREO'], 'string', 'max' => 200],
+           // [['CORREO'], 'string', 'max' => 200],
+            [['CORREO'], 'email', 'message' => '{value} no es un correo electrónico válido.'],
             [['CLAVE'], 'string', 'max' => 50],
             // [['CORREO'], 'autocompleteOff'],
             [['ESTADO'], 'string', 'max' => 10],
@@ -151,7 +153,7 @@ public function beforeSaveCustom($insert)
             $user->save();
         } else {
             $user = $this->user;
-            if (!empty($this->CLAVE)) {
+            if ($user !== null) {
                 $user->password_hash = $security->generatePasswordHash($this->CLAVE);
                 $user->save();
             }
@@ -161,4 +163,25 @@ public function beforeSaveCustom($insert)
     return false;
   }
 
+  //traer el id
+//   public function getUser()
+// {
+//     return $this->hasOne(User::class, ['username' => 'CEDULA']);
+// }
+
+//   //Actualizar y eliminar usuarios del profesor
+//   public function updateUserLogin($CEDULA, $CLAVE)
+//     {
+//         //buscar el id
+//         $usern=User::findByUsername($CEDULA);
+//         if ($usern) {
+//             $userId = $usern->id;
+//         $user = User::findOne(['id' => $this->user_Id]);
+//         $user->username = $CEDULA;
+//         $user->setPassword($CLAVE);
+//         $user->generateAuthKey();
+//         return $user->save();
+//     }
+//         return false;
+//     }
 }
