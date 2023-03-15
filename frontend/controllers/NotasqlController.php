@@ -36,7 +36,54 @@ class NotasqlController extends Controller
             ]
         );
     }
+//BUSCAR DATOS notas
+public function actionBuscar($nota)
+{
+    $model=Notasql::find()->select(["MATRICULA","MATERIA","P1Q1","P2Q1","EQUIV80","EV_QUIM","EQUIV20","PROM_QUI","EQ_CUAL","COMP","NF"])
+        ->where(["ID_NOTAS"=>$nota])->asArray()->one();
+    return json_encode($model);
+}
 
+public function actionListar()
+{
+    $model=Notasql::find()->select(["MATRICULA","MATERIA","P1Q1","P2Q1","EQUIV80","EV_QUIM","EQUIV20","PROM_QUI","EQ_CUAL","COMP","NF"])
+    ->asArray()->all();
+    return json_encode($model);
+}
+
+public function actionCrear()
+    {
+        $request = Yii::$app->request;
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+
+        if ($request->isPost) {
+            $data = json_decode($request->getRawBody(), true);
+            $model = new Notasql();
+            $model->attributes = $data;
+            if ($model->save()) {
+                $response->statusCode = 201; // Created
+                return [
+                    'status' => 'success',
+                    'message' => 'Notas ingresadas exitosamente',
+                    'data' => $model,
+                ];
+            } else {
+                $response->statusCode = 400; // Bad Request
+                return [
+                    'status' => 'error',
+                    'message' => 'No se pudo ingresar las notas',
+                    'errors' => $model->errors,
+                ];
+            }
+        } else {
+            $response->statusCode = 405; // Method Not Allowed
+            return [
+                'status' => 'error',
+                'message' => 'Sólo se permiten solicitudes POST en esta acción',
+            ];
+        }
+    }
     /**
      * Lists all Notasql models.
      *

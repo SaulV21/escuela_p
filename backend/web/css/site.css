@@ -98,3 +98,7 @@ a[href$="logout"] {
     color: red !important; /* Cambiar a tu color deseado */
     font-weight: bold; /* Agregar negrita */
 }
+
+.help-block {
+    color: red;
+ }

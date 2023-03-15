@@ -34,9 +34,7 @@ class MateriaController extends Controller
      //BUSCAR DATOS MATERIA
 public function actionBuscar($mat)
 {
-    // if (Yii::$app->user->isGuest) {
-    //     return $this->redirect(['site/login']);
-    // }
+
     $model=Materias::find()->select(["NOMBRE","DESCRIPCION","HORAS","NIVEL","TIPO","ABREVIATURA","PRIORIDAD","AREA"])
         ->where(["MATERIA"=>$mat])->asArray()->one();
     return json_encode($model);

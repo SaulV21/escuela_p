@@ -37,9 +37,7 @@ class MatriculaController extends Controller
     //BUSCAR DATOS MATRICULA
 public function actionBuscar($matri)
 {
-    // if (Yii::$app->user->isGuest) {
-    //     return $this->redirect(['site/login']);
-    // }
+
     $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
         ->where(["NUMEROMATRICULA"=>$matri])->asArray()->one();
     return json_encode($model);

@@ -13,7 +13,7 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'PERIODO')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'PERIODO')->textInput(['maxlength' => true])->error(['class' => 'help-block']) ?>
 
     <!-- Fecha inicio -->
     <div class="form-group" style="margin-top: 20px;">

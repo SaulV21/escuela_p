@@ -1,0 +1,15 @@
+/* Hace que el contenido se desvanezca gradualmente */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  /* Hace que el contenido aparezca gradualmente */
+  .fade-in.show {
+    opacity: 1;
+  }
+
+  .slide-up {
+    transform: translateY(100%);
+    transition: transform 0.5s ease-in-out;
+}
