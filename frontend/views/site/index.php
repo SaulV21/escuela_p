@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 $this->title = 'My Yii Application';
@@ -24,7 +24,9 @@ $this->title = 'My Yii Application';
                     <p><?= $row['DESCRIPCION']?></p>
 
                     <p><a class="btn btn-primary" href="http://www.yiiframework.com/doc/">CALIFICACIÓN</a>
-                        <a class="btn btn-success" href="http://www.yiiframework.com/doc/">ASISTENCIA</a>
+<!--                        <a class="btn btn-success" href="http://www.yiiframework.com/doc/">ASISTENCIA</a>-->
+
+                        <?= Html::a('Asistencia',['/view-asistencia/index','criterio'=>$row['CURSO']],['class' => 'btn btn-primary'])?>
                     </p>
                 </div>
 
