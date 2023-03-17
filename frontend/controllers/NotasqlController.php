@@ -13,11 +13,14 @@ use yii\data\ActiveDataProvider;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use yii\web\Response;
 /**
  * NotasqlController implements the CRUD actions for Notasql model.
  */
 class NotasqlController extends Controller
 {
+    //Desactivamos la verificacion para la validacion
+    public $enableCsrfValidation=false;
 
     /**
      * @inheritDoc
@@ -51,39 +54,77 @@ public function actionListar()
     return json_encode($model);
 }
 
+////////////
 public function actionCrear()
-    {
-        $request = Yii::$app->request;
-        $response = Yii::$app->response;
-        $response->format = Response::FORMAT_JSON;
+{
+    $request = Yii::$app->request;
+    $response = Yii::$app->response;
+    $response->format = Response::FORMAT_JSON;
 
-        if ($request->isPost) {
-            $data = json_decode($request->getRawBody(), true);
-            $model = new Notasql();
-            $model->attributes = $data;
-            if ($model->save()) {
-                $response->statusCode = 201; // Created
-                return [
-                    'status' => 'success',
-                    'message' => 'Notas ingresadas exitosamente',
-                    'data' => $model,
-                ];
-            } else {
-                $response->statusCode = 400; // Bad Request
-                return [
-                    'status' => 'error',
-                    'message' => 'No se pudo ingresar las notas',
-                    'errors' => $model->errors,
-                ];
-            }
+    $model = new Notasql();
+
+    if ($request->isPost) {
+        $data = json_decode($request->getRawBody(), true);
+        $model->attributes = $data;
+        if ($model->validate() && $model->save()) {
+            $response->statusCode = 201; // Created
+            return [
+                'status' => 'success',
+                'message' => 'Registro creado exitosamente',
+                'data' => $model,
+            ];
         } else {
-            $response->statusCode = 405; // Method Not Allowed
+            $response->statusCode = 400; // Bad Request
             return [
                 'status' => 'error',
-                'message' => 'Sólo se permiten solicitudes POST en esta acción',
+                'message' => 'No se pudo crear el registro',
+                'errors' => $model->errors,
             ];
         }
+    } else {
+        $response->statusCode = 405; // Method Not Allowed
+        return [
+            'status' => 'error',
+            'message' => 'Sólo se permiten solicitudes POST en esta acción',
+        ];
     }
+}
+///////////
+public function actionActualizar($matri, $mate)
+{
+    $request = Yii::$app->request;
+    $response = Yii::$app->response;
+    $response->format = Response::FORMAT_JSON;
+
+    $model = $this->findModel($matri, $mate);
+
+    if ($request->isPut) {
+        $data = json_decode($request->getRawBody(), true);
+        $model->attributes = $data;
+        if ($model->save()) {
+            $response->statusCode = 200; // OK
+            return [
+                'status' => 'success',
+                'message' => 'Registro actualizado exitosamente',
+                'data' => $model,
+            ];
+        } else {
+            $response->statusCode = 400; // Bad Request
+            return [
+                'status' => 'error',
+                'message' => 'No se pudo actualizar el registro',
+                'errors' => $model->errors,
+            ];
+        }
+    } else {
+        $response->statusCode = 405; // Method Not Allowed
+        return [
+            'status' => 'error',
+            'message' => 'Sólo se permiten solicitudes PUT en esta acción',
+        ];
+    }
+}
+
     /**
      * Lists all Notasql models.
      *
@@ -92,24 +133,6 @@ public function actionCrear()
     public function actionIndex()
     {
        
-        /*
-        $MATERIA = Yii::$app->request->post('MATERIA');
-
-        $query = \backend\models\Materias::find()->where(['MATERIA' => $MATERIA]);
-    
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-        $query = \backend\models\Alumnos::find();
-        $paginas=new Pagination([
-            'defaultPageSize'=>10,
-            'totalCount'=>$query->count(),
-        ]);
-        $alumnos=$query->orderBy('NOMBRES')->offset($paginas->offset)
-        ->limit($paginas->limit)->all();*/
-        //
-        // $searchModel = new NotasqlSearch();
-        // $dataProvider = $searchModel->search($this->request->queryParams);
         $model = new NotasqlSearch();
         $dataProvider = $model->search(Yii::$app->request->queryParams);
     
@@ -121,21 +144,7 @@ public function actionCrear()
             'dataProvider' => $dataProvider,
             'materias' => $materias,
         ]);
-        // return $this->render('index', [
-        //     //'alumnos'=>$alumnos,
-        //     //'paginas'=>$paginas,
-        //     'searchModel' => $searchModel,
-        //     'dataProvider' => $dataProvider,
-        // ]);
-        // $dataProvider = new Query;
-        // $dataProvider ->select('A.NOMBRES, A.APELLIDOS')
-        // ->from('ALUMNOS A, MATRICULAS M, notasql N')
-        // ->where('M.ALUMNO=A.ALUMNO AND
-        // N.MATRICULA=M.NUMEROMATRICULA');
-        // return $this->render('index', [
-        //     'searchModel' => $searchModel,
-        //     'dataProvider' => $dataProvider,
-        // ]);
+       
     }
 
     /**

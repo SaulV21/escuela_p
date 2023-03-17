@@ -1,8 +1,10 @@
 <?php
 
 namespace backend\models;
-
+use backend\models\Periodo;
 use Yii;
+use yii\helpers\ArrayHelper;
+use backend\models\Cursos;
 
 /**
  * This is the model class for table "matriculas".
@@ -51,6 +53,11 @@ class Matriculas extends \yii\db\ActiveRecord
             [['ESPECIALIDAD'], 'string', 'max' => 200],
             [['OBSERVACION'], 'string', 'max' => 250],
             [['SYSRES'], 'string', 'max' => 150],
+            [['ALUMNO'], 'required', 'message' => 'Por favor seleccione un alumno'],
+            [['PERIODO'], 'required', 'message' => 'Por favor seleccione el período'],
+            [['CURSO'], 'required', 'message' => 'Por favor seleccione un curso'],
+            [['CICLO'], 'required', 'message' => 'Por favor seleccione un ciclo'],
+            [['ESPECIALIDAD'], 'required', 'message' => 'Por favor seleccione una especialidad'],
             [['PERIODO'], 'exist', 'skipOnError' => true, 'targetClass' => Periodo::class, 'targetAttribute' => ['PERIODO' => 'PERIODO']],
             [['ALUMNO'], 'exist', 'skipOnError' => true, 'targetClass' => Alumnos::class, 'targetAttribute' => ['ALUMNO' => 'ALUMNO']],
             [['CURSO'], 'exist', 'skipOnError' => true, 'targetClass' => Cursos::class, 'targetAttribute' => ['CURSO' => 'CURSO']],
@@ -65,7 +72,7 @@ class Matriculas extends \yii\db\ActiveRecord
         return [
             'NUMEROMATRICULA' => '# matricula',
             'ALUMNO' => 'Alumno',
-            'PERIODO' => 'Periodo',
+            'PERIODO' => 'Elija el Periodo',
             'CURSO' => 'Curso',
             'CICLO' => 'Ciclo',
             'ESPECIALIDAD' => 'Especialidad',
@@ -190,5 +197,39 @@ class Matriculas extends \yii\db\ActiveRecord
 //Creamos la relacion con alumnos 
     public function getListnombre(){
         return $this->hasOne(Alumnos::className(),['ALUMNO'=>'ALUMNO']);
+    }
+
+    public function getListaPeriodo()
+    {
+        // Devuelve una matriz de opciones para el campo dropdown
+        return ArrayHelper::map(
+            Periodo::find()->where(['ESTADO' => 'ABIERTO'])->all(),
+            'PERIODO', 'PERIODO'
+        );
+    }
+
+    public function getListaCursos()
+    {
+        // Devuelve una matriz de opciones para el campo dropdown
+        return ArrayHelper::map(
+            Cursos::find()->all(),
+            'CURSO', 'DESCRIPCION'
+        );
+    }
+
+    public function getCiclo()
+    {
+       return [
+            'DIVERSIFICADO' => 'Diversificado',
+            'BASICO'=>'Basico'
+        ];
+    }
+
+    public function getEspecialidad()
+    {
+       return [
+        'GENERAL UNIFICADO' => 'General Unificado',
+        'GENERAL UNIFICADO TECNICO'=>'General Unificado Tecnico'
+        ];
     }
 }

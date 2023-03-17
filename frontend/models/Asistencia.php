@@ -10,7 +10,6 @@ use backend\models\Alumnos;
  * This is the model class for table "asistencia".
  *
  * @property string $ALUMNO
- * @property string $CURSO
  * @property int $MATRICULA
  * @property string $fecha
  * @property string|null $asiste
@@ -33,14 +32,13 @@ class Asistencia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ALUMNO', 'CURSO', 'fecha'], 'required'],
+            [['ALUMNO', 'fecha'], 'required'],
             [['MATRICULA'], 'safe'],
             [['MATRICULA'], 'integer'],
             [['fecha'], 'safe'],
             [['ALUMNO'], 'string', 'max' => 50],
-            [['CURSO'], 'string', 'max' => 45],
             [['asiste'], 'string', 'max' => 5],
-            [['ALUMNO', 'CURSO'], 'unique', 'targetAttribute' => ['ALUMNO', 'CURSO']],
+            [['ALUMNO'], 'unique', 'targetAttribute' => ['ALUMNO']],
             [['MATRICULA'], 'exist', 'skipOnError' => true, 'targetClass' => Matriculas::class, 'targetAttribute' => ['MATRICULA' => 'NUMEROMATRICULA']],
         ];
     }
@@ -52,7 +50,6 @@ class Asistencia extends \yii\db\ActiveRecord
     {
         return [
             'ALUMNO' => 'Alumno',
-            'CURSO' => 'Curso',
             'MATRICULA' => 'Matricula',
             'fecha' => 'Fecha',
             'asiste' => 'Asiste',

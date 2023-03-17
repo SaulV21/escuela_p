@@ -30,7 +30,7 @@ use yii\jui\DatePicker;
     </div>
     <!-- Estado -->
     <div class="form-group" style="margin-top: 20px;">
-    <?= $form->field($model, 'estado')->dropDownList(['prompt'=>'Seleccione el estado', 'ABIERTO' => 'Abierto','CERRADO'=>'Cerrado']) ?>
+    <?= $form->field($model, 'estado')->dropDownList($model->getEstado(),['prompt'=>'Seleccione el estado']) ?>
     </div>
     <?= $form->field($model, 'rector')->textInput(['maxlength' => true]) ?>
 

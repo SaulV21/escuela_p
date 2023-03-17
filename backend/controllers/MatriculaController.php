@@ -98,13 +98,6 @@ public function actionListar()
     {
         $model = new Matriculas();
 
-        // if ($this->request->isPost) {
-        //     if ($model->load($this->request->post()) && $model->save()) {
-        //         return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
-        //     }
-        // } else {
-        //     $model->loadDefaultValues();
-        // }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $count = Matriculas::find()->where(['ALUMNO' => $model->ALUMNO])->count();
            
@@ -170,10 +163,5 @@ public function actionListar()
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-    // public function getListnombre(){
-    //     $model = Alumnos::findOne($id);
-    //     return $this->hasOne(Alumnos::className(),['ALUMNO'=>'ALUMNO']);
-    // }
 
 }

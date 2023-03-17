@@ -11,13 +11,14 @@ use backend\models\Alumnos;
  */
 class AlumnoSearch extends Alumnos
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['ALUMNO', 'CEDULA', 'NOMBRES', 'APELLIDOS', 'FECHA_NACIMIENTO', 'CIUDAD_NACIMIENTO', 'SEXO', 'PADRE', 'PROFESION_PADRE', 'MADRE', 'PROFESION_MADRE', 'CIUDADRES', 'DIRECCION', 'TELEFONO', 'CONTACTO', 'REFERENCIA', 'CORREO', 'FOTO', 'SISRES', 'SISFECHA', 'CSLTKO'], 'safe'],
+            [['ALUMNO', 'globalSearch','CEDULA', 'NOMBRES', 'APELLIDOS', 'FECHA_NACIMIENTO', 'CIUDAD_NACIMIENTO', 'SEXO', 'PADRE', 'PROFESION_PADRE', 'MADRE', 'PROFESION_MADRE', 'CIUDADRES', 'DIRECCION', 'TELEFONO', 'CONTACTO', 'REFERENCIA', 'CORREO', 'FOTO', 'SISRES', 'SISFECHA', 'CSLTKO'], 'safe'],
         ];
     }
 

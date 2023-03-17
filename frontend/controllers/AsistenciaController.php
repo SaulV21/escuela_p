@@ -75,14 +75,14 @@ class AsistenciaController extends Controller
     /**
      * Displays a single Asistencia model.
      * @param string $ALUMNO Alumno
-     * @param string $CURSO Curso
+     * @param string $MATRICULA Matricula
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($ALUMNO, $CURSO)
+    public function actionView($ALUMNO, $MATRICULA)
     {
         return $this->render('view', [
-            'model' => $this->findModel($ALUMNO, $CURSO),
+            'model' => $this->findModel($ALUMNO, $MATRICULA),
         ]);
     }
 
@@ -97,7 +97,7 @@ class AsistenciaController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'ALUMNO' => $model->ALUMNO, 'CURSO' => $model->CURSO]);
+                return $this->redirect(['view', 'ALUMNO' => $model->ALUMNO, 'MATRICULA' => $model->MATRICULA]);
             }
         } else {
             $model->loadDefaultValues();
@@ -112,16 +112,16 @@ class AsistenciaController extends Controller
      * Updates an existing Asistencia model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $ALUMNO Alumno
-     * @param string $CURSO Curso
+     * @param string $MATRICULA Matricula
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($ALUMNO, $CURSO)
+    public function actionUpdate($ALUMNO, $MATRICULA)
     {
-        $model = $this->findModel($ALUMNO, $CURSO);
+        $model = $this->findModel($ALUMNO, $MATRICULA);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ALUMNO' => $model->ALUMNO, 'CURSO' => $model->CURSO]);
+            return $this->redirect(['view', 'ALUMNO' => $model->ALUMNO, 'MATRICULA' => $model->MATRICULA]);
         }
 
         return $this->render('update', [
@@ -133,13 +133,13 @@ class AsistenciaController extends Controller
      * Deletes an existing Asistencia model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $ALUMNO Alumno
-     * @param string $CURSO Curso
+     * @param string $MATRICULA Matricula
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($ALUMNO, $CURSO)
+    public function actionDelete($ALUMNO, $MATRICULA)
     {
-        $this->findModel($ALUMNO, $CURSO)->delete();
+        $this->findModel($ALUMNO, $MATRICULA)->delete();
 
         return $this->redirect(['index']);
     }
@@ -148,13 +148,13 @@ class AsistenciaController extends Controller
      * Finds the Asistencia model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $ALUMNO Alumno
-     * @param string $CURSO Curso
+     * @param string $MATRICULA Matricula
      * @return Asistencia the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($ALUMNO, $CURSO)
+    protected function findModel($ALUMNO, $MATRICULA)
     {
-        if (($model = Asistencia::findOne(['ALUMNO' => $ALUMNO, 'CURSO' => $CURSO])) !== null) {
+        if (($model = Asistencia::findOne(['ALUMNO' => $ALUMNO, 'MATRICULA' => $MATRICULA])) !== null) {
             return $model;
         }
 

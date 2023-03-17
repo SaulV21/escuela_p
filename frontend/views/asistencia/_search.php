@@ -17,8 +17,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ALUMNO') ?>
 
-    <?= $form->field($model, 'CURSO') ?>
-
     <?= $form->field($model, 'MATRICULA') ?>
 
     <?= $form->field($model, 'fecha') ?>
@@ -26,7 +24,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'asiste') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 

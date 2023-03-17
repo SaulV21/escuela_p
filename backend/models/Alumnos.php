@@ -120,16 +120,7 @@ class Alumnos extends \yii\db\ActiveRecord
         return $this->hasMany(Matriculas::class, ['ALUMNO' => 'ALUMNO']);
     }
 
-    // public function beforeSave($insert)
-    // {
-    //     if ($this->isNewRecord) {
-    //         // Incrementar el contador de ID en 1
-    //         $count = Alumnos::find()->count();
-    //         $this->ALUMNO = 'UEC-' . ($count + 1);
-    //     }
-
-    //     return parent::beforeSave($insert);
-    // }
+   
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
@@ -144,4 +135,5 @@ class Alumnos extends \yii\db\ActiveRecord
 //
         return parent::beforeSave($insert);
     }
+
 }

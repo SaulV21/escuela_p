@@ -33,14 +33,17 @@ class Periodo extends \yii\db\ActiveRecord
     {
         return [
             [['PERIODO'], 'required', 'message' => 'Debe ingresar el año lectivo. Ejemplo: 2023-2024'],
-            [['rector'], 'required', 'message' =>'Debe ingresar los nombres del Rector'],
-            [['secretario'], 'required', 'message' =>'Debe ingresar los nombres del Secretario'],
+            [['rector'], 'required', 'message' =>'Debe ingresar los nombres de el/la Rector/a'],
+            [['secretario'], 'required', 'message' =>'Ingresar los nombres de el/la Secretario/a'],
+            [['estado'], 'required', 'message' =>'Debe elegir una opcion'],
+            [['Fecha_ini_periodo'], 'required', 'message' =>'Debe elegir una fecha'],
+            [['Fecha_fin_periodo'], 'required', 'message' =>'Debe elegir una fecha'],
             [['Fecha_ini_periodo', 'Fecha_fin_periodo'], 'safe'],
             [['PERIODO', 'estado'], 'string', 'max' => 45],
             [['rector', 'secretario'], 'string', 'max' => 150],
             [['PERIODO'], 'unique'],
-            [['Fecha_fin_periodo'], 'compare', 'compareAttribute' => 'Fecha_ini_periodo', 'operator' => '>=',
-            'message' => 'La fecha de finalización del periodo no puede ser anterior a la fecha de inicio'],
+            [['Fecha_fin_periodo'], 'compare', 'compareAttribute' => 'Fecha_ini_periodo', 'operator' => '>',
+            'message' => 'La fecha de finalización del periodo no puede ser anterior o igual a la fecha de inicio'],
         ];
     }
 
@@ -67,5 +70,13 @@ class Periodo extends \yii\db\ActiveRecord
     public function getMatriculas()
     {
         return $this->hasMany(Matriculas::class, ['PERIODO' => 'PERIODO']);
+    }
+
+    public function getEstado()
+    {
+       return [
+        'ABIERTO' => 'Abierto',
+        'CERRADO'=>'Cerrado'
+        ];
     }
 }
