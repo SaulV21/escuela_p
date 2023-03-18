@@ -34,6 +34,21 @@ class MatriculaController extends Controller
         );
     }
 
+    //BUSCAR DATOS MATRICULA
+public function actionBuscar($matri)
+{
+
+    $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
+        ->where(["NUMEROMATRICULA"=>$matri])->asArray()->one();
+    return json_encode($model);
+}
+
+public function actionListar()
+{
+    $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
+    ->asArray()->all();
+    return json_encode($model);
+}
     /**
      * Lists all Matriculas models.
      *
@@ -83,13 +98,6 @@ class MatriculaController extends Controller
     {
         $model = new Matriculas();
 
-        // if ($this->request->isPost) {
-        //     if ($model->load($this->request->post()) && $model->save()) {
-        //         return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
-        //     }
-        // } else {
-        //     $model->loadDefaultValues();
-        // }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $count = Matriculas::find()->where(['ALUMNO' => $model->ALUMNO])->count();
            
@@ -154,11 +162,6 @@ class MatriculaController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function getListnombre(){
-        $model = Alumnos::findOne($id);
-        return $this->hasOne(Alumnos::className(),['ALUMNO'=>'ALUMNO']);
     }
 
 }

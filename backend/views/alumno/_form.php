@@ -22,7 +22,7 @@ $this->registerJsFile('@web/assets/locale/jquery-ui.min.js', [
     <!-- ID Alumno -->
     <!-- <?= $form->field($model, 'ALUMNO')->textInput(['maxlength' => true, 'readonly' => true,'value' => $model->ALUMNO]) ?> -->
 
-    <?= $form->field($model, 'CEDULA')->textInput(['type' => 'number', 'maxlength' => 10, 'minlength' => 10, 'placeholder'=>'Ingrese el numero de cédula']) ?>
+    <?= $form->field($model, 'CEDULA')->textInput(['type' => 'number', 'maxlength' => 10, 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);',  'placeholder'=>'Ingrese el numero de cédula']) ?>
 
     <?= $form->field($model, 'NOMBRES')->textInput(['maxlength' => true, 'placeholder'=>'Ingrese los nombres completos']) ?>
     <div class="form-group">
@@ -52,9 +52,9 @@ $this->registerJsFile('@web/assets/locale/jquery-ui.min.js', [
 
     <?= $form->field($model, 'DIRECCION')->textarea(['rows' => 4, 'placeholder'=>'Nombre de la calle o barrio']) ?>
 
-    <?= $form->field($model, 'TELEFONO')->textInput(['type' => 'number', 'maxlength' => 15,'placeholder'=>'Ingrese número de teléfono' ]) ?>
+    <?= $form->field($model, 'TELEFONO')->textInput(['type' => 'number', 'maxlength' => 15, 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);', 'placeholder'=>'Ingrese número de teléfono' ]) ?>
 
-    <?= $form->field($model, 'CONTACTO')->textInput(['maxlength' => true, 'type' => 'number', 'maxlength' => 15, 'placeholder'=>'Numero de celular en caso de emergencia']) ?>
+    <?= $form->field($model, 'CONTACTO')->textInput(['maxlength' => true, 'type' => 'number', 'maxlength' => 15, 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);',  'placeholder'=>'Numero de celular en caso de emergencia']) ?>
 
     <?= $form->field($model, 'REFERENCIA')->textInput(['maxlength' => true, 'placeholder'=>'Nombre del contacto de emergencia']) ?>
 

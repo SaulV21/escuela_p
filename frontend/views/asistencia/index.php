@@ -40,14 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'contentOptions' => ['style' => 'width: 300px;']
             ],
-            'CURSO',
             'MATRICULA',
             'fecha',
             'asiste',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Asistencia $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'ALUMNO' => $model->ALUMNO, 'CURSO' => $model->CURSO]);
+                    return Url::toRoute([$action, 'ALUMNO' => $model->ALUMNO, 'MATRICULA' => $model->MATRICULA]);
                  }
             ],
         ],

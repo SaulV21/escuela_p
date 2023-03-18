@@ -17,7 +17,7 @@ class AsistenciaSearch extends Asistencia
     public function rules()
     {
         return [
-            [['ALUMNO', 'CURSO', 'fecha', 'asiste'], 'safe'],
+            [['ALUMNO', 'fecha', 'asiste'], 'safe'],
             [['MATRICULA'], 'integer'],
         ];
     }
@@ -63,7 +63,6 @@ class AsistenciaSearch extends Asistencia
         ]);
 
         $query->andFilterWhere(['like', 'ALUMNO', $this->ALUMNO])
-            ->andFilterWhere(['like', 'CURSO', $this->CURSO])
             ->andFilterWhere(['like', 'asiste', $this->asiste]);
 
         return $dataProvider;

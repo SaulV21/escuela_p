@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use backend\models\Cursos;
 use backend\models\Alumnos;
+use backend\models\Profesor;
 use backend\models\Periodo;
 use kartik\select2\Select2;
 use yii\jui\DatePicker;
@@ -30,22 +31,27 @@ use yii\jui\DatePicker;
 ]);?>
 
     <!-- PERIODOS -->
-    <?= $form->field($model, 'PERIODO')->dropDownList(
+    <!-- <?= $form->field($model, 'PERIODO')->dropDownList(
         ArrayHelper::map(Periodo::find()->where(['ESTADO' => 'ABIERTO'])->all(),'PERIODO', 'PERIODO'),
         ['prompt'=>'Seleccione el periodo']
-    ) ?>
+    ) ?> -->
+
+<?= $form->field($model, 'PERIODO')->dropDownList($model->getListaPeriodo(), ['prompt' => 'Seleccione el período']) ?>
+
 
     <!-- CURSOS -->
-    <?= $form->field($model, 'CURSO')->dropDownList(
+    <!-- <?= $form->field($model, 'CURSO')->dropDownList(
         ArrayHelper::map(Cursos::find()->all(),'CURSO', 'DESCRIPCION'),
         ['prompt'=>'Seleccione el curso']
-    ) ?>
+    ) ?> -->
 
-    <!-- CICLO -->
-    <?= $form->field($model, 'CICLO')->dropDownList(['prompt'=>'Seleccione el ciclo', 'DIVERSIFICADO' => 'Diversificado','BASICO'=>'Basico']) ?>
+<?= $form->field($model, 'CURSO')->dropDownList($model->getListaCursos(), ['prompt' => 'Seleccione el curso']) ?>
+    
+<!-- CICLO -->
+    <?= $form->field($model, 'CICLO')->dropDownList($model->getCiclo(),['prompt'=>'Seleccione el ciclo']) ?>
 
     <!-- Especialidad -->
-    <?= $form->field($model, 'ESPECIALIDAD')->dropDownList(['prompt'=>'Seleccione la especialidad', 'GENERAL UNIFICADO' => 'General Unificado','GENERAL UNIFICADO TECNICO'=>'General Unificado Tecnico']) ?>
+    <?= $form->field($model, 'ESPECIALIDAD')->dropDownList($model->getEspecialidad(),['prompt'=>'Seleccione la especialidad']) ?>
 
     <!-- FECHA -->
     <!-- <?=$form->field($model, 'FECHA')->widget(DatePicker::className(), [
@@ -57,12 +63,29 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'REFERENCIA')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'SYSRES')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'SYSRES')->textInput(['maxlength' => true,'id' => 'nombre-input']) ?>
 
     <div class="form-group" style="margin-top: 20px;">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+    
+    <?php
+// Obtener sugerencias de nombres desde la base de datos
+    $sugerencias = ArrayHelper::getColumn(Profesor::find()->select(['nombres'])->asArray()->all(), 'nombres');
+    ?>
+
+<?php $this->registerJs(
+    "
+    $(function() {
+        var availableTags = " . json_encode($sugerencias) . ";
+        $('#nombre-input').autocomplete({
+            source: availableTags
+        });
+    });
+    ",
+    \yii\web\View::POS_READY
+); ?>
 
 </div>

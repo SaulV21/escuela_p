@@ -1,9 +1,9 @@
 <?php
 
 namespace backend\models;
-
+use backend\models\Cursos;
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "materias".
  *
@@ -44,6 +44,8 @@ class Materias extends \yii\db\ActiveRecord
             [['ABREVIATURA'], 'required', 'message'=>'Debe agregar una abreviatura para la materia'],
             [['MATERIA'], 'safe', 'message'=>'Debe agregar un identificador para la materia'],
             [['AREA'], 'required', 'message'=>'Debe escoger el area a que pertenece la materia'],
+            [['NIVEL'], 'required', 'message'=>'Debe escoger una opción'],
+            [['TIPO'], 'required', 'message'=>'Debe escoger una opción'],
             [['HORAS', 'PRIORIDAD'], 'integer'],
             [['MATERIA', 'NOMBRE', 'NIVEL', 'TIPO'], 'string', 'max' => 45],
             [['DESCRIPCION'], 'string', 'max' => 200],
@@ -162,5 +164,35 @@ class Materias extends \yii\db\ActiveRecord
             return true;
         }
         return false;
+    }
+
+    public function getNivel()
+    {
+        return ArrayHelper::map(
+            Cursos::find()->all(),
+            'CURSO', 'DESCRIPCION'
+        );
+    }
+
+    public function getTipo()
+    {
+       return [
+        'CUANTITATIVA' => 'Cuantitativa',
+        'CUALITATIVA'=>'Cualitativa'
+        ];
+    }
+
+    public function getArea()
+    {
+       return [
+        'ÁREA TECNICA' => 'ÁREA TECNICA',
+        'CIENCIAS NATURALES'=>'CIENCIAS NATURALES',
+        'EDUCACIÓN CULTURAL Y ARTÍSTICA'=>'EDUCACIÓN CULTURAL Y ARTÍSTICA',
+        'EDUCACION FÍSICA'=>'EDUCACION FÍSICA',
+        'PROYECTOS ESCOLARES'=>'PROYECTOS ESCOLARES',
+        'COMPORTAMIENTO'=>'COMPORTAMIENTO',
+        'EDUCACIÓN PARA LA CIUDADANÍA'=>'EDUCACIÓN PARA LA CIUDADANÍA',
+        'EDUCACIÓN RELIGIOSA'=>'EDUCACIÓN RELIGIOSA'
+        ];
     }
 }

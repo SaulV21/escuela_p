@@ -25,7 +25,8 @@
         "kartik-v/yii2-editable": "@dev",
         "yii2mod/yii2-editable": "*",
         "kartik-v/yii2-grid": "dev-master",
-        "himiklab/yii2-recaptcha-widget": "*" 
+        "himiklab/yii2-recaptcha-widget": "*"
+
         
     },
     "require-dev": {

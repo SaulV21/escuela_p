@@ -9,6 +9,9 @@ $this->title = 'Crear un nuevo Periodo Lectivo';
 $this->params['breadcrumbs'][] = ['label' => 'Periodos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
 <div class="periodo-create">
 
     <h1><?= Html::encode($this->title) ?></h1>

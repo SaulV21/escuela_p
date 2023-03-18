@@ -9,13 +9,14 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="alumnos-search">
-
+<?= $form->field($model, 'globalSearch') ?>
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ALUMNO') ?>
+
+    <!-- <?= $form->field($model, 'ALUMNO') ?>
 
     <?= $form->field($model, 'CEDULA') ?>
 
@@ -23,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'APELLIDOS') ?>
 
-    <?= $form->field($model, 'FECHA_NACIMIENTO') ?>
+    <?= $form->field($model, 'FECHA_NACIMIENTO') ?> -->
 
     <?php // echo $form->field($model, 'CIUDAD_NACIMIENTO') ?>
 

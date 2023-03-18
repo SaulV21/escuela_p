@@ -31,6 +31,22 @@ class MateriacursoController extends Controller
         );
     }
 
+         //BUSCAR DATOS MATERIAxCURSO
+public function actionBuscar($mat)
+{
+
+    $model=MateriaCurso::find()->select(["MATERIA","PROFESOR","PERIODO"])
+        ->where(["CURSO"=>$mat])->asArray()->one();
+    return json_encode($model);
+}
+
+public function actionListar()
+{
+    $model=MateriaCurso::find()->select(["MATERIA","PROFESOR","PERIODO"])
+    ->asArray()->all();
+    return json_encode($model);
+}
+
     /**
      * Lists all MateriaCurso models.
      *
@@ -40,7 +56,6 @@ class MateriacursoController extends Controller
     {
         $searchModel = new MateriacursoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,14 +66,15 @@ class MateriacursoController extends Controller
      * Displays a single MateriaCurso model.
      * @param string $CURSO Curso
      * @param string $MATERIA Materia
+     * @param string $PROFESOR Profesor
      * @param string $PERIODO Periodo
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($CURSO, $MATERIA, $PERIODO)
+    public function actionView($CURSO, $MATERIA, $PROFESOR, $PERIODO)
     {
         return $this->render('view', [
-            'model' => $this->findModel($CURSO, $MATERIA, $PERIODO),
+            'model' => $this->findModel($CURSO, $MATERIA, $PROFESOR, $PERIODO),
         ]);
     }
 
@@ -73,7 +89,7 @@ class MateriacursoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'CURSO' => $model->CURSO, 'MATERIA' => $model->MATERIA, 'PERIODO' => $model->PERIODO]);
+                return $this->redirect(['view', 'CURSO' => $model->CURSO, 'MATERIA' => $model->MATERIA, 'PROFESOR' => $model->PROFESOR, 'PERIODO' => $model->PERIODO]);
             }
         } else {
             $model->loadDefaultValues();
@@ -89,16 +105,17 @@ class MateriacursoController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $CURSO Curso
      * @param string $MATERIA Materia
+     * @param string $PROFESOR Profesor
      * @param string $PERIODO Periodo
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($CURSO, $MATERIA, $PERIODO)
+    public function actionUpdate($CURSO, $MATERIA, $PROFESOR, $PERIODO)
     {
-        $model = $this->findModel($CURSO, $MATERIA, $PERIODO);
+        $model = $this->findModel($CURSO, $MATERIA, $PROFESOR, $PERIODO);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'CURSO' => $model->CURSO, 'MATERIA' => $model->MATERIA, 'PERIODO' => $model->PERIODO]);
+            return $this->redirect(['view', 'CURSO' => $model->CURSO, 'MATERIA' => $model->MATERIA, 'PROFESOR' => $model->PROFESOR, 'PERIODO' => $model->PERIODO]);
         }
 
         return $this->render('update', [
@@ -111,13 +128,14 @@ class MateriacursoController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $CURSO Curso
      * @param string $MATERIA Materia
+     * @param string $PROFESOR Profesor
      * @param string $PERIODO Periodo
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($CURSO, $MATERIA, $PERIODO)
+    public function actionDelete($CURSO, $MATERIA, $PROFESOR, $PERIODO)
     {
-        $this->findModel($CURSO, $MATERIA, $PERIODO)->delete();
+        $this->findModel($CURSO, $MATERIA, $PROFESOR, $PERIODO)->delete();
 
         return $this->redirect(['index']);
     }
@@ -127,13 +145,14 @@ class MateriacursoController extends Controller
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $CURSO Curso
      * @param string $MATERIA Materia
+     * @param string $PROFESOR Profesor
      * @param string $PERIODO Periodo
      * @return MateriaCurso the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($CURSO, $MATERIA, $PERIODO)
+    protected function findModel($CURSO, $MATERIA, $PROFESOR, $PERIODO)
     {
-        if (($model = MateriaCurso::findOne(['CURSO' => $CURSO, 'MATERIA' => $MATERIA, 'PERIODO' => $PERIODO])) !== null) {
+        if (($model = MateriaCurso::findOne(['CURSO' => $CURSO, 'MATERIA' => $MATERIA, 'PROFESOR' => $PROFESOR, 'PERIODO' => $PERIODO])) !== null) {
             return $model;
         }
 

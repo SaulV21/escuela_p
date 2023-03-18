@@ -62,9 +62,18 @@ class Alumnos extends \yii\db\ActiveRecord
             [['archivo'], 'file', 'extensions'=>'jpg, png'],
             [['ALUMNO'], 'string', 'max' => 50],
             [['CEDULA'], 'string', 'max' => 15],
-            [['NOMBRES', 'APELLIDOS', 'PROFESION_PADRE', 'PROFESION_MADRE', 'CORREO'], 'string', 'max' => 100],
+            [['NOMBRES', 'APELLIDOS', 'PROFESION_PADRE', 'PROFESION_MADRE'], 'string', 'max' => 100],
+            [['NOMBRES'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'El nombre solo debe contener letras.'],
+            [['APELLIDOS'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'El apellido solo debe contener letras.'],
+            [['PROFESION_PADRE'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
+            [['PROFESION_MADRE'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
+            [['CORREO'], 'email', 'message' => '{value} no es un correo electrónico válido.'],
             [['CIUDAD_NACIMIENTO', 'SEXO', 'CIUDADRES', 'TELEFONO', 'CONTACTO', 'REFERENCIA', 'SISRES'], 'string', 'max' => 45],
             [['PADRE', 'MADRE'], 'string', 'max' => 200],
+            [['CIUDAD_NACIMIENTO'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
+            [['CIUDADRES'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
+            [['MADRE'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
+            [['PADRE'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
             [['CSLTKO'], 'string', 'max' => 250],
             [['ALUMNO'], 'unique'],
         ];
@@ -111,36 +120,20 @@ class Alumnos extends \yii\db\ActiveRecord
         return $this->hasMany(Matriculas::class, ['ALUMNO' => 'ALUMNO']);
     }
 
+   
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
-            // Incrementar el contador de ID en 1
-            $count = Alumnos::find()->count();
-            $this->ALUMNO = 'UEC-' . ($count + 1);
-        }
-
+        $count = Alumnos::find()->where(['like', 'ALUMNO', 'UEC-'])->count();
+        if ($count > 0) {
+        // Si el valor generado ya existe, agregar un sufijo numérico al final del valor
+        $this->ALUMNO .= 'UEC-0' . ($count + 1);
+        } else {
+        // Si el valor generado no existe, utilizar el valor generado por defecto
+        $this->ALUMNO = 'UEC-' . ($count + 1);
+        }}
+//
         return parent::beforeSave($insert);
     }
-    // public function beforeSave($insert)
-    // {
-    //     if (parent::beforeSave($insert)) {
-    //         if ($this->isNewRecord) {
-    //             // Obtener el último registro
-    //             $lastRecord = Alumnos::find()->orderBy(['ALUMNO' => SORT_DESC])->one();
 
-    //             // Obtener el último número de ID y agregar 1
-    //             $lastNumber = 1;
-    //             if ($lastRecord) {
-    //                 $lastNumber = substr($lastRecord->ALUMNO, 4) + 1;
-    //             }
-
-    //             // Crear el nuevo ID
-    //             $this->ALUMNO = 'UEC-' . $lastNumber;
-    //         }
-
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 }

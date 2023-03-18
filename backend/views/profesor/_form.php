@@ -10,20 +10,19 @@ use yii\jui\DatePicker;
 ?>
 
 <div class="profesor-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <!-- <?= $form->field($model, 'PROFESOR')->textInput(['maxlength' => true]) ?> -->
 
-    <?= $form->field($model, 'CEDULA')->textInput(['type' => 'number', 'minlength' => 10, 'maxlength' => 10, 'placeholder'=>'Ingrese el numero de cédula']) ?>
+    <?= $form->field($model, 'CEDULA')->textInput(['type' => 'number', 'maxlength' => 10, 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);', 'placeholder'=>'Ingrese el numero de cédula']) ?>
 
-    <?= $form->field($model, 'NOMBRES')->textInput(['maxlength' => true, 'placeholder'=>'Ingrese los nombres y apellidos completos']) ?>
+    <?= $form->field($model, 'NOMBRES')->textInput(['maxlength' => true, 'placeholder'=>'Ingrese los nombres y apellidos completos'])->error(['class' => 'help-block']) ?>
 
     <?= $form->field($model, 'DESCRIPCION')->textInput(['maxlength' => true, 'placeholder'=>'Ingrese una descripción del docente']) ?>
 
     <?= $form->field($model, 'DIRECCION')->textInput(['maxlength' => true, 'placeholder'=>'Ingrese la dirección de residencia']) ?>
 
-    <?= $form->field($model, 'TELEFONO')->textInput(['type' => 'number', 'maxlength' => 15, 'maxlength' => true, 'placeholder'=>'Ingrese el numero de telefono']) ?>
+    <?= $form->field($model, 'TELEFONO')->textInput(['type' => 'number', 'maxlength' => 15, 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);', 'placeholder'=>'Ingrese el numero de telefono']) ?>
 
     <!-- <?= $form->field($model, 'FECHA_NACIMIENTO')->textInput() ?> -->
     <!-- Fecha_fin_periodo -->

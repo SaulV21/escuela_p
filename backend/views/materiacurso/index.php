@@ -31,12 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'CURSO',
             'MATERIA',
-            'PROFESOR',
+            //'Profesor.NOMBRES',
+            [
+                'attribute' => 'PROFESOR',
+                'value' =>('nombreProfesor.NOMBRES')
+                /*'value' => function ($model) {
+                    return $model->pROFESOR->NOMBRES;
+                },*/
+            ],
             'PERIODO',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, MateriaCurso $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'CURSO' => $model->CURSO, 'MATERIA' => $model->MATERIA, 'PERIODO' => $model->PERIODO]);
+                    return Url::toRoute([$action, 'CURSO' => $model->CURSO, 'MATERIA' => $model->MATERIA, 'PROFESOR' => $model->PROFESOR, 'PERIODO' => $model->PERIODO]);
                  }
             ],
         ],

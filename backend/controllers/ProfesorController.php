@@ -33,7 +33,24 @@ class ProfesorController extends Controller
             ]
         );
     }
+//apirest
+//BUSCAR DATOS PROFESOR
+public function actionBuscar($prof)
+{
+    // if (Yii::$app->user->isGuest) {
+    //     return $this->redirect(['site/login']);
+    // }
+    $model=Profesor::find()->select(["CEDULA","NOMBRES","DESCRIPCION","DIRECCION","TELEFONO","FECHA_NACIMIENTO","FOTO","CORREO","CLAVE","HOJAVIDA","AREA","ESTADO"])
+        ->where(["PROFESOR"=>$prof])->asArray()->one();
+    return json_encode($model);
+}
 
+public function actionListar()
+{
+    $model=Profesor::find()->select(["CEDULA","NOMBRES","DESCRIPCION","DIRECCION","TELEFONO","FECHA_NACIMIENTO","FOTO","CORREO","CLAVE","HOJAVIDA","AREA","ESTADO"])
+    ->asArray()->all();
+    return json_encode($model);
+}
     /**
      * Lists all Profesor models.
      *
@@ -241,33 +258,15 @@ public function guardar(Profesor $model){
                 Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar el profesor.');
             }
         } else {
-            Yii::$app->session->setFlash('error', 'Debe cargar ambos archivos.');
-        }
+            if ($model->save(false)) {
+                Yii::$app->session->setFlash('success', 'El profesor ha sido creado exitosamente.');
+                return $this->redirect(['view', 'PROFESOR' => $model->PROFESOR]);
+        }}
     }
 
     return $this->render('create', [
         'model' => $model,
     ]);
 }
-//
-// public function actionSignup()
-//     {
-//         $model = new Profesor();
-//         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//             // Crear un nuevo registro en la tabla user con el username y password_hash del profesor
-//             $user = new User();
-//             $user->username = $model->username;
-//             $user->email = $model->CORREO;
-//             $user->password_hash = $model->password_hash;
-//             $user->auth_key = $model->auth_key;
-//             $user->verification_token = $model->verification_token;
-//             $user->save();
-//             return $this->redirect(['view', 'id' => $model->id]);
-//         } else {
-//             return $this->render('signup', [
-//                 'model' => $model,
-//             ]);
-//         }
-//     }
 
 }

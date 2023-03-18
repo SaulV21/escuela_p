@@ -17,31 +17,20 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!-- <?= $form->field($model, 'ALUMNO')->textInput(['maxlength' => true]) ?> -->
+    <!-- Lista de alumnos -->
     <?= $form->field($model, 'ALUMNO')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Alumnos::find()->all(),'ALUMNO',  function ($model) {
-        return $model['NOMBRES'] .' '. $model['APELLIDOS'];
-    }),
+    'data' => ArrayHelper::map(Alumnos::findBySql("SELECT a.alumno, CONCAT(a.nombres, ' ', a.apellidos) AS nombres_apellidos FROM alumnos a INNER JOIN matriculas m ON a.alumno = m.alumno")->asArray()->all(), 'alumno', 'nombres_apellidos'),
     'language' => 'en',
     'options' => ['placeholder' => 'Seleccione el alumno'],
     'pluginOptions' => [
         'allowClear' => true
     ],
-]);?>
-    <!-- <?= $form->field($model, 'CURSO')->textInput(['maxlength' => true]) ?> -->
-    <?= $form->field($model, 'CURSO')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Cursos::find()->all(),'CURSO',  function ($model) {
-        return $model['DESCRIPCION'];
-    }),
-    'language' => 'en',
-    'options' => ['placeholder' => 'Seleccione el curso'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);?>
-    <?= $form->field($model, 'MATRICULA')->textInput() ?>
+]); ?>
+
+  
+    <!-- <?= $form->field($model, 'MATRICULA')->textInput() ?> -->
    
-    <!-- <?= $form->field($model, 'fecha')->textInput() ?> -->
+    <!-- Fecha -->
     <?=$form->field($model, 'fecha')->textInput(['readonly' => true, 'value' => date('Y-m-d')])?>
 
     <!-- <?= $form->field($model, 'asiste')->textInput(['maxlength' => true]) ?> -->
