@@ -32,7 +32,7 @@ class MateriacursoController extends Controller
     }
 
          //BUSCAR DATOS MATERIAxCURSO
-public function actionBuscar($mat)
+public function actionBuscarmxc($mat)
 {
 
     $model=MateriaCurso::find()->select(["MATERIA","PROFESOR","PERIODO"])
@@ -40,7 +40,7 @@ public function actionBuscar($mat)
     return json_encode($model);
 }
 
-public function actionListar()
+public function actionListmxc()
 {
     $model=MateriaCurso::find()->select(["MATERIA","PROFESOR","PERIODO"])
     ->asArray()->all();

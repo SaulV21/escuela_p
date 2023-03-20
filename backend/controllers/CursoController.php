@@ -32,17 +32,15 @@ class CursoController extends Controller
     }
 
     //BUSCAR DATOS CURSO
-public function actionBuscar($cur)
+public function actionBuscarcur($cur)
 {
-    // if (Yii::$app->user->isGuest) {
-    //     return $this->redirect(['site/login']);
-    // }
+   
     $model=Cursos::find()->select(["CUPO","INICIAL","CICLO","ESPECIALIDAD","DESCRIPCION","PROMOVIDO"])
         ->where(["CURSO"=>$cur])->asArray()->one();
     return json_encode($model);
 }
 
-public function actionListar()
+public function actionListarcursos()
 {
     $model=Cursos::find()->select(["CUPO","INICIAL","CICLO","ESPECIALIDAD","DESCRIPCION","PROMOVIDO"])
     ->asArray()->all();

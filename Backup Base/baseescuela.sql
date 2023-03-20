@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-03-2023 a las 00:10:03
+-- Tiempo de generación: 20-03-2023 a las 21:55:18
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -330,7 +330,6 @@ INSERT INTO `aopres` (`pork`, `psoono`, `conrax`, `apesss`) VALUES
 
 CREATE TABLE `asistencia` (
   `ALUMNO` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `CURSO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `MATRICULA` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `asiste` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT 'SI'
@@ -340,9 +339,12 @@ CREATE TABLE `asistencia` (
 -- Volcado de datos para la tabla `asistencia`
 --
 
-INSERT INTO `asistencia` (`ALUMNO`, `CURSO`, `MATRICULA`, `fecha`, `asiste`) VALUES
-('UEC-1', 'CUARTO EGB', 1, '2023-02-10', 'SI'),
-('UEC-10', 'DECIMO', 2, '2023-03-03', 'SI');
+INSERT INTO `asistencia` (`ALUMNO`, `MATRICULA`, `fecha`, `asiste`) VALUES
+('UEC-1', 1, '2023-02-10', 'NO'),
+('UEC-10', 2, '2023-03-03', 'SI'),
+('UEC-100', 3, '2023-03-17', 'SI'),
+('UEC-101', 6, '2023-03-17', 'SI'),
+('UEC-102', 5, '2023-03-20', 'SI');
 
 -- --------------------------------------------------------
 
@@ -464,6 +466,15 @@ CREATE TABLE `materiasxcurso` (
   `PERIODO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `materiasxcurso`
+--
+
+INSERT INTO `materiasxcurso` (`CURSO`, `MATERIA`, `PROFESOR`, `PERIODO`) VALUES
+('CUARTO EGB', 'MATE', 'PROF-05', '2024-2025'),
+('CUARTO EGB', 'BIBGU', 'PROF-1', '2024-2025'),
+('DECIMO', 'BIBGU', 'PROF-1', '2024-2025');
+
 -- --------------------------------------------------------
 
 --
@@ -489,7 +500,13 @@ CREATE TABLE `matriculas` (
 
 INSERT INTO `matriculas` (`NUMEROMATRICULA`, `ALUMNO`, `PERIODO`, `CURSO`, `CICLO`, `ESPECIALIDAD`, `FECHA`, `OBSERVACION`, `REFERENCIA`, `SYSRES`) VALUES
 (1, 'UEC-1', '2023-2024', 'CUARTO EGB', 'DIVERSIFICADO', 'GENERAL UNIFICADO', '2023-02-10', 'n', '', ''),
-(2, 'UEC-10', '2024-2025', 'DECIMO', 'DIVERSIFICADO', 'prompt', '2023-03-28', 'n', '', '');
+(2, 'UEC-10', '2024-2025', 'DECIMO', 'DIVERSIFICADO', 'prompt', '2023-03-28', 'n', '', ''),
+(3, 'UEC-100', '2024-2025', 'DECIMO', 'DIVERSIFICADO', 'GENERAL UNIFICADO TECNICO', '2023-03-13', '', '', ''),
+(5, 'UEC-102', '2024-2025', 'DECIMO', 'BASICO', 'GENERAL UNIFICADO', '2023-03-17', '', '', ''),
+(6, 'UEC-101', '2024-2025', 'CUARTO EGB', 'DIVERSIFICADO', 'GENERAL UNIFICADO', '2023-03-17', '', '', ''),
+(7, 'UEC-104', '2024-2025', 'DECIMO', 'DIVERSIFICADO', 'GENERAL UNIFICADO TECNICO', '2023-03-17', '', '', ''),
+(11, 'UEC-108', '2024-2025', 'CUARTO EGB', 'DIVERSIFICADO', 'prompt', '2023-03-17', '', '', ''),
+(12, 'UEC-113', '2024-2025', 'DECIMO', 'DIVERSIFICADO', 'GENERAL UNIFICADO TECNICO', '2023-03-17', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -518,8 +535,10 @@ CREATE TABLE `matricula_detalle` (
 --
 
 INSERT INTO `matricula_detalle` (`MATRICULA`, `MATERIA`, `QUIM1`, `QUIM2`, `TOTAL`, `PROMF`, `EQUIV`, `SUM_TOT`, `PROM_GE`, `SUPLETORIO`, `REMEDIAL`, `GRACIA`, `PROMOCION`) VALUES
-(1, 'BIBGU', '0.00', '0.00', '0.00', '0.00', '8', '8.00', '8.00', '0.00', '0.00', '0.00', ''),
-(1, 'MATE', '0.00', '0.00', '0.00', '0.00', '8', '8.00', '8.00', '0.00', '0.00', '0.00', '');
+(1, 'BIBGU', '8.00', '8.00', '9.00', '8.50', '8', '8.25', '8.00', '0.00', '0.00', '0.00', 'APRUEBA'),
+(1, 'MATE', '0.00', '0.00', '0.00', '0.00', '8', '8.00', '8.00', '0.00', '0.00', '0.00', ''),
+(2, 'BIBGU', '0.00', '0.00', '0.00', '0.00', '10', '10.00', '10.00', '0.00', '0.00', '0.00', ''),
+(2, 'MATE', '8.00', '8.00', '9.00', '8.50', '8', '8.25', '8.00', '0.00', '0.00', '0.00', 'APRUEBA');
 
 -- --------------------------------------------------------
 
@@ -567,8 +586,12 @@ CREATE TABLE `notasql` (
 --
 
 INSERT INTO `notasql` (`ID_NOTAS`, `MATRICULA`, `MATERIA`, `P1Q1`, `P2Q1`, `EQUIV80`, `EV_QUIM`, `EQUIV20`, `PROM_QUI`, `EQ_CUAL`, `COMP`, `NF`) VALUES
-(1, 1, 'MATE', '9', '10', '80', '10', '20', '10', 'DAR', 'A', '10'),
-(2, 1, 'BIBGU', '8', '8', '65', '8', '15', '8', 'AAR', 'B', '8');
+(1, 1, 'MATE', '8', '10', '80', '80', '20', '10', 'AAR', 'A', '9'),
+(2, 1, 'BIBGU', '8', '8', '65', '8', '15', '8', 'AAR', 'B', '8'),
+(3, 3, 'MATE', '9', '10', '80', '10', '20', '10', 'DAR', 'A', '10'),
+(4, 2, 'MATE', '9', '10', '80', '10', '20', '10', 'DAR', 'A', '10'),
+(5, 3, 'BIBGU', '9', '10', '80', '10', '20', '10', 'DAR', 'A', '10'),
+(6, 5, 'BIBGU', '9', '10', '80', '10', '20', '10', 'DAR', 'A', '10');
 
 -- --------------------------------------------------------
 
@@ -680,8 +703,11 @@ CREATE TABLE `profesores` (
 --
 
 INSERT INTO `profesores` (`PROFESOR`, `CEDULA`, `NOMBRES`, `DESCRIPCION`, `DIRECCION`, `TELEFONO`, `FECHA_NACIMIENTO`, `FOTO`, `CORREO`, `CLAVE`, `HOJAVIDA`, `AREA`, `ESTADO`) VALUES
-('PROF-1', '0302164397', 'Carolina Aguaiza', 'Breve descripción del profesor para su publicación en el sitio principal máximo 40 palabras', 'Calle Chimborazo', '0983942626', '1992-12-08', NULL, 'adyverdugo@hotmail.com', '12345', NULL, 'Lengua Extranjera', 'ACTIVO'),
-('PROF-2', '030216439', 'prueba', 'as', '', '', NULL, NULL, '', '', NULL, '', 'INACTIVO'),
+('PROF-03', '0123456789', 'prueba', '', '', '', '2023-03-02', 0x75706c6f6164732f363430626130653330353233342e706e67, 'asas@gmail.com', '1234profesor', 0x686f6a61766964612f363430626130653330353234352e706466, '', 'prompt'),
+('PROF-04', '0123456366', 'prueba2', '', '', '', '2023-03-02', 0x75706c6f6164732f363430626133393661333930372e706e67, 'prueba2@gmail.com', 'admin1234', 0x686f6a61766964612f363430626133393661333931382e706466, '', 'prompt'),
+('PROF-05', '0102456678', 'Juan', 'as', 'Cuenca', '', NULL, 0x75706c6f6164732f363431306436636534333664352e6a7067, 'prueba@gmailcom', 'prueba1245', 0x686f6a61766964612f363431306436636534333666312e706466, '', 'ACTIVO'),
+('PROF-06', '0102020345', 'Luis Vega', '', '', '', '1983-03-01', 0x75706c6f6164732f363431306463383465646332302e706e67, 'luisve@gmail.com', 'luisveg1234', 0x686f6a61766964612f363431306463383465646333312e706466, '', 'ACTIVO'),
+('PROF-1', '0302164397', 'Carolina Aguaiza', 'Breve descripción del profesor para su publicación en el sitio principal máximo 40 palabras', 'Calle Chimborazo', '0983942626', '1992-12-08', 0x75706c6f6164732f363430376262656637393166362e6a7067, 'adyverdugo@hotmail.com', '12345', 0x686f6a61766964612f363430376262656637393230342e706466, 'Lengua Extranjera', 'ACTIVO'),
 ('PROF-3', '0302164398', 'Martin', 'as', 'Cuenca', '7894554545', '1987-02-13', 0x75706c6f6164732f313637373838333631375f2e6a7067, 'martin@gmail.com', '12345', NULL, 'Lengua y Literatura', 'ACTIVO');
 
 -- --------------------------------------------------------
@@ -727,7 +753,10 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`) VALUES
 (6, 'Admin', 'AMIigvNCelKYUShRETBY3l7v3TaPXT23', '$2y$13$5hWeSzwxY9N78ENkxsTjP.4FqpZi9gVtMbs/i2tGCB5Pozjwvh.n.', NULL, 'claudio.velecela.est@tecazuay.edu.ec', 10, 1675282062, 1675282062, 'KfKoGwbrHR2y5qiAoq8ZoYhSuf_gzZwy_1675282062'),
 (7, 'Admin2', 'cAh2p9hCCLDWiUQExaxEAj2T0Gk_JyeM', '$2y$13$AEHWBQ.WOO4Y2yBzkgf8S.peTVHaanRgLr7uq7GOQcpwXeEIFC7H.', NULL, 'admin@apecs.com', 10, 1675282185, 1675282185, 'xyh8n03UFF25xADMcf1RHoowa9pSGq_6_1675282185'),
-(8, 'Admin3', 'yCTzJY745BckTpWldTT_HkEr-73K4HLe', '$2y$13$e5nxFe/1bVCJBHngKrYnw.zclt4ul7TGJgvLT.qnPYdrkBFKx8Imu', NULL, 'admin@apecs3.com', 10, 1675461681, 1675461681, '1AfVJQyODNnNxXVVjo4eSHptYLhCJw-P_1675461681');
+(8, 'Admin3', 'yCTzJY745BckTpWldTT_HkEr-73K4HLe', '$2y$13$e5nxFe/1bVCJBHngKrYnw.zclt4ul7TGJgvLT.qnPYdrkBFKx8Imu', NULL, 'admin@apecs3.com', 10, 1675461681, 1675461681, '1AfVJQyODNnNxXVVjo4eSHptYLhCJw-P_1675461681'),
+(9, '0123456366', ';<?UQ?+U?L??Άv?Zf?l??:\r|??P?', '$2y$13$4KcQVNcGqVK7dyAXBj1q7ufAK/su7p0rFevslPg0C17Yk2GtDyPGC', NULL, 'prueba2@gmail.com', 10, 1678484375, 1678484375, '?,\005??1r;??????fj\"??ׄe_1678484375'),
+(10, '0102456678', '1?]KP??hWa\0?s*???jS??X`w\r)9?Ϙ}s', '$2y$13$GJVTqY5i.RBvVWtbX9d0FOjng1yV23RY76cwYxzg07PvTSquStxOu', NULL, 'prueba@gmailcom', 10, 1678486666, 1678486666, '\n???.+F???K?i?~??\0!?ń6\'??_1678486666'),
+(11, '0102020345', 'uIy}lj?S?&@?s????i6??z?@?', '$2y$13$GDm1k71l.rYcH7HRSQnaluLOJvI.AbJcPlcJszPvwVOXgX0ZCxZbe', NULL, 'luisve@gmail.com', 10, 1678826602, 1678826629, 'sO?????/?????8?0?/E??+??is?_1678826602');
 
 --
 -- Índices para tablas volcadas
@@ -751,10 +780,7 @@ ALTER TABLE `aopres`
 -- Indices de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD PRIMARY KEY (`ALUMNO`,`CURSO`),
-  ADD KEY `fk_alum_idx` (`ALUMNO`),
-  ADD KEY `fk_cur_idx` (`CURSO`),
-  ADD KEY `matricula` (`MATRICULA`);
+  ADD PRIMARY KEY (`ALUMNO`);
 
 --
 -- Indices de la tabla `clubxprofesor`
@@ -878,13 +904,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
-  MODIFY `NUMEROMATRICULA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `NUMEROMATRICULA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `notasql`
 --
 ALTER TABLE `notasql`
-  MODIFY `ID_NOTAS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_NOTAS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `noticias`
@@ -896,7 +922,7 @@ ALTER TABLE `noticias`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas
@@ -906,8 +932,7 @@ ALTER TABLE `user`
 -- Filtros para la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`ALUMNO`) REFERENCES `alumnos` (`ALUMNO`),
-  ADD CONSTRAINT `matricula` FOREIGN KEY (`MATRICULA`) REFERENCES `matriculas` (`NUMEROMATRICULA`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`ALUMNO`) REFERENCES `alumnos` (`ALUMNO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `materiasxcurso`

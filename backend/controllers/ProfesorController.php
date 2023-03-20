@@ -35,7 +35,7 @@ class ProfesorController extends Controller
     }
 //apirest
 //BUSCAR DATOS PROFESOR
-public function actionBuscar($prof)
+public function actionBuscarprof($prof)
 {
     // if (Yii::$app->user->isGuest) {
     //     return $this->redirect(['site/login']);
@@ -45,7 +45,7 @@ public function actionBuscar($prof)
     return json_encode($model);
 }
 
-public function actionListar()
+public function actionListarprof()
 {
     $model=Profesor::find()->select(["CEDULA","NOMBRES","DESCRIPCION","DIRECCION","TELEFONO","FECHA_NACIMIENTO","FOTO","CORREO","CLAVE","HOJAVIDA","AREA","ESTADO"])
     ->asArray()->all();

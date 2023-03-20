@@ -32,7 +32,7 @@ class MateriaController extends Controller
     }
 
      //BUSCAR DATOS MATERIA
-public function actionBuscar($mat)
+public function actionBuscarmat($mat)
 {
 
     $model=Materias::find()->select(["NOMBRE","DESCRIPCION","HORAS","NIVEL","TIPO","ABREVIATURA","PRIORIDAD","AREA"])
@@ -40,7 +40,7 @@ public function actionBuscar($mat)
     return json_encode($model);
 }
 
-public function actionListar()
+public function actionListarmat()
 {
     $model=Materias::find()->select(["NOMBRE","DESCRIPCION","HORAS","NIVEL","TIPO","ABREVIATURA","PRIORIDAD","AREA"])
     ->asArray()->all();

@@ -74,13 +74,13 @@ public function actionCrear()
     }
 }
 ///////////
-public function actionActualizar($alum, $cur)
+public function actionActualizar($alum, $mat)
 {
     $request = Yii::$app->request;
     $response = Yii::$app->response;
     $response->format = Response::FORMAT_JSON;
 
-    $model = $this->findModel($alum, $cur);
+    $model = $this->findModel($alum, $mat);
 
     if ($request->isPut) {
         $data = json_decode($request->getRawBody(), true);

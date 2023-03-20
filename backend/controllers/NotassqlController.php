@@ -23,14 +23,14 @@ class NotassqlController extends \yii\web\Controller
         return $this->render('index');
     }
 //BUSCAR DATOS notas
-public function actionBuscar($nota)
+public function actionBuscarnot($nota)
 {
     $model=Notasql::find()->select(["MATRICULA","MATERIA","P1Q1","P2Q1","EQUIV80","EV_QUIM","EQUIV20","PROM_QUI","EQ_CUAL","COMP","NF"])
         ->where(["ID_NOTAS"=>$nota])->asArray()->one();
     return json_encode($model);
 }
 
-public function actionListar()
+public function actionListarnot()
 {
     $model=Notasql::find()->select(["MATRICULA","MATERIA","P1Q1","P2Q1","EQUIV80","EV_QUIM","EQUIV20","PROM_QUI","EQ_CUAL","COMP","NF"])
     ->asArray()->all();
@@ -38,7 +38,7 @@ public function actionListar()
 }
 
 ////////////
-public function actionCrear()
+public function actionCrearnot()
 {
     $request = Yii::$app->request;
     $response = Yii::$app->response;
@@ -73,7 +73,7 @@ public function actionCrear()
     }
 }
 ///////////
-public function actionActualizar($matri, $mate)
+public function actionActualizarnot($matri, $mate)
 {
     $request = Yii::$app->request;
     $response = Yii::$app->response;

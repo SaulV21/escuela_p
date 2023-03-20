@@ -20,14 +20,14 @@ class NotasController extends \yii\web\Controller
     }
 
     //BUSCAR DATOS notas
-public function actionBuscar($not)
+public function actionBuscarnf($not)
 {
     $model=Notas::find()->select(["MATRICULA","MATERIA","QUIM1","QUIM2","TOTAL","PROMF","EQUIV","SUM_TOT","PROM_GE","SUPLETORIO","REMEDIAL","GRACIA","PROMOCION"])
         ->where(["MATRICULA"=>$not])->asArray()->one();
     return json_encode($model);
 }
 
-public function actionListar()
+public function actionListarnf()
 {
     $model=Notas::find()->select(["MATRICULA","MATERIA","QUIM1","QUIM2","TOTAL","PROMF","EQUIV","SUM_TOT","PROM_GE","SUPLETORIO","REMEDIAL","GRACIA","PROMOCION"])
     ->asArray()->all();

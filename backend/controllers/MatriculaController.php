@@ -35,7 +35,7 @@ class MatriculaController extends Controller
     }
 
     //BUSCAR DATOS MATRICULA
-public function actionBuscar($matri)
+public function actionBuscarmatri($matri)
 {
 
     $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
@@ -43,7 +43,7 @@ public function actionBuscar($matri)
     return json_encode($model);
 }
 
-public function actionListar()
+public function actionListarmatri()
 {
     $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
     ->asArray()->all();
