@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Registro de Asistencia';
+$this->title = 'Registro de Asistencia ' . $dataProvider->getModels()[0]["CURSO"];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="view-asistencia-index">
@@ -22,10 +22,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'ALUMNO',
-            'CURSO',
-            'NOMBRES',
+           // 'CURSO',
             'APELLIDOS',
-            'asistencia',
+            'NOMBRES',
+
+            //'asistencia',
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                 'checkboxOptions' => function($model, $key, $index, $column) {
+     return ['checked' => true];}
+            ]
+            ,
+
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, ViewAsistencia $model, $key, $index, $column) {
