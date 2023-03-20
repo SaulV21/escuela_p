@@ -13,31 +13,15 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'id' => 'matri',
     ]); ?>
 
-    <?= $form->field($model, 'NUMEROMATRICULA') ?>
+<?= $form->field($model, 'globalSearch')->textInput(['style' => 'width: 39%;']) ?> 
 
-    <?= $form->field($model, 'ALUMNO') ?>
-
-    <?= $form->field($model, 'PERIODO') ?>
-
-    <?= $form->field($model, 'CURSO') ?>
-
-    <?= $form->field($model, 'CICLO') ?>
-
-    <?php // echo $form->field($model, 'ESPECIALIDAD') ?>
-
-    <?php // echo $form->field($model, 'FECHA') ?>
-
-    <?php // echo $form->field($model, 'OBSERVACION') ?>
-
-    <?php // echo $form->field($model, 'REFERENCIA') ?>
-
-    <?php // echo $form->field($model, 'SYSRES') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+    <div class="form-group" style="margin-top: 10px;">
+        <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
+        <?= Html::button('Borrar', ['class' => 'btn btn-outline-secondary',
+        'onclick' => '$("#' . $form->id . '").find("input[type=text]").val("").end().submit();']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -86,6 +86,7 @@ class Alumnos extends \yii\db\ActiveRecord
     {
         return [
             'ALUMNO' => 'ID',
+            'globalSearch'=>'BUSCAR:',
             'CEDULA' => 'Cedula',
             'NOMBRES' => 'Nombres',
             'APELLIDOS' => 'Apellidos',

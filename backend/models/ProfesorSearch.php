@@ -11,13 +11,14 @@ use backend\models\Profesor;
  */
 class ProfesorSearch extends Profesor
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['PROFESOR', 'CEDULA', 'NOMBRES', 'DESCRIPCION', 'DIRECCION', 'TELEFONO', 'FECHA_NACIMIENTO', 'FOTO', 'CORREO', 'CLAVE', 'HOJAVIDA', 'AREA', 'ESTADO'], 'safe'],
+            [['PROFESOR', 'globalSearch', 'CEDULA', 'NOMBRES', 'DESCRIPCION', 'DIRECCION', 'TELEFONO', 'FECHA_NACIMIENTO', 'FOTO', 'CORREO', 'CLAVE', 'HOJAVIDA', 'AREA', 'ESTADO'], 'safe'],
         ];
     }
 
@@ -56,22 +57,22 @@ class ProfesorSearch extends Profesor
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'FECHA_NACIMIENTO' => $this->FECHA_NACIMIENTO,
+        $query->orFilterWhere([
+            'FECHA_NACIMIENTO' => $this->globalSearch,
         ]);
 
-        $query->andFilterWhere(['like', 'PROFESOR', $this->PROFESOR])
-            ->andFilterWhere(['like', 'CEDULA', $this->CEDULA])
-            ->andFilterWhere(['like', 'NOMBRES', $this->NOMBRES])
-            ->andFilterWhere(['like', 'DESCRIPCION', $this->DESCRIPCION])
-            ->andFilterWhere(['like', 'DIRECCION', $this->DIRECCION])
-            ->andFilterWhere(['like', 'TELEFONO', $this->TELEFONO])
-            ->andFilterWhere(['like', 'FOTO', $this->FOTO])
-            ->andFilterWhere(['like', 'CORREO', $this->CORREO])
-            ->andFilterWhere(['like', 'CLAVE', $this->CLAVE])
-            ->andFilterWhere(['like', 'HOJAVIDA', $this->HOJAVIDA])
-            ->andFilterWhere(['like', 'AREA', $this->AREA])
-            ->andFilterWhere(['like', 'ESTADO', $this->ESTADO]);
+        $query->orFilterWhere(['like', 'PROFESOR', $this->globalSearch])
+            ->orFilterWhere(['like', 'CEDULA', $this->globalSearch])
+            ->orFilterWhere(['like', 'NOMBRES', $this->globalSearch])
+            ->orFilterWhere(['like', 'DESCRIPCION', $this->globalSearch])
+            ->orFilterWhere(['like', 'DIRECCION', $this->globalSearch])
+            ->orFilterWhere(['like', 'TELEFONO', $this->globalSearch])
+            ->orFilterWhere(['like', 'FOTO', $this->globalSearch])
+            ->orFilterWhere(['like', 'CORREO', $this->globalSearch])
+            ->orFilterWhere(['like', 'CLAVE', $this->globalSearch])
+            ->orFilterWhere(['like', 'HOJAVIDA', $this->globalSearch])
+            ->orFilterWhere(['like', 'AREA', $this->globalSearch])
+            ->orFilterWhere(['like', 'ESTADO', $this->globalSearch]);
 
         return $dataProvider;
     }

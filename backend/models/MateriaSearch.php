@@ -11,13 +11,14 @@ use backend\models\Materias;
  */
 class MateriaSearch extends Materias
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['MATERIA', 'NOMBRE', 'DESCRIPCION', 'NIVEL', 'TIPO', 'ABREVIATURA', 'AREA'], 'safe'],
+            [['MATERIA', 'globalSearch', 'NOMBRE', 'DESCRIPCION', 'NIVEL', 'TIPO', 'ABREVIATURA', 'AREA'], 'safe'],
             [['HORAS', 'PRIORIDAD'], 'integer'],
         ];
     }
@@ -57,18 +58,18 @@ class MateriaSearch extends Materias
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'HORAS' => $this->HORAS,
-            'PRIORIDAD' => $this->PRIORIDAD,
+        $query->orFilterWhere([
+            'HORAS' => $this->globalSearch,
+            'PRIORIDAD' => $this->globalSearch,
         ]);
 
-        $query->andFilterWhere(['like', 'MATERIA', $this->MATERIA])
-            ->andFilterWhere(['like', 'NOMBRE', $this->NOMBRE])
-            ->andFilterWhere(['like', 'DESCRIPCION', $this->DESCRIPCION])
-            ->andFilterWhere(['like', 'NIVEL', $this->NIVEL])
-            ->andFilterWhere(['like', 'TIPO', $this->TIPO])
-            ->andFilterWhere(['like', 'ABREVIATURA', $this->ABREVIATURA])
-            ->andFilterWhere(['like', 'AREA', $this->AREA]);
+        $query->orFilterWhere(['like', 'MATERIA', $this->globalSearch])
+            ->orFilterWhere(['like', 'NOMBRE', $this->globalSearch])
+            ->orFilterWhere(['like', 'DESCRIPCION', $this->globalSearch])
+            ->orFilterWhere(['like', 'NIVEL', $this->globalSearch])
+            ->orFilterWhere(['like', 'TIPO', $this->globalSearch])
+            ->orFilterWhere(['like', 'ABREVIATURA', $this->globalSearch])
+            ->orFilterWhere(['like', 'AREA', $this->globalSearch]);
 
         return $dataProvider;
     }

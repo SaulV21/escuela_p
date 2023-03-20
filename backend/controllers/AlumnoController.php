@@ -51,9 +51,7 @@ class AlumnoController extends Controller
 //BUSCAR DATOS ALUMNO
 public function actionBuscar($est)
 {
-    // if (Yii::$app->user->isGuest) {
-    //     return $this->redirect(['site/login']);
-    // }
+
     $model=Alumnos::find()->select(["CEDULA","NOMBRES","APELLIDOS","FECHA_NACIMIENTO","CIUDAD_NACIMIENTO","SEXO","PADRE","PROFESION_PADRE","MADRE","PROFESION_MADRE","CIUDADRES","DIRECCION","TELEFONO","CONTACTO","REFERENCIA","CORREO","FOTO","SISRES","SISFECHA","CSLTKO"])
         ->where(["ALUMNO"=>$est])->asArray()->one();
     return json_encode($model);
@@ -66,62 +64,62 @@ public function actionListar()
     return json_encode($model);
 }
 
-public function actionCrear()
-{
-    $model = new Alumno();
-
-    $model->load(Yii::$app->request->post(), '');
-
-    if ($model->save()) {
-        Yii::$app->response->statusCode = 201; // Created
-        return [
-            'status' => 'success',
-            'message' => 'Alumno creado exitosamente',
-            'data' => $model,
-        ];
-    } else {
-        Yii::$app->response->statusCode = 400; // Bad Request
-        return [
-            'status' => 'error',
-            'message' => 'No se pudo crear el alumno',
-            'errors' => $model->errors,
-        ];
-    }
-}
-
 // public function actionCrear()
-//     {
-//         $request = Yii::$app->request;
-//         $response = Yii::$app->response;
-//         $response->format = Response::FORMAT_JSON;
+// {
+//     $model = new Alumno();
 
-//         if ($request->isPost) {
-//             $data = json_decode($request->getRawBody(), true);
-//             $model = new Alumnos();
-//             $model->attributes = $data;
-//             if ($model->validate() && $model->save()) {
-//                 $response->statusCode = 201; // Created
-//                 return [
-//                     'status' => 'success',
-//                     'message' => 'Alumno creado exitosamente',
-//                     'data' => $model,
-//                 ];
-//             } else {
-//                 $response->statusCode = 400; // Bad Request
-//                 return [
-//                     'status' => 'error',
-//                     'message' => 'No se pudo crear el alumno',
-//                     'errors' => $model->errors,
-//                 ];
-//             }
-//         } else {
-//             $response->statusCode = 405; // Method Not Allowed
-//             return [
-//                 'status' => 'error',
-//                 'message' => 'Sólo se permiten solicitudes POST en esta acción',
-//             ];
-//         }
+//     $model->load(Yii::$app->request->post(), '');
+
+//     if ($model->save()) {
+//         Yii::$app->response->statusCode = 201; // Created
+//         return [
+//             'status' => 'success',
+//             'message' => 'Alumno creado exitosamente',
+//             'data' => $model,
+//         ];
+//     } else {
+//         Yii::$app->response->statusCode = 400; // Bad Request
+//         return [
+//             'status' => 'error',
+//             'message' => 'No se pudo crear el alumno',
+//             'errors' => $model->errors,
+//         ];
 //     }
+// }
+
+public function actionCrear()
+    {
+        $request = Yii::$app->request;
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+
+        if ($request->isPost) {
+            $data = json_decode($request->getRawBody(), true);
+            $model = new Alumnos();
+            $model->attributes = $data;
+            if ($model->validate() && $model->save()) {
+                $response->statusCode = 201; // Created
+                return [
+                    'status' => 'success',
+                    'message' => 'Alumno creado exitosamente',
+                    'data' => $model,
+                ];
+            } else {
+                $response->statusCode = 400; // Bad Request
+                return [
+                    'status' => 'error',
+                    'message' => 'No se pudo crear el alumno',
+                    'errors' => $model->errors,
+                ];
+            }
+        } else {
+            $response->statusCode = 405; // Method Not Allowed
+            return [
+                'status' => 'error',
+                'message' => 'Sólo se permiten solicitudes POST en esta acción',
+            ];
+        }
+    }
     /**
      * Displays a single Alumnos model.
      * @param string $ALUMNO Alumno

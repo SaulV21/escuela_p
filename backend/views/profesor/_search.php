@@ -13,37 +13,15 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'id' => 'prof',
     ]); ?>
 
-    <?= $form->field($model, 'PROFESOR') ?>
+<?= $form->field($model, 'globalSearch')->textInput(['style' => 'width: 37%;']) ?> 
 
-    <?= $form->field($model, 'CEDULA') ?>
-
-    <?= $form->field($model, 'NOMBRES') ?>
-
-    <?php // echo $form->field($model, 'DESCRIPCION') ?> 
-
-    <?= $form->field($model, 'DIRECCION') ?>
-
-    <?php // echo $form->field($model, 'TELEFONO') ?>
-
-    <?php // echo $form->field($model, 'FECHA_NACIMIENTO') ?>
-
-    <?php  $form->field($model, 'FOTO') ?>
-
-    <?php // echo $form->field($model, 'CORREO') ?>
-
-    <?php // echo $form->field($model, 'CLAVE') ?>
-
-    <?php // echo $form->field($model, 'HOJAVIDA') ?>
-
-    <?php // echo $form->field($model, 'AREA') ?>
-
-    <?php // echo $form->field($model, 'ESTADO') ?>
-
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 10px;">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Limpiar', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::button('Borrar', ['class' => 'btn btn-outline-secondary',
+        'onclick' => '$("#' . $form->id . '").find("input[type=text]").val("").end().submit();']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

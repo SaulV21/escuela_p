@@ -13,29 +13,14 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'id' => 'mat',
     ]); ?>
 
-    <?= $form->field($model, 'MATERIA') ?>
-
-    <?= $form->field($model, 'NOMBRE') ?>
-
-    <?= $form->field($model, 'DESCRIPCION') ?>
-
-    <?= $form->field($model, 'HORAS') ?>
-
-    <?= $form->field($model, 'NIVEL') ?>
-
-    <?php // echo $form->field($model, 'TIPO') ?>
-
-    <?php // echo $form->field($model, 'ABREVIATURA') ?>
-
-    <?php // echo $form->field($model, 'PRIORIDAD') ?>
-
-    <?php // echo $form->field($model, 'AREA') ?>
-
-    <div class="form-group">
+    <?= $form->field($model, 'globalSearch')->textInput(['style' => 'width: 30%;']) ?> 
+    <div class="form-group" style="margin-top: 10px;">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::button('Borrar', ['class' => 'btn btn-outline-secondary',
+        'onclick' => '$("#' . $form->id . '").find("input[type=text]").val("").end().submit();']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

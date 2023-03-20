@@ -73,6 +73,7 @@ class Profesor extends \yii\db\ActiveRecord
         return [
             'PROFESOR' => 'Profesor',
             'CEDULA' => 'Cédula',
+            'globalSearch'=>'BUSCAR:',
             'NOMBRES' => 'Nombres y Apellidos',
             'DESCRIPCION' => 'Descripción',
             'DIRECCION' => 'Dirección',

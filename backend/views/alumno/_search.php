@@ -9,58 +9,19 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="alumnos-search">
-<?= $form->field($model, 'globalSearch') ?>
+
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'id' => 'alum',
     ]); ?>
 
+<?= $form->field($model, 'globalSearch')->textInput(['style' => 'width: 39%;']) ?>
 
-    <!-- <?= $form->field($model, 'ALUMNO') ?>
-
-    <?= $form->field($model, 'CEDULA') ?>
-
-    <?= $form->field($model, 'NOMBRES') ?>
-
-    <?= $form->field($model, 'APELLIDOS') ?>
-
-    <?= $form->field($model, 'FECHA_NACIMIENTO') ?> -->
-
-    <?php // echo $form->field($model, 'CIUDAD_NACIMIENTO') ?>
-
-    <?php // echo $form->field($model, 'SEXO') ?>
-
-    <?php // echo $form->field($model, 'PADRE') ?>
-
-    <?php // echo $form->field($model, 'PROFESION_PADRE') ?>
-
-    <?php // echo $form->field($model, 'MADRE') ?>
-
-    <?php // echo $form->field($model, 'PROFESION_MADRE') ?>
-
-    <?php // echo $form->field($model, 'CIUDADRES') ?>
-
-    <?php // echo $form->field($model, 'DIRECCION') ?>
-
-    <?php // echo $form->field($model, 'TELEFONO') ?>
-
-    <?php // echo $form->field($model, 'CONTACTO') ?>
-
-    <?php // echo $form->field($model, 'REFERENCIA') ?>
-
-    <?php // echo $form->field($model, 'CORREO') ?>
-
-    <?php // echo $form->field($model, 'FOTO') ?>
-
-    <?php // echo $form->field($model, 'SISRES') ?>
-
-    <?php // echo $form->field($model, 'SISFECHA') ?>
-
-    <?php // echo $form->field($model, 'CSLTKO') ?>
-
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 10px;">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Limpiar', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::button('Borrar', ['class' => 'btn btn-outline-secondary',
+        'onclick' => '$("#' . $form->id . '").find("input[type=text]").val("").end().submit();']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

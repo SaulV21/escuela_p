@@ -62,6 +62,7 @@ class Materias extends \yii\db\ActiveRecord
     {
         return [
             'MATERIA' => 'Materia',
+            'globalSearch'=>'BUSCAR:',
             'NOMBRE' => 'Nombre',
             'DESCRIPCION' => 'Descripcion',
             'HORAS' => 'Horas',

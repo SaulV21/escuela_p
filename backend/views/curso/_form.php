@@ -64,7 +64,10 @@ use yii\widgets\ActiveForm;
                 "promovido/a a SEPTIMO AÑO DE EDUCACIÓN GENERAL BASICA",
                 "promovido/a a OCTAVO AÑO DE EDUCACIÓN GENERAL BASICA",
                 "promovido/a a NOVENO AÑO DE EDUCACIÓN GENERAL BASICA",
-                "promovido/a a DÉCIMO AÑO DE EDUCACIÓN GENERAL BASICA"
+                "promovido/a a DÉCIMO AÑO DE EDUCACIÓN GENERAL BASICA",
+                "promovido/a a PRIMER AÑO DE BACHILLERATO",
+                "promovido/a a SEGUNDO AÑO DE BACHILLERATO",
+                "promovido/a a TERCER AÑO DE BACHILLERATO",
             ],
         ],
     ]) ?>

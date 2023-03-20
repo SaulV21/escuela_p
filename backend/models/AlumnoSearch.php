@@ -18,7 +18,7 @@ class AlumnoSearch extends Alumnos
     public function rules()
     {
         return [
-            [['ALUMNO', 'globalSearch','CEDULA', 'NOMBRES', 'APELLIDOS', 'FECHA_NACIMIENTO', 'CIUDAD_NACIMIENTO', 'SEXO', 'PADRE', 'PROFESION_PADRE', 'MADRE', 'PROFESION_MADRE', 'CIUDADRES', 'DIRECCION', 'TELEFONO', 'CONTACTO', 'REFERENCIA', 'CORREO', 'FOTO', 'SISRES', 'SISFECHA', 'CSLTKO'], 'safe'],
+            [['ALUMNO', 'globalSearch', 'CEDULA', 'NOMBRES', 'APELLIDOS', 'FECHA_NACIMIENTO', 'CIUDAD_NACIMIENTO', 'SEXO', 'PADRE', 'PROFESION_PADRE', 'MADRE', 'PROFESION_MADRE', 'CIUDADRES', 'DIRECCION', 'TELEFONO', 'CONTACTO', 'REFERENCIA', 'CORREO', 'FOTO', 'SISRES', 'SISFECHA', 'CSLTKO'], 'safe'],
         ];
     }
 
@@ -57,30 +57,30 @@ class AlumnoSearch extends Alumnos
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'FECHA_NACIMIENTO' => $this->FECHA_NACIMIENTO,
-            'SISFECHA' => $this->SISFECHA,
+        $query->orFilterWhere([
+            'FECHA_NACIMIENTO' => $this->globalSearch,
+            'SISFECHA' => $this->globalSearch,
         ]);
 
-        $query->andFilterWhere(['like', 'ALUMNO', $this->ALUMNO])
-            ->andFilterWhere(['like', 'CEDULA', $this->CEDULA])
-            ->andFilterWhere(['like', 'NOMBRES', $this->NOMBRES])
-            ->andFilterWhere(['like', 'APELLIDOS', $this->APELLIDOS])
-            ->andFilterWhere(['like', 'CIUDAD_NACIMIENTO', $this->CIUDAD_NACIMIENTO])
-            ->andFilterWhere(['like', 'SEXO', $this->SEXO])
-            ->andFilterWhere(['like', 'PADRE', $this->PADRE])
-            ->andFilterWhere(['like', 'PROFESION_PADRE', $this->PROFESION_PADRE])
-            ->andFilterWhere(['like', 'MADRE', $this->MADRE])
-            ->andFilterWhere(['like', 'PROFESION_MADRE', $this->PROFESION_MADRE])
-            ->andFilterWhere(['like', 'CIUDADRES', $this->CIUDADRES])
-            ->andFilterWhere(['like', 'DIRECCION', $this->DIRECCION])
-            ->andFilterWhere(['like', 'TELEFONO', $this->TELEFONO])
-            ->andFilterWhere(['like', 'CONTACTO', $this->CONTACTO])
-            ->andFilterWhere(['like', 'REFERENCIA', $this->REFERENCIA])
-            ->andFilterWhere(['like', 'CORREO', $this->CORREO])
-            ->andFilterWhere(['like', 'FOTO', $this->FOTO])
-            ->andFilterWhere(['like', 'SISRES', $this->SISRES])
-            ->andFilterWhere(['like', 'CSLTKO', $this->CSLTKO]);
+        $query->orFilterWhere(['like', 'ALUMNO', $this->globalSearch])
+            ->orFilterWhere(['like', 'CEDULA', $this->globalSearch])
+            ->orFilterWhere(['like', 'NOMBRES', $this->globalSearch])
+            ->orFilterWhere(['like', 'APELLIDOS', $this->globalSearch])
+            ->orFilterWhere(['like', 'CIUDAD_NACIMIENTO', $this->globalSearch])
+            ->orFilterWhere(['like', 'SEXO', $this->globalSearch])
+            ->orFilterWhere(['like', 'PADRE', $this->globalSearch])
+            ->orFilterWhere(['like', 'PROFESION_PADRE', $this->globalSearch])
+            ->orFilterWhere(['like', 'MADRE', $this->globalSearch])
+            ->orFilterWhere(['like', 'PROFESION_MADRE', $this->globalSearch])
+            ->orFilterWhere(['like', 'CIUDADRES', $this->globalSearch])
+            ->orFilterWhere(['like', 'DIRECCION', $this->globalSearch])
+            ->orFilterWhere(['like', 'TELEFONO', $this->globalSearch])
+            ->orFilterWhere(['like', 'CONTACTO', $this->globalSearch])
+            ->orFilterWhere(['like', 'REFERENCIA', $this->globalSearch])
+            ->orFilterWhere(['like', 'CORREO', $this->globalSearch])
+            ->orFilterWhere(['like', 'FOTO', $this->globalSearch])
+            ->orFilterWhere(['like', 'SISRES', $this->globalSearch])
+            ->orFilterWhere(['like', 'CSLTKO', $this->globalSearch]);
 
         return $dataProvider;
     }

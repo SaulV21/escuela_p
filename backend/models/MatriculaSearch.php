@@ -11,6 +11,7 @@ use backend\models\Matriculas;
  */
 class MatriculaSearch extends Matriculas
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class MatriculaSearch extends Matriculas
     {
         return [
             [['NUMEROMATRICULA'], 'integer'],
-            [['ALUMNO', 'PERIODO', 'CURSO', 'CICLO', 'ESPECIALIDAD', 'FECHA', 'OBSERVACION', 'REFERENCIA', 'SYSRES'], 'safe'],
+            [['ALUMNO', 'globalSearch', 'PERIODO', 'CURSO', 'CICLO', 'ESPECIALIDAD', 'FECHA', 'OBSERVACION', 'REFERENCIA', 'SYSRES'], 'safe'],
         ];
     }
 
@@ -57,19 +58,19 @@ class MatriculaSearch extends Matriculas
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'NUMEROMATRICULA' => $this->NUMEROMATRICULA,
-            'FECHA' => $this->FECHA,
+        $query->orFilterWhere([
+            'NUMEROMATRICULA' => $this->globalSearch,
+            'FECHA' => $this->globalSearch,
         ]);
 
-        $query->andFilterWhere(['like', 'ALUMNO', $this->ALUMNO])
-            ->andFilterWhere(['like', 'PERIODO', $this->PERIODO])
-            ->andFilterWhere(['like', 'CURSO', $this->CURSO])
-            ->andFilterWhere(['like', 'CICLO', $this->CICLO])
-            ->andFilterWhere(['like', 'ESPECIALIDAD', $this->ESPECIALIDAD])
-            ->andFilterWhere(['like', 'OBSERVACION', $this->OBSERVACION])
-            ->andFilterWhere(['like', 'REFERENCIA', $this->REFERENCIA])
-            ->andFilterWhere(['like', 'SYSRES', $this->SYSRES]);
+        $query->orFilterWhere(['like', 'ALUMNO', $this->globalSearch])
+            ->orFilterWhere(['like', 'PERIODO', $this->globalSearch])
+            ->orFilterWhere(['like', 'CURSO', $this->globalSearch])
+            ->orFilterWhere(['like', 'CICLO', $this->globalSearch])
+            ->orFilterWhere(['like', 'ESPECIALIDAD', $this->globalSearch])
+            ->orFilterWhere(['like', 'OBSERVACION', $this->globalSearch])
+            ->orFilterWhere(['like', 'REFERENCIA', $this->globalSearch])
+            ->orFilterWhere(['like', 'SYSRES', $this->globalSearch]);
 
         return $dataProvider;
     }
