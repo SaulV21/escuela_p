@@ -11,7 +11,7 @@ class ViewAsistenciaController extends \yii\web\Controller
     public function actionIndex($criterio)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => ViewAsistencia::find()->where(["CURSO"=>$criterio]),
+            'query' => ViewAsistencia::find()->where(["CURSO"=>$criterio])->orderBy("APELLIDOS"),
             /*
             'pagination' => [
                 'pageSize' => 50
