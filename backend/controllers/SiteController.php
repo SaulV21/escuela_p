@@ -8,7 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
-
+use common\models\User;
 /**
  * Site controller
  */
@@ -69,7 +69,19 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
-
+    
+    public function actionIniSesion($usuario, $pass)
+    {
+        $model = new LoginForm();
+        $model->username = $usuario;
+        $model->password = $pass;
+    
+        if ($model->iniSesion()) {
+            return true;
+        } else {
+            return false;
+        }
+}
     /**
      * Login action.
      *

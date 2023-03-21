@@ -73,7 +73,7 @@ class Matriculas extends \yii\db\ActiveRecord
             'NUMEROMATRICULA' => '# matricula',
             'globalSearch'=>'BUSCAR:',
             'ALUMNO' => 'Alumno',
-            'PERIODO' => 'Elija el Periodo',
+            'PERIODO' => 'Periodo',
             'CURSO' => 'Curso',
             'CICLO' => 'Ciclo',
             'ESPECIALIDAD' => 'Especialidad',

@@ -36,6 +36,7 @@ class Alumnos extends \yii\db\ActiveRecord
     public $archivo;
     public $nombreCompleto;
     public $id;
+    
     public function getNombreCompleto()
     {
         return $this->listnombre->NOMBRES . ' ' . $this->listnombre->APELLIDOS;
