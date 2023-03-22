@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=> function ($model) {
                     return $model->listnombre->NOMBRES . ' ' . $model->listnombre->APELLIDOS;
                 },
-                'contentOptions' => ['style' => 'width: 300px;']
+                'contentOptions' => ['style' => 'width: 350px;']
             ],
             [
                 'attribute'=>'PERIODO',
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             [
                 'attribute'=>'CICLO',
-                'contentOptions' => ['style' => 'width: 300px;']
+                'contentOptions' => ['style' => 'width: 100px;']
             ],
             //'ESPECIALIDAD',
             //'FECHA',
@@ -73,7 +73,8 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
-        'headerRowOptions' => ['style' => 'text-align:center;'],
+        'headerRowOptions' => ['style' => 'text-align:center; color:  #1474fc;'],
+        'summary' => 'Alumnos del {begin} al {end} de un total de {totalCount} matriculados',
     ]); ?>
 
 </div>

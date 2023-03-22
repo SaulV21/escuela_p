@@ -62,14 +62,18 @@ class Alumnos extends \yii\db\ActiveRecord
             //[['DIRECCION'], 'string'],
             [['archivo'], 'file', 'extensions'=>'jpg, png'],
             [['ALUMNO'], 'string', 'max' => 50],
-            [['CEDULA'], 'string', 'max' => 15],
+            [['CEDULA'], 'string', 'max' => 10],
+            [['CEDULA'], 'required', 'message' => 'Debe ingresar el número de cédula'],
             [['NOMBRES', 'APELLIDOS', 'PROFESION_PADRE', 'PROFESION_MADRE'], 'string', 'max' => 100],
             [['NOMBRES'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'El nombre solo debe contener letras.'],
+            [['NOMBRES'], 'required', 'message' => 'Debe ingresar los nombres del estudiante'],
             [['APELLIDOS'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'El apellido solo debe contener letras.'],
+            [['APELLIDOS'], 'required', 'message' => 'Debe ingresar los apellidos del estudiante'],
             [['PROFESION_PADRE'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
             [['PROFESION_MADRE'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
             [['CORREO'], 'email', 'message' => '{value} no es un correo electrónico válido.'],
             [['CIUDAD_NACIMIENTO', 'SEXO', 'CIUDADRES', 'TELEFONO', 'CONTACTO', 'REFERENCIA', 'SISRES'], 'string', 'max' => 45],
+            [['SEXO'], 'required', 'message' => 'Debe elegir una opción'],
             [['PADRE', 'MADRE'], 'string', 'max' => 200],
             [['CIUDAD_NACIMIENTO'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
             [['CIUDADRES'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Este campo solo debe contener letras.'],
@@ -91,13 +95,13 @@ class Alumnos extends \yii\db\ActiveRecord
             'CEDULA' => 'Cedula',
             'NOMBRES' => 'Nombres',
             'APELLIDOS' => 'Apellidos',
-            'FECHA_NACIMIENTO' => 'Fecha Nacimiento',
-            'CIUDAD_NACIMIENTO' => 'Ciudad Nacimiento',
+            'FECHA_NACIMIENTO' => 'Fecha de Nacimiento',
+            'CIUDAD_NACIMIENTO' => 'Ciudad de Nacimiento',
             'SEXO' => 'Sexo',
             'PADRE' => 'Padre',
-            'PROFESION_PADRE' => 'Profesion Padre',
+            'PROFESION_PADRE' => 'Profesion del Padre',
             'MADRE' => 'Madre',
-            'PROFESION_MADRE' => 'Profesion Madre',
+            'PROFESION_MADRE' => 'Profesion de la Madre',
             'CIUDADRES' => 'Ciudad de residencia',
             'DIRECCION' => 'Direccion',
             'TELEFONO' => 'Telefono',
@@ -136,6 +140,14 @@ class Alumnos extends \yii\db\ActiveRecord
         }}
 //
         return parent::beforeSave($insert);
+    }
+
+    public function getSexo()
+    {
+       return [
+        'M' => 'Masculino',
+        'F'=>'Femenino'
+        ];
     }
 
 }

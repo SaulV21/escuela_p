@@ -2,6 +2,7 @@
 
 namespace backend\models;
 use backend\models\Profesor;
+// use backend\models\Materias;
 use Yii;
 
 /**
@@ -51,6 +52,7 @@ class MateriaCurso extends \yii\db\ActiveRecord
     {
         return [
             'CURSO' => 'Curso',
+            'globalSearch'=>'BUSCAR:',
             'MATERIA' => 'Materia',
             'PROFESOR' => 'Profesor',
             'PERIODO' => 'Periodo',
@@ -91,6 +93,12 @@ class MateriaCurso extends \yii\db\ActiveRecord
     public function getNombreProfesor()
     {
         return $this->hasOne(Profesor::className(), ['PROFESOR' => 'PROFESOR']);
+    }
+
+    //TRAER EL NOMBRE DE LA MATERIA
+    public function getNombreMateria()
+    {
+        return $this->hasOne(Materias::className(), ['MATERIA' => 'MATERIA']);
     }
 
 }

@@ -52,7 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
-        'headerRowOptions' => ['style' => 'text-align:center;'],
+        'headerRowOptions' => ['style' => 'text-align:center; color:  #1474fc;'],
+        'summary' => 'Materias de {begin} al {end} de un total de {totalCount}',
     ]); ?>
 
 

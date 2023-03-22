@@ -21,11 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Crear Periodo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -43,6 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'headerRowOptions' => ['style' => 'text-align:center; color:  #1474fc;'],
+        'summary' => 'Periodo lectivo del {begin} al {end} de un total de {totalCount} periodos',
     ]); ?>
 
 

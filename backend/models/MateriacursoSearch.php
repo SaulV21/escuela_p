@@ -11,13 +11,14 @@ use backend\models\MateriaCurso;
  */
 class MateriacursoSearch extends MateriaCurso
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['CURSO', 'MATERIA', 'PROFESOR', 'PERIODO'], 'safe'],
+            [['CURSO', 'globalSearch', 'MATERIA', 'PROFESOR', 'PERIODO'], 'safe'],
         ];
     }
 
@@ -56,10 +57,12 @@ class MateriacursoSearch extends MateriaCurso
         }
 
         // grid filtering conditions
-        $query->andFilterWhere(['like', 'CURSO', $this->CURSO])
-            ->andFilterWhere(['like', 'MATERIA', $this->MATERIA])
-            ->andFilterWhere(['like', 'PROFESOR', $this->PROFESOR])
-            ->andFilterWhere(['like', 'PERIODO', $this->PERIODO]);
+        $query->orFilterWhere(['like', 'P.NOMBRES', $this->globalSearch])
+        ->innerJoin('PROFESORES P', 'P.PROFESOR = MATERIASXCURSO.PROFESOR')
+        ->innerJoin('MATERIAS M', 'M.MATERIA= MATERIASXCURSO.MATERIA')
+        ->orFilterWhere(['like', 'MATERIASXCURSO.CURSO', $this->globalSearch])
+        ->orFilterWhere(['like', 'M.NOMBRE', $this->globalSearch])
+        ->orFilterWhere(['like', 'MATERIASXCURSO.PERIODO', $this->globalSearch]);
 
         return $dataProvider;
     }

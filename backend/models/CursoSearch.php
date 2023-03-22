@@ -11,13 +11,14 @@ use backend\models\Cursos;
  */
 class CursoSearch extends Cursos
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['CURSO', 'CUPO', 'INICIAL', 'CICLO', 'ESPECIALIDAD', 'DESCRIPCION', 'PROMOVIDO'], 'safe'],
+            [['CURSO', 'globalSearch', 'CUPO', 'INICIAL', 'CICLO', 'ESPECIALIDAD', 'DESCRIPCION', 'PROMOVIDO'], 'safe'],
         ];
     }
 
@@ -56,13 +57,13 @@ class CursoSearch extends Cursos
         }
 
         // grid filtering conditions
-        $query->andFilterWhere(['like', 'CURSO', $this->CURSO])
-            ->andFilterWhere(['like', 'CUPO', $this->CUPO])
-            ->andFilterWhere(['like', 'INICIAL', $this->INICIAL])
-            ->andFilterWhere(['like', 'CICLO', $this->CICLO])
-            ->andFilterWhere(['like', 'ESPECIALIDAD', $this->ESPECIALIDAD])
-            ->andFilterWhere(['like', 'DESCRIPCION', $this->DESCRIPCION])
-            ->andFilterWhere(['like', 'PROMOVIDO', $this->PROMOVIDO]);
+        $query->orFilterWhere(['like', 'CURSO', $this->globalSearch])
+            ->orFilterWhere(['like', 'CUPO', $this->globalSearch])
+            ->orFilterWhere(['like', 'INICIAL', $this->globalSearch])
+            ->orFilterWhere(['like', 'CICLO', $this->globalSearch])
+            ->orFilterWhere(['like', 'ESPECIALIDAD', $this->globalSearch])
+            ->orFilterWhere(['like', 'DESCRIPCION', $this->globalSearch])
+            ->orFilterWhere(['like', 'PROMOVIDO', $this->globalSearch]);
 
         return $dataProvider;
     }

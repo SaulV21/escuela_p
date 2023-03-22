@@ -46,12 +46,12 @@ AppAsset::register($this);
     $menuItems = [
         //Llama al controlador
         ['label' => 'Inicio', 'url' => ['/site/index']],
-        ['label' => 'Alumno', 'url' => ['/alumno/index']],
+        ['label' => 'Alumnos', 'url' => ['/alumno/index']],
         ['label' => 'Profesor', 'url' => ['/profesor/index']],
-        ['label' => 'Curso', 'url' => ['/curso/index']],
-        ['label' => 'Materia', 'url' => ['/materia/index']],
-        ['label' => 'Periodo', 'url' => ['/periodo/index']],
-        ['label' => 'Matricula', 'url' => ['/matricula/index']],
+        ['label' => 'Cursos', 'url' => ['/curso/index']],
+        ['label' => 'Materias', 'url' => ['/materia/index']],
+        ['label' => 'Períodos', 'url' => ['/periodo/index']],
+        ['label' => 'Matrículas', 'url' => ['/matricula/index']],
         ['label' => 'Asignación', 'url' => ['/materiacurso/index']],
     ];
     if (Yii::$app->user->isGuest) {

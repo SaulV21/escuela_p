@@ -66,6 +66,7 @@ class MateriaSearch extends Materias
         $query->orFilterWhere(['like', 'MATERIA', $this->globalSearch])
             ->orFilterWhere(['like', 'NOMBRE', $this->globalSearch])
             ->orFilterWhere(['like', 'DESCRIPCION', $this->globalSearch])
+            ->orFilterWhere(['like', 'HORAS', $this->globalSearch])
             ->orFilterWhere(['like', 'NIVEL', $this->globalSearch])
             ->orFilterWhere(['like', 'TIPO', $this->globalSearch])
             ->orFilterWhere(['like', 'ABREVIATURA', $this->globalSearch])

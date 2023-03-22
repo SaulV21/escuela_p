@@ -72,8 +72,10 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
-        'headerRowOptions' => ['style' => 'text-align:center;'],
-        'layout'=>"{summary}\n{items}\n{pager}"
+        'headerRowOptions' => [
+            'style' => 'background-color: #98c379;text-align:center;color:  #1474fc;',
+        ],
+        'summary' => 'Nombres del {begin} al {end} de un total de {totalCount} alumnos',
     ]); ?>
 
 

@@ -70,18 +70,7 @@ class SiteController extends Controller
         return $this->render('index');
     }
     
-    public function actionIniSesion($usuario, $pass)
-    {
-        $model = new LoginForm();
-        $model->username = $usuario;
-        $model->password = $pass;
-    
-        if ($model->iniSesion()) {
-            return true;
-        } else {
-            return false;
-        }
-}
+   
     /**
      * Login action.
      *

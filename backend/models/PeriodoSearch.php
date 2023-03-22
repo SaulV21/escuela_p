@@ -11,13 +11,14 @@ use backend\models\Periodo;
  */
 class PeriodoSearch extends Periodo
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['PERIODO', 'Fecha_ini_periodo', 'Fecha_fin_periodo', 'estado', 'rector', 'secretario'], 'safe'],
+            [['PERIODO', 'globalSearch', 'Fecha_ini_periodo', 'Fecha_fin_periodo', 'estado', 'rector', 'secretario'], 'safe'],
         ];
     }
 
@@ -56,15 +57,15 @@ class PeriodoSearch extends Periodo
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'Fecha_ini_periodo' => $this->Fecha_ini_periodo,
-            'Fecha_fin_periodo' => $this->Fecha_fin_periodo,
+        $query->orFilterWhere([
+            'Fecha_ini_periodo' => $this->globalSearch,
+            'Fecha_fin_periodo' => $this->globalSearch,
         ]);
 
-        $query->andFilterWhere(['like', 'PERIODO', $this->PERIODO])
-            ->andFilterWhere(['like', 'estado', $this->estado])
-            ->andFilterWhere(['like', 'rector', $this->rector])
-            ->andFilterWhere(['like', 'secretario', $this->secretario]);
+        $query->orFilterWhere(['like', 'PERIODO', $this->globalSearch])
+            ->orFilterWhere(['like', 'estado', $this->globalSearch])
+            ->orFilterWhere(['like', 'rector', $this->globalSearch])
+            ->orFilterWhere(['like', 'secretario', $this->globalSearch]);
 
         return $dataProvider;
     }

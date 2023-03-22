@@ -45,7 +45,7 @@ class Profesor extends \yii\db\ActiveRecord
     {
         return [
             [['PROFESOR'], 'safe'],
-            [['CEDULA'], 'required', 'message' => 'Debe ingresar el numero de cedula'],
+            [['CEDULA'], 'required', 'message' => 'Debe ingresar el numero de cédula'],
             [['FECHA_NACIMIENTO'], 'safe'],
             [['FOTO', 'HOJAVIDA'], 'string'],
             [['archivo'], 'file', 'extensions'=>'jpg, png'],
@@ -56,11 +56,13 @@ class Profesor extends \yii\db\ActiveRecord
             [['DESCRIPCION'], 'string', 'max' => 205],
            // [['CORREO'], 'string', 'max' => 200],
             [['CORREO'], 'email', 'message' => '{value} no es un correo electrónico válido.'],
-            [['CLAVE'], 'string', 'max' => 50],
-            // [['CORREO'], 'autocompleteOff'],
+            [['CLAVE'], 'required', 'message' => 'La contraseña debe tener mínimo 5 y máximo 20 caracteres'],
+            [['CLAVE'], 'string', 'max' => 20,'min' => 5],
             [['ESTADO'], 'string', 'max' => 10],
+            [['ESTADO'], 'required', 'message' => 'Debe elegir una opción'],
+            [['NOMBRES'], 'required', 'message' => 'Ingrese los nombres de el/la docente'],
             [['CEDULA'], 'unique','message' => 'El numero de cédula {value} ya esta registrada en el sistema.'],
-            [['PROFESOR'], 'unique','message' => 'Esta ID del profesor ya esta registrada en el sistema.'],
+            [['PROFESOR'], 'unique','message' => 'El ID del profesor ya esta registrada en el sistema.'],
             
         ];
     }

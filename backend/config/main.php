@@ -46,15 +46,12 @@ return [
             'errorAction' => 'site/error',
         ],
         
-       /* 'urlManager' => [
+        /*'urlManager' => [
             
             'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
             'showScriptName' => false,
-            'rules' =>  [
-                //agrego la ruta del controlador del api
-                'class' => 'yii\rest\UrlRule',
-                'controller' => 'api/alumnos-api',
+            'rules' => [
+            'site/inisesion' => 'site/inisesion',
             ],
         ],*/
         

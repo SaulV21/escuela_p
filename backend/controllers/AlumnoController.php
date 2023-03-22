@@ -43,10 +43,12 @@ class AlumnoController extends Controller
         $searchModel = new AlumnoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    
     }
 //BUSCAR DATOS ALUMNO
 public function actionBuscar($est)
@@ -64,28 +66,6 @@ public function actionListar()
     return json_encode($model);
 }
 
-// public function actionCrear()
-// {
-//     $model = new Alumno();
-
-//     $model->load(Yii::$app->request->post(), '');
-
-//     if ($model->save()) {
-//         Yii::$app->response->statusCode = 201; // Created
-//         return [
-//             'status' => 'success',
-//             'message' => 'Alumno creado exitosamente',
-//             'data' => $model,
-//         ];
-//     } else {
-//         Yii::$app->response->statusCode = 400; // Bad Request
-//         return [
-//             'status' => 'error',
-//             'message' => 'No se pudo crear el alumno',
-//             'errors' => $model->errors,
-//         ];
-//     }
-// }
 
 public function actionCrear()
     {

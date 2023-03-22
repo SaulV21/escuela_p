@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
+use yii\helpers\ArrayHelper;
+use backend\models\Profesor;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Profesor $model */
@@ -40,6 +42,7 @@ use yii\jui\DatePicker;
     <div class="form-group" style="margin-top: 20px;">
     <?= $form->field($model, 'CORREO')->textInput(['autocomplete' => 'off','maxlength' => true, 'placeholder'=>'usuario@example.com']) ?>
     </div>
+    
     <?= $form->field($model, 'CLAVE')->passwordInput(['maxlength' => true, 'id' => 'password-input']) ?>
     <button id="toggle-password" type="button">Mostrar</button>
 
@@ -47,16 +50,44 @@ use yii\jui\DatePicker;
 <!-- Hoja de vida -->
     <?= $form->field($model, 'documento')->fileInput() ?>
     <div class="form-group" style="margin-top: 20px;">
-    <?= $form->field($model, 'AREA')->textInput(['maxlength' => true, 'placeholder'=>'Nombre del area de educación que imparte el profesor']) ?>
+    <?= $form->field($model, 'AREA')->textInput(['maxlength' => true, 'placeholder'=>'Nombre del area de educación que imparte el profesor', 'id'=>'area-input']) ?>
     </div>
-    <!-- <?= $form->field($model, 'ESTADO')->textInput(['maxlength' => true]) ?> -->
-    <?= $form->field($model, 'ESTADO')->dropDownList(['prompt'=>'Seleccione el estado', 'ACTIVO' => 'Activo','INACTIVO'=>'Inactivo']) ?>
+    <!-- Estado -->
+    <?= $form->field($model, 'ESTADO')->dropDownList([
+        'ACTIVO' => 'Activo',
+        'INACTIVO' => 'Inactivo',
+    ], [
+        'prompt' => 'Seleccione el estado',
+        'options' => [
+            'ACTIVO' => ['selected' => true],
+        ],
+    ]) 
+?>
+
     
     <div class="form-group" style="margin-top: 20px;">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+<!-- Sugerencias area -->
+<?php
+// Obtener sugerencias de nombres desde la base de datos
+    $sugerencias = ArrayHelper::getColumn(Profesor::find()->select(['area'])->asArray()->all(), 'area');
+    ?>
+
+<?php $this->registerJs(
+    "
+    $(function() {
+        var availableTags = " . json_encode($sugerencias) . ";
+        $('#area-input').autocomplete({
+            source: availableTags
+        });
+    });
+    ",
+    \yii\web\View::POS_READY
+); ?>
+    <!-- Mostrar/ocultar contraseña -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
   const passwordInput = document.getElementById('password-input');

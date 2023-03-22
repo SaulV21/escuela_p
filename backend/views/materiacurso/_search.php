@@ -13,19 +13,15 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'id' => 'mxc',
     ]); ?>
 
-    <?= $form->field($model, 'CURSO') ?>
+<?= $form->field($model, 'globalSearch')->textInput(['style' => 'width: 39%;']) ?> 
 
-    <?= $form->field($model, 'MATERIA') ?>
-
-    <?= $form->field($model, 'PROFESOR') ?>
-
-    <?= $form->field($model, 'PERIODO') ?>
-
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 10px;">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Limpiar', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::button('Borrar', ['class' => 'btn btn-outline-secondary',
+        'onclick' => '$("#' . $form->id . '").find("input[type=text]").val("").end().submit();']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

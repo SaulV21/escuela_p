@@ -16,7 +16,6 @@ class LoginForm extends Model
     public $rememberMe = true;
     public $captcha;
     private $_user;
-    public $enableCsrfValidation=false;
 
     /**
      * {@inheritdoc}
@@ -34,14 +33,6 @@ class LoginForm extends Model
         ];
     }
 
-    public function iniSesion()
-    {
-        if ($this->validate()) {
-            return json_encode(['success' => true]);
-        } else {
-            return json_encode(['success' => false, 'errors' => $this->getErrors()]);
-        }
-    }
 
     /**
      * Validates the password.

@@ -54,6 +54,7 @@ class Periodo extends \yii\db\ActiveRecord
     {
         return [
             'PERIODO' => 'Periodo',
+            'globalSearch'=>'BUSCAR:',
             'Fecha_ini_periodo' => 'Fecha Inicio del Periodo',
             'Fecha_fin_periodo' => 'Fecha Fin del Periodo',
             'estado' => 'Estado',
