@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
         'headerRowOptions' => ['style' => 'text-align:center; color:  #1474fc;'],
-        'summary' => 'Periodo lectivo del {begin} al {end} de un total de {totalCount} periodos',
+        'summary' => 'Periodo lectivo desde el {begin} al {end} de un total de {totalCount} periodos',
     ]); ?>
 
 

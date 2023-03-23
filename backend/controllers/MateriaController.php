@@ -7,6 +7,8 @@ use backend\models\MateriaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap4\Alert;
+use Yii;
 
 /**
  * MateriaController implements the CRUD actions for Materias model.
@@ -87,6 +89,7 @@ public function actionListarmat()
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'Se ha registrado una nueva materia.');
                 return $this->redirect(['index']);
             }
         } else {
@@ -110,6 +113,7 @@ public function actionListarmat()
         $model = $this->findModel($MATERIA);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Materia actualizada con éxito.');
             return $this->redirect(['index']);
         }
 
@@ -128,7 +132,7 @@ public function actionListarmat()
     public function actionDelete($MATERIA)
     {
         $this->findModel($MATERIA)->delete();
-
+        Yii::$app->session->setFlash('danger', 'Se ha eliminado la materia.');
         return $this->redirect(['index']);
     }
 

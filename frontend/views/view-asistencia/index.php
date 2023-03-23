@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'APELLIDOS',
             'NOMBRES',
 
-            //'asistencia',
-            [
-                'class' => 'yii\grid\CheckboxColumn',
-                 'checkboxOptions' => function($model, $key, $index, $column) {
-     return ['checked' => true];}
-            ]
-            ,
+            'asistencia',
+    //         [
+    //             'class' => 'yii\grid\CheckboxColumn',
+    //              'checkboxOptions' => function($model, $key, $index, $column) {
+    //  return ['checked' => true];}
+    //         ]
+    //         ,
 
             [
                 'class' => ActionColumn::class,

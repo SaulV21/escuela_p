@@ -106,7 +106,9 @@ public function actionListarmatri()
                 return $this->refresh();
             }
             if ($model->save()) {
-                return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
+               // return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
+               Yii::$app->session->setFlash('success', 'Estudiante se ha matriculado con éxito.');
+               return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
@@ -126,7 +128,9 @@ public function actionListarmatri()
         $model = $this->findModel($NUMEROMATRICULA);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
+            //return $this->redirect(['view', 'NUMEROMATRICULA' => $model->NUMEROMATRICULA]);
+            Yii::$app->session->setFlash('success', 'Matricula actualizada correctamente.');
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -144,7 +148,7 @@ public function actionListarmatri()
     public function actionDelete($NUMEROMATRICULA)
     {
         $this->findModel($NUMEROMATRICULA)->delete();
-
+        Yii::$app->session->setFlash('danger', 'Matricula eliminada');
         return $this->redirect(['index']);
     }
 

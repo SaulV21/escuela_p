@@ -40,7 +40,7 @@ class NotasController extends Controller
     {
         $searchModel = new NotasSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $this->actionUpdateNotas();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -72,7 +72,8 @@ class NotasController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'MATRICULA' => $model->MATRICULA, 'MATERIA' => $model->MATERIA]);
+                //return $this->redirect(['view', 'MATRICULA' => $model->MATRICULA, 'MATERIA' => $model->MATERIA]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -96,7 +97,7 @@ class NotasController extends Controller
         $model = $this->findModel($MATRICULA, $MATERIA);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'MATRICULA' => $model->MATRICULA, 'MATERIA' => $model->MATERIA]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -135,4 +136,30 @@ class NotasController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+//Actualizar notas
+public function actionUpdateNotas()
+{
+//Buscar las notas para actualizarlo
+    $notas = Notas::find()
+    ->where(['or', ['PROMOCION' => 'APRUEBA'], ['PROMOCION' => '']])
+    ->andWhere(['<', 'PROMF', 6])
+    ->all();
+// Actualizar las notas de los reprobados
+    foreach ($notas as $nota) {
+    $nota->PROMOCION = 'REPRUEBA';
+    $nota->save(false);
+    }
+
+//Buscar las notas para actualizarlo
+    $notas2 = Notas::find()
+    ->where(['or', ['PROMOCION' => 'REPRUEBA'], ['PROMOCION' => '']])
+    ->andWhere(['>=', 'PROMF', 6])
+    ->all();
+
+// Actualizar las notas de los aprobados
+    foreach ($notas2 as $nota2) {
+    $nota2->PROMOCION = 'APRUEBA';
+    $nota2->save(false);
+    }
+}
 }

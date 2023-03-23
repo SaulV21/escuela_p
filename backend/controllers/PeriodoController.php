@@ -7,6 +7,8 @@ use backend\models\PeriodoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap4\Alert;
+use Yii;
 
 /**
  * PeriodoController implements the CRUD actions for Periodo model.
@@ -40,7 +42,7 @@ class PeriodoController extends Controller
     {
         $searchModel = new PeriodoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $this->actionUpdatePeriodos();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -71,8 +73,18 @@ class PeriodoController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'PERIODO' => $model->PERIODO]);
+                //return $this->redirect(['view', 'PERIODO' => $model->PERIODO]);
+                Yii::$app->session->setFlash('success', 'Período creado con éxito.');
+                return $this->redirect(['index']);
             }
+            // Mostrar el mensaje de notificación si existe
+            if(Yii::$app->session->hasFlash('success')){
+            echo Alert::widget([
+            'options' => [
+                'class' => 'alert-success',
+            ],
+            'body' => Yii::$app->session->getFlash('success'),
+    ]);}
         } else {
             $model->loadDefaultValues();
         }
@@ -94,7 +106,9 @@ class PeriodoController extends Controller
         $model = $this->findModel($PERIODO);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'PERIODO' => $model->PERIODO]);
+            Yii::$app->session->setFlash('success', 'Período actualizado con éxito.');
+            //return $this->redirect(['view', 'PERIODO' => $model->PERIODO]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -112,7 +126,7 @@ class PeriodoController extends Controller
     public function actionDelete($PERIODO)
     {
         $this->findModel($PERIODO)->delete();
-
+        Yii::$app->session->setFlash('success', 'Período eliminado con éxito.');
         return $this->redirect(['index']);
     }
 
@@ -131,4 +145,36 @@ class PeriodoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+//Actualizar periodos
+    public function actionUpdatePeriodos()
+{
+    // Obtener la fecha actual
+    $now = date('Y-m-d');
+
+    // Buscar los periodos que ya han pasado su fecha de fin y están abiertos
+    $periodos = Periodo::find()
+        ->where(['estado' => 'ABIERTO'])
+        ->andWhere(['<', 'Fecha_fin_periodo', $now])
+        ->all();
+    // Buscar los periodos que ya han pasado su fecha de fin y están abiertos
+    $periodab = Periodo::find()
+        ->where(['estado' => 'CERRADO'])
+        ->andWhere(['>', 'Fecha_fin_periodo', $now])
+        ->all();
+
+    // Actualizar el estado de los periodos a cerrado
+    foreach ($periodos as $periodo) {
+        $periodo->estado = 'CERRADO';
+        $periodo->save(false);
+    }
+
+    // Actualizar el estado de los periodos a cerrado
+    foreach ($periodab as $periodoa) {
+        $periodoa->estado = 'ABIERTO';
+        $periodoa->save(false);
+    }
+
+    echo "Los periodos han sido actualizados.";
+}
+
 }

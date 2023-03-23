@@ -9,7 +9,8 @@ use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-
+use yii\bootstrap4\Alert;
+use Yii;
 /**
  * AlumnoController implements the CRUD actions for Alumnos model.
  */
@@ -201,7 +202,16 @@ public function actionCrear()
                     }
                 }
                 if($model->save(false)){
+                    Yii::$app->session->setFlash('success', 'Alumno registrado con éxito.');
                 return $this->redirect(['index']);}
+                // Mostrar el mensaje de notificación si existe
+            if(Yii::$app->session->hasFlash('success')){
+                echo Alert::widget([
+                'options' => [
+                    'class' => 'alert-success',
+                ],
+                'body' => Yii::$app->session->getFlash('success'),
+        ]);}
             }
         } else {
             $model->loadDefaultValues();

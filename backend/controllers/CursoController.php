@@ -7,7 +7,8 @@ use backend\models\CursoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\bootstrap4\Alert;
+use Yii;
 /**
  * CursoController implements the CRUD actions for Cursos model.
  */
@@ -86,8 +87,18 @@ public function actionListarcursos()
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'CURSO' => $model->CURSO]);
+                //return $this->redirect(['view', 'CURSO' => $model->CURSO]);
+                Yii::$app->session->setFlash('success', 'Curso creado con éxito.');
+                return $this->redirect(['index']);
             }
+            // Mostrar el mensaje de notificación si existe
+            if(Yii::$app->session->hasFlash('success')){
+                echo Alert::widget([
+                'options' => [
+                    'class' => 'alert-success',
+                ],
+                'body' => Yii::$app->session->getFlash('success'),
+        ]);}
         } else {
             $model->loadDefaultValues();
         }
@@ -109,7 +120,9 @@ public function actionListarcursos()
         $model = $this->findModel($CURSO);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'CURSO' => $model->CURSO]);
+            //return $this->redirect(['view', 'CURSO' => $model->CURSO]);
+            Yii::$app->session->setFlash('success', 'El curso se actualizo correctamente.');
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -127,7 +140,7 @@ public function actionListarcursos()
     public function actionDelete($CURSO)
     {
         $this->findModel($CURSO)->delete();
-
+        Yii::$app->session->setFlash('danger', 'Se ha eliminado el curso.');
         return $this->redirect(['index']);
     }
 

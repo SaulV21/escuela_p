@@ -13,7 +13,7 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'PERIODO')->textInput(['maxlength' => true])->error(['class' => 'help-block']) ?>
+    <?= $form->field($model, 'PERIODO')->textInput(['type' => 'number', 'maxlength' => 9, 'oninput' => 'javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);',  'placeholder'=>'Ingrese el periodo lectivo. Ejemplo: 2023-2024']) ?>
 
     <!-- Fecha inicio -->
     <div class="form-group" style="margin-top: 20px;">

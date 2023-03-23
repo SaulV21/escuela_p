@@ -154,7 +154,8 @@ public function actionListarprof()
         // Validar y guardar el modelo
         if ($model->save(false)) {
             Yii::$app->session->setFlash('success', 'El profesor ha sido actualizado exitosamente.');
-            return $this->redirect(['view', 'PROFESOR' => $model->PROFESOR]);
+           // return $this->redirect(['view', 'PROFESOR' => $model->PROFESOR]);
+           return $this->redirect(['index']);
         } else {
             Yii::$app->session->setFlash('error', 'Ocurrió un error al guardar el profesor.');
         }
@@ -177,7 +178,7 @@ public function actionListarprof()
     {
         //$model=$this->findModel($PROFESOR);
         $this->findModel($PROFESOR)->delete();
-
+        Yii::$app->session->setFlash('danger', 'Se ha eliminado correctamente');
         return $this->redirect(['index']);
     }
 

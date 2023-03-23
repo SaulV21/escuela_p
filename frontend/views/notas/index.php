@@ -34,14 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'QUIM1',
             'QUIM2',
             'TOTAL',
-            //'PROMF',
+            'PROMF',
             //'EQUIV',
             //'SUM_TOT',
             //'PROM_GE',
             //'SUPLETORIO',
             //'REMEDIAL',
             //'GRACIA',
-            //'PROMOCION',
+            'PROMOCION',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Notas $model, $key, $index, $column) {
