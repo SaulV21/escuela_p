@@ -57,22 +57,22 @@ class MatriculaSearch extends Matriculas
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        $query->orFilterWhere([
-            'MATRICULAS.NUMEROMATRICULA' => $this->globalSearch,
-            'MATRICULAS.FECHA' => $this->globalSearch,
+         // grid filtering conditions
+         $query->orFilterWhere([
+            'matriculas.NUMEROMATRICULA' => $this->globalSearch,
+            'matriculas.FECHA' => $this->globalSearch,
         ]);
 
         $query->orFilterWhere(['like', 'A.NOMBRES', $this->globalSearch])
         ->orFilterWhere(['like', 'A.APELLIDOS', $this->globalSearch])
-        ->innerJoin('ALUMNOS A', 'A.ALUMNO = MATRICULAS.ALUMNO')
-            ->orFilterWhere(['like', 'MATRICULAS.PERIODO', $this->globalSearch])
-            ->orFilterWhere(['like', 'MATRICULAS.CURSO', $this->globalSearch])
-            ->orFilterWhere(['like', 'MATRICULAS.CICLO', $this->globalSearch])
-            ->orFilterWhere(['like', 'MATRICULAS.ESPECIALIDAD', $this->globalSearch])
-            ->orFilterWhere(['like', 'MATRICULAS.OBSERVACION', $this->globalSearch])
-            ->orFilterWhere(['like', 'MATRICULAS.REFERENCIA', $this->globalSearch])
-            ->orFilterWhere(['like', 'MATRICULAS.SYSRES', $this->globalSearch]);
+        ->innerJoin('alumnos A', 'A.ALUMNO = matriculas.ALUMNO')
+            ->orFilterWhere(['like', 'matriculas.PERIODO', $this->globalSearch])
+            ->orFilterWhere(['like', 'matriculas.CURSO', $this->globalSearch])
+            ->orFilterWhere(['like', 'matriculas.CICLO', $this->globalSearch])
+            ->orFilterWhere(['like', 'matriculas.ESPECIALIDAD', $this->globalSearch])
+            ->orFilterWhere(['like', 'matriculas.OBSERVACION', $this->globalSearch])
+            ->orFilterWhere(['like', 'matriculas.REFERENCIA', $this->globalSearch])
+            ->orFilterWhere(['like', 'matriculas.SYSRES', $this->globalSearch]);
 
         return $dataProvider;
     }

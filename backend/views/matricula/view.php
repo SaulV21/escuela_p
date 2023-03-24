@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Matriculas $model */
@@ -32,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'NUMEROMATRICULA',
             'ALUMNO',
-            //
             'PERIODO',
             'CURSO',
             'CICLO',

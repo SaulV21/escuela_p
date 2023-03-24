@@ -51,7 +51,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            'site/inisesion' => 'site/inisesion',
+            'actualizar-asistencia' => 'asistencia/actualizar-asistencia',
             ],
         ],*/
         

@@ -5,6 +5,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\ViewAsistencia;
+use backend\models\Matriculas;
+use backend\models\Alumnos;
 
 class ViewAsistenciaController extends \yii\web\Controller
 {
@@ -29,5 +31,22 @@ class ViewAsistenciaController extends \yii\web\Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+//
+public function actionActualizarAsistencia($id, $asiste)
+{
+    $matri=Matriculas::find(['alumno' => $id])->one();
+    $model = Asistencia::find()->where(['alumno' => $id,'matricula'=>$matri, 'fecha' => date('Y-m-d')])->one();
+    if ($model) {
+        $model->asiste = 'no';
+        $model->save();
+    } else {
+        $model = new Asistencia();
+        $model->alumno_id = $alumno_id;
+        $model->fecha = date('Y-m-d');
+        $model->asiste = 'no';
+        $model->save();
+    }
+    
+}
 
 }

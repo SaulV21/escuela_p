@@ -9,6 +9,7 @@ use backend\models\Profesor;
 use backend\models\Periodo;
 use kartik\select2\Select2;
 use yii\jui\DatePicker;
+
 /** @var yii\web\View $this */
 /** @var backend\models\Matriculas $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -18,8 +19,8 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!-- Lista de Alumnos -->
-    <?= $form->field($model, 'ALUMNO')->widget(Select2::classname(), [
+     <!-- Lista de Alumnos -->
+     <?= $form->field($model, 'ALUMNO')->widget(Select2::classname(), [
     'data' => ArrayHelper::map(Alumnos::find()->all(),'ALUMNO',  function ($model) {
         return $model['NOMBRES'] .' '. $model['APELLIDOS'];
     }),
@@ -70,7 +71,7 @@ use yii\jui\DatePicker;
     </div>
 
     <?php ActiveForm::end(); ?>
-    
+
     <?php
 // Obtener sugerencias de nombres desde la base de datos
     $sugerencias = ArrayHelper::getColumn(Profesor::find()->select(['nombres'])->asArray()->all(), 'nombres');

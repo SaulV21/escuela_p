@@ -188,7 +188,7 @@ class Matriculas extends \yii\db\ActiveRecord
 
     public function search($params){
         $query=new \yii\db\Query();
-        $query->join(['ALUMNOS']);
+        $query->join(['alumnos']);
         $this->load($params);
         if($this->validate()){
 

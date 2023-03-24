@@ -3,14 +3,15 @@
 namespace backend\controllers;
 
 use backend\models\Matriculas;
+use backend\models\MatriculaSearch;
 use backend\models\Alumnos;
 use backend\models\Periodo;
-use backend\models\MatriculaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use Yii;
+
 /**
  * MatriculaController implements the CRUD actions for Matriculas model.
  */
@@ -49,6 +50,7 @@ public function actionListarmatri()
     ->asArray()->all();
     return json_encode($model);
 }
+
     /**
      * Lists all Matriculas models.
      *
@@ -57,28 +59,28 @@ public function actionListarmatri()
     public function actionIndex()
     {
         $searchModel = new MatriculaSearch();
-       $dataProvider = $searchModel->search($this->request->queryParams);
-       $dataProvider2 = new ActiveDataProvider([
-        'query' => Alumnos::find(),
-    ]);
-
-    // Agregar el nombre completo del alumno a los datos de la tabla
-    foreach ($dataProvider2->models as $model) {
-        $model->nombreCompleto = $model->NOMBRES . ' ' . $model->APELLIDOS;
-    }
-        //agrego la instancia de matricula
-        //$model = new Matriculas();
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'dataProvider2' => $dataProvider2,
-            'model'=>$model,
-        ]);
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider2 = new ActiveDataProvider([
+         'query' => Alumnos::find(),
+     ]);
+ 
+     // Agregar el nombre completo del alumno a los datos de la tabla
+     foreach ($dataProvider2->models as $model) {
+         $model->nombreCompleto = $model->NOMBRES . ' ' . $model->APELLIDOS;
+     }
+         //agrego la instancia de matricula
+         //$model = new Matriculas();
+         return $this->render('index', [
+             'searchModel' => $searchModel,
+             'dataProvider' => $dataProvider,
+             'dataProvider2' => $dataProvider2,
+             'model'=>$model,
+         ]);
     }
 
     /**
      * Displays a single Matriculas model.
-     * @param int $NUMEROMATRICULA Numeromatricula
+     * @param int $NUMEROMATRICULA # matricula
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -119,7 +121,7 @@ public function actionListarmatri()
     /**
      * Updates an existing Matriculas model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $NUMEROMATRICULA Numeromatricula
+     * @param int $NUMEROMATRICULA # matricula
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -141,7 +143,7 @@ public function actionListarmatri()
     /**
      * Deletes an existing Matriculas model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $NUMEROMATRICULA Numeromatricula
+     * @param int $NUMEROMATRICULA # matricula
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -155,7 +157,7 @@ public function actionListarmatri()
     /**
      * Finds the Matriculas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $NUMEROMATRICULA Numeromatricula
+     * @param int $NUMEROMATRICULA # matricula
      * @return Matriculas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -167,5 +169,4 @@ public function actionListarmatri()
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }

@@ -9,7 +9,6 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var backend\models\MatriculaSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-/** @var backend\models\Matriculas $model */
 
 $this->title = 'Matriculas';
 $this->params['breadcrumbs'][] = $this->title;
@@ -76,5 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'headerRowOptions' => ['style' => 'text-align:center; color:  #1474fc;'],
         'summary' => 'Alumnos del {begin} al {end} de un total de {totalCount} matriculados',
     ]); ?>
+
 
 </div>

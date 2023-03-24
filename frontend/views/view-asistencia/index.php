@@ -22,17 +22,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'ALUMNO',
-           // 'CURSO',
             'APELLIDOS',
             'NOMBRES',
-
-            'asistencia',
-    //         [
-    //             'class' => 'yii\grid\CheckboxColumn',
-    //              'checkboxOptions' => function($model, $key, $index, $column) {
-    //  return ['checked' => true];}
-    //         ]
-    //         ,
+            [
+                
+                'class' => 'yii\grid\CheckboxColumn',
+                 'checkboxOptions' => function($model, $key, $index, $column) {
+                return [
+                    //'checked' => true
+                    'value' => $model->ALUMNO,
+                    'checked' => $model->asistencia == 1 ? true : false,
+                    'onclick' => '
+                        $.post("actualizar-asistencia?ALUMNO=' . $model->ALUMNO . '&asistencia=" + $(this).prop("checked"), function(data) {
+                            console.log(data);
+                        });
+                    ',
+                ];}
+            ],
 
             [
                 'class' => ActionColumn::class,

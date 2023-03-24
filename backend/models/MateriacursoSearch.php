@@ -58,11 +58,11 @@ class MateriacursoSearch extends MateriaCurso
 
         // grid filtering conditions
         $query->orFilterWhere(['like', 'P.NOMBRES', $this->globalSearch])
-        ->innerJoin('PROFESORES P', 'P.PROFESOR = MATERIASXCURSO.PROFESOR')
-        ->innerJoin('MATERIAS M', 'M.MATERIA= MATERIASXCURSO.MATERIA')
-        ->orFilterWhere(['like', 'MATERIASXCURSO.CURSO', $this->globalSearch])
+        ->innerJoin('profesores P', 'P.PROFESOR = materiasxcurso.PROFESOR')
+        ->innerJoin('materias M', 'M.MATERIA= materiasxcurso.MATERIA')
+        ->orFilterWhere(['like', 'materiasxcurso.CURSO', $this->globalSearch])
         ->orFilterWhere(['like', 'M.NOMBRE', $this->globalSearch])
-        ->orFilterWhere(['like', 'MATERIASXCURSO.PERIODO', $this->globalSearch]);
+        ->orFilterWhere(['like', 'materiasxcurso.PERIODO', $this->globalSearch]);
 
         return $dataProvider;
     }

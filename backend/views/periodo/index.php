@@ -29,10 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'PERIODO',
-            'Fecha_ini_periodo',
-            'Fecha_fin_periodo',
-            'estado',
+            [
+                'attribute'=>'PERIODO',
+                'contentOptions' => ['style' => 'text-align: center; width: 95px;']
+            ],
+            [
+                'attribute'=>'Fecha_ini_periodo',
+                'contentOptions' => ['style' => 'text-align: center; width: 95px;']
+            ],
+
+            [
+                'attribute'=>'Fecha_fin_periodo',
+                'contentOptions' => ['style' => 'text-align: center; width: 95px;']
+            ],
+            [
+                'attribute'=>'estado',
+                'contentOptions' => ['style' => 'text-align: center; width: 95px;']
+            ],
             'rector',
             //'secretario',
             [

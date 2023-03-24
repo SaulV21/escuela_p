@@ -6,7 +6,7 @@ use Yii;
 
 /**
  * This is the model class for table "view_asistencia".
- *
+ *@property int $id
  * @property string $fecha
  * @property string|null $CURSO
  * @property string $ALUMNO
@@ -30,6 +30,7 @@ class ViewAsistencia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'safe'],
             [['fecha'], 'safe'],
             [['ALUMNO'], 'required'],
             [['CURSO'], 'string', 'max' => 45],
@@ -45,6 +46,7 @@ class ViewAsistencia extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'fecha' => 'Fecha',
             'CURSO' => 'Curso',
             'ALUMNO' => 'Alumno',
