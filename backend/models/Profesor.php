@@ -168,10 +168,10 @@ public function beforeSaveCustom($insert)
   }
 
   //traer el id
-//   public function getUser()
-// {
-//     return $this->hasOne(User::class, ['username' => 'CEDULA']);
-// }
+  public function getUser()
+{
+    return $this->hasOne(User::class, ['username' => 'CEDULA']);
+}
 
 //   //Actualizar y eliminar usuarios del profesor
 //   public function updateUserLogin($CEDULA, $CLAVE)

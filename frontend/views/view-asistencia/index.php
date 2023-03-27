@@ -25,20 +25,28 @@ $this->params['breadcrumbs'][] = $this->title;
             'APELLIDOS',
             'NOMBRES',
             [
-                
                 'class' => 'yii\grid\CheckboxColumn',
-                 'checkboxOptions' => function($model, $key, $index, $column) {
-                return [
-                    //'checked' => true
-                    'value' => $model->ALUMNO,
-                    'checked' => $model->asistencia == 1 ? true : false,
-                    'onclick' => '
-                        $.post("actualizar-asistencia?ALUMNO=' . $model->ALUMNO . '&asistencia=" + $(this).prop("checked"), function(data) {
-                            console.log(data);
-                        });
-                    ',
-                ];}
+                'headerOptions' => ['style' => 'width:3%'],
+                'checkboxOptions' => function ($model, $key, $index, $column) {
+                    return [
+                        'value' => $model->id,
+                        'checked' => $model->asiste == 1 ? true : false,
+                        'onclick' => '
+                            $.post("actualizar-asistencia?id=' . $model->id . '&asiste=" + $(this).prop("checked"), function(data) {
+                                console.log(data);
+                            });
+                        ',
+                    ];
+                },
             ],
+            // [
+                
+            //     'class' => 'yii\grid\CheckboxColumn',
+            //      'checkboxOptions' => function($model, $key, $index, $column) {
+            //     return [
+            //         'checked' => true
+            //     ];}
+            // ],
 
             [
                 'class' => ActionColumn::class,

@@ -86,23 +86,23 @@ class SiteController extends Controller
        // var_dump(Yii::$app->user->identity->username);exit();
         $profe=new Profesor();
         $profe= Profesor::findOne(['CEDULA' => Yii::$app->user->identity->username]);
-         $squery=Materiasxcurso::find()->select('CURSO')->where(['PROFESOR'=>$profe->PROFESOR]);
+        $squery=Materiasxcurso::find()->select('CURSO')->where(['PROFESOR'=>'PROF-1']);
 
-        //var_dump($profe->PROFESOR);exit();
+        // //var_dump($profe->PROFESOR);exit();
         $dataProvider = new ActiveDataProvider([
 
             'query' => Cursos::find()->where(['IN','CURSO',$squery]),
-            //'query' => Cursos::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'CURSO' => SORT_DESC,
-                ]
-            ],
-            */
+        //     //'query' => Cursos::find(),
+        //     /*
+        //     'pagination' => [
+        //         'pageSize' => 50
+        //     ],
+        //     'sort' => [
+        //         'defaultOrder' => [
+        //             'CURSO' => SORT_DESC,
+        //         ]
+        //     ],
+        //     */
         ]);
 
         return $this->render('index', [
