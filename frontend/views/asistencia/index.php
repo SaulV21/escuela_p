@@ -18,39 +18,22 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="asistencia-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Registrar Asistencia', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <!-- <?php
-    echo $this->render('_search', ['model' => $searchModel]); 
-    ?> -->
-
     <?= GridView::widget([
-        //'id' => 'item-table',
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute'=>'ALUMNO',
-                'value'=> function ($model) {
-                    return $model->listnombre->NOMBRES . ' ' . $model->listnombre->APELLIDOS;
-                },
-                'contentOptions' => ['style' => 'width: 300px;']
-            ],
-            'MATRICULA',
-            'fecha',
-            'asiste',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Asistencia $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'ALUMNO' => $model->ALUMNO, 'MATRICULA' => $model->MATRICULA]);
-                 }
+            'alumno',
+            'nombres',
+            'apellidos',
+            [  
+                'class' => 'yii\grid\CheckboxColumn',
+                 'checkboxOptions' => function($model, $key, $index, $column) {
+                return [
+                    //'value' => $model->id,
+                    'checked' => true
+                ];}
             ],
         ],
     ]); ?>
-
-
+<?= Html::a('Guardar', ['create', 'criterio' => $criterio], ['class' => 'btn btn-primary']) ?>
 </div>

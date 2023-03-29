@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2023 a las 21:55:18
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.1.12
+-- Tiempo de generación: 28-03-2023 a las 22:56:24
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,28 +28,28 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `alumnos` (
-  `ALUMNO` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `CEDULA` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `NOMBRES` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `APELLIDOS` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `ALUMNO` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `CEDULA` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
+  `NOMBRES` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `APELLIDOS` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   `FECHA_NACIMIENTO` date DEFAULT NULL,
-  `CIUDAD_NACIMIENTO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `SEXO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `PADRE` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `PROFESION_PADRE` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `MADRE` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `PROFESION_MADRE` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `CIUDADRES` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `DIRECCION` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `TELEFONO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `CONTACTO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `REFERENCIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `CORREO` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `CIUDAD_NACIMIENTO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `SEXO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `PADRE` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
+  `PROFESION_PADRE` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `MADRE` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
+  `PROFESION_MADRE` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `CIUDADRES` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `DIRECCION` longtext CHARACTER SET latin1 DEFAULT NULL,
+  `TELEFONO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `CONTACTO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `REFERENCIA` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `CORREO` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   `FOTO` blob DEFAULT NULL,
-  `SISRES` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT 'APECS',
+  `SISRES` varchar(45) CHARACTER SET latin1 DEFAULT 'APECS',
   `SISFECHA` datetime DEFAULT NULL,
-  `CSLTKO` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `CSLTKO` varchar(250) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `alumnos`
@@ -309,11 +309,11 @@ INSERT INTO `alumnos` (`ALUMNO`, `CEDULA`, `NOMBRES`, `APELLIDOS`, `FECHA_NACIMI
 --
 
 CREATE TABLE `aopres` (
-  `pork` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `psoono` varchar(145) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `conrax` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `apesss` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `pork` varchar(10) CHARACTER SET latin1 NOT NULL,
+  `psoono` varchar(145) CHARACTER SET latin1 DEFAULT NULL,
+  `conrax` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
+  `apesss` varchar(45) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `aopres`
@@ -329,22 +329,19 @@ INSERT INTO `aopres` (`pork`, `psoono`, `conrax`, `apesss`) VALUES
 --
 
 CREATE TABLE `asistencia` (
-  `ALUMNO` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `ALUMNO` varchar(50) CHARACTER SET latin1 NOT NULL,
   `MATRICULA` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `asiste` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT 'SI'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `asiste` varchar(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `asistencia`
 --
 
 INSERT INTO `asistencia` (`ALUMNO`, `MATRICULA`, `fecha`, `asiste`) VALUES
-('UEC-1', 1, '2023-02-10', 'NO'),
-('UEC-10', 2, '2023-03-03', 'SI'),
-('UEC-100', 3, '2023-03-17', 'SI'),
-('UEC-101', 6, '2023-03-17', 'SI'),
-('UEC-102', 5, '2023-03-20', 'SI');
+('UEC-1', 1, '2023-03-27', 'SI'),
+('UEC-1', 1, '2023-03-28', 'NO');
 
 -- --------------------------------------------------------
 
@@ -356,7 +353,7 @@ CREATE TABLE `clubxprofesor` (
   `club` varchar(45) NOT NULL,
   `profesor` varchar(45) NOT NULL,
   `periodo` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -365,14 +362,14 @@ CREATE TABLE `clubxprofesor` (
 --
 
 CREATE TABLE `cursos` (
-  `CURSO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `CUPO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `INICIAL` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `CICLO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `ESPECIALIDAD` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `DESCRIPCION` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `PROMOVIDO` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `CURSO` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `CUPO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `INICIAL` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `CICLO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `ESPECIALIDAD` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `DESCRIPCION` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `PROMOVIDO` varchar(100) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `cursos`
@@ -390,12 +387,12 @@ INSERT INTO `cursos` (`CURSO`, `CUPO`, `INICIAL`, `CICLO`, `ESPECIALIDAD`, `DESC
 --
 
 CREATE TABLE `fbnotas` (
-  `PERIODO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `NOTA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `PERIODO` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `NOTA` varchar(45) CHARACTER SET latin1 NOT NULL,
   `FI` date NOT NULL,
   `FF` date NOT NULL,
-  `ESTADO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'ABIERTO'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `ESTADO` varchar(45) CHARACTER SET latin1 NOT NULL DEFAULT 'ABIERTO'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -425,7 +422,7 @@ CREATE TABLE `informacion` (
   `SegundoVocal` varchar(145) DEFAULT NULL,
   `TercerVocal` varchar(145) DEFAULT NULL,
   `visualizacer` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -434,16 +431,16 @@ CREATE TABLE `informacion` (
 --
 
 CREATE TABLE `materias` (
-  `MATERIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `NOMBRE` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `DESCRIPCION` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `MATERIA` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `NOMBRE` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `DESCRIPCION` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
   `HORAS` int(11) DEFAULT NULL,
-  `NIVEL` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `TIPO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'CUANTITATIVA',
-  `ABREVIATURA` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `NIVEL` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `TIPO` varchar(45) CHARACTER SET latin1 NOT NULL DEFAULT 'CUANTITATIVA',
+  `ABREVIATURA` varchar(5) CHARACTER SET latin1 NOT NULL,
   `PRIORIDAD` int(5) NOT NULL DEFAULT 0,
-  `AREA` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `AREA` varchar(300) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `materias`
@@ -460,20 +457,20 @@ INSERT INTO `materias` (`MATERIA`, `NOMBRE`, `DESCRIPCION`, `HORAS`, `NIVEL`, `T
 --
 
 CREATE TABLE `materiasxcurso` (
-  `CURSO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `MATERIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `PROFESOR` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `PERIODO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `CURSO` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `MATERIA` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `PROFESOR` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `PERIODO` varchar(45) CHARACTER SET latin1 NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `materiasxcurso`
 --
 
 INSERT INTO `materiasxcurso` (`CURSO`, `MATERIA`, `PROFESOR`, `PERIODO`) VALUES
-('CUARTO EGB', 'MATE', 'PROF-05', '2024-2025'),
-('CUARTO EGB', 'BIBGU', 'PROF-1', '2024-2025'),
-('DECIMO', 'BIBGU', 'PROF-1', '2024-2025');
+('CUARTO EGB', 'BIBGU', 'PROF-04', '2024-2025'),
+('DECIMO', 'MATE', 'PROF-04', '2024-2025'),
+('CUARTO EGB', 'MATE', 'PROF-05', '2024-2025');
 
 -- --------------------------------------------------------
 
@@ -483,16 +480,16 @@ INSERT INTO `materiasxcurso` (`CURSO`, `MATERIA`, `PROFESOR`, `PERIODO`) VALUES
 
 CREATE TABLE `matriculas` (
   `NUMEROMATRICULA` int(11) NOT NULL,
-  `ALUMNO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `PERIODO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `CURSO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `CICLO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `ESPECIALIDAD` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `ALUMNO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `PERIODO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `CURSO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `CICLO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `ESPECIALIDAD` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
   `FECHA` date DEFAULT NULL,
-  `OBSERVACION` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `REFERENCIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `SYSRES` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `OBSERVACION` varchar(250) CHARACTER SET latin1 DEFAULT NULL,
+  `REFERENCIA` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `SYSRES` varchar(150) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `matriculas`
@@ -516,19 +513,19 @@ INSERT INTO `matriculas` (`NUMEROMATRICULA`, `ALUMNO`, `PERIODO`, `CURSO`, `CICL
 
 CREATE TABLE `matricula_detalle` (
   `MATRICULA` int(11) NOT NULL,
-  `MATERIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `MATERIA` varchar(45) CHARACTER SET latin1 NOT NULL,
   `QUIM1` decimal(6,2) DEFAULT 0.00,
   `QUIM2` decimal(6,2) DEFAULT 0.00,
   `TOTAL` decimal(6,2) NOT NULL DEFAULT 0.00,
   `PROMF` decimal(6,2) NOT NULL DEFAULT 0.00,
-  `EQUIV` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `EQUIV` varchar(50) CHARACTER SET latin1 NOT NULL,
   `SUM_TOT` decimal(6,2) NOT NULL,
   `PROM_GE` decimal(6,2) NOT NULL,
   `SUPLETORIO` decimal(6,2) DEFAULT 0.00,
   `REMEDIAL` decimal(6,2) DEFAULT 0.00,
   `GRACIA` decimal(6,2) DEFAULT 0.00,
-  `PROMOCION` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL COMMENT 'APRUEBA\nREPRUEBA'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `PROMOCION` varchar(45) CHARACTER SET latin1 DEFAULT NULL COMMENT 'APRUEBA\nREPRUEBA'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `matricula_detalle`
@@ -536,8 +533,8 @@ CREATE TABLE `matricula_detalle` (
 
 INSERT INTO `matricula_detalle` (`MATRICULA`, `MATERIA`, `QUIM1`, `QUIM2`, `TOTAL`, `PROMF`, `EQUIV`, `SUM_TOT`, `PROM_GE`, `SUPLETORIO`, `REMEDIAL`, `GRACIA`, `PROMOCION`) VALUES
 (1, 'BIBGU', '8.00', '8.00', '9.00', '8.50', '8', '8.25', '8.00', '0.00', '0.00', '0.00', 'APRUEBA'),
-(1, 'MATE', '0.00', '0.00', '0.00', '0.00', '8', '8.00', '8.00', '0.00', '0.00', '0.00', ''),
-(2, 'BIBGU', '0.00', '0.00', '0.00', '0.00', '10', '10.00', '10.00', '0.00', '0.00', '0.00', ''),
+(1, 'MATE', '0.00', '0.00', '0.00', '0.00', '8', '8.00', '8.00', '0.00', '0.00', '0.00', 'REPRUEBA'),
+(2, 'BIBGU', '0.00', '0.00', '0.00', '0.00', '10', '10.00', '10.00', '0.00', '0.00', '0.00', 'REPRUEBA'),
 (2, 'MATE', '8.00', '8.00', '9.00', '8.50', '8', '8.25', '8.00', '0.00', '0.00', '0.00', 'APRUEBA');
 
 -- --------------------------------------------------------
@@ -549,7 +546,7 @@ INSERT INTO `matricula_detalle` (`MATRICULA`, `MATERIA`, `QUIM1`, `QUIM2`, `TOTA
 CREATE TABLE `migration` (
   `version` varchar(180) NOT NULL,
   `apply_time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `migration`
@@ -569,17 +566,17 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 CREATE TABLE `notasql` (
   `ID_NOTAS` int(11) NOT NULL,
   `MATRICULA` int(11) NOT NULL,
-  `MATERIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `P1Q1` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `P2Q1` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `EQUIV80` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `EV_QUIM` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `EQUIV20` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `PROM_QUI` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `EQ_CUAL` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `COMP` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `NF` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `MATERIA` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `P1Q1` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `P2Q1` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `EQUIV80` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `EV_QUIM` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `EQUIV20` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `PROM_QUI` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `EQ_CUAL` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `COMP` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `NF` varchar(10) CHARACTER SET latin1 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `notasql`
@@ -605,7 +602,7 @@ CREATE TABLE `noticias` (
   `FECHA` date DEFAULT NULL,
   `NOTICIA` longtext DEFAULT NULL,
   `FOTO` mediumblob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -617,8 +614,8 @@ CREATE TABLE `parametros` (
   `id_parametro` int(11) NOT NULL,
   `valor_numerico` double(6,2) NOT NULL,
   `valor_entero` bigint(20) NOT NULL,
-  `valor_texto` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `valor_texto` varchar(250) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -627,9 +624,9 @@ CREATE TABLE `parametros` (
 --
 
 CREATE TABLE `parcial` (
-  `QUIMESTRE` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `QUIMESTRE` varchar(5) CHARACTER SET latin1 NOT NULL,
   `MATRICULA` int(11) NOT NULL,
-  `MATERIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `MATERIA` varchar(45) CHARACTER SET latin1 NOT NULL,
   `PARCIAL` int(11) NOT NULL,
   `TAREAS` decimal(6,2) DEFAULT 0.00,
   `AICLASE` decimal(6,2) DEFAULT 0.00,
@@ -637,7 +634,7 @@ CREATE TABLE `parcial` (
   `LECCIONES` decimal(6,2) DEFAULT 0.00,
   `PRUEBAPARCIAL` decimal(6,2) DEFAULT 0.00,
   `NOTAL` decimal(6,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -646,13 +643,13 @@ CREATE TABLE `parcial` (
 --
 
 CREATE TABLE `periodos` (
-  `PERIODO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `PERIODO` varchar(45) CHARACTER SET latin1 NOT NULL,
   `Fecha_ini_periodo` date DEFAULT NULL,
   `Fecha_fin_periodo` date DEFAULT NULL,
-  `estado` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT 'ABIERTO',
-  `rector` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `secretario` varchar(150) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `estado` varchar(45) CHARACTER SET latin1 DEFAULT 'ABIERTO',
+  `rector` varchar(150) CHARACTER SET latin1 NOT NULL,
+  `secretario` varchar(150) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `periodos`
@@ -674,7 +671,7 @@ CREATE TABLE `portada` (
   `subtitulo` varchar(45) DEFAULT NULL,
   `cuerpo` longtext DEFAULT NULL,
   `foto` longblob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -683,31 +680,29 @@ CREATE TABLE `portada` (
 --
 
 CREATE TABLE `profesores` (
-  `PROFESOR` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `CEDULA` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `NOMBRES` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `DESCRIPCION` varchar(205) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `DIRECCION` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `TELEFONO` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `PROFESOR` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `CEDULA` varchar(25) CHARACTER SET latin1 NOT NULL,
+  `NOMBRES` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `DESCRIPCION` varchar(205) CHARACTER SET latin1 DEFAULT NULL,
+  `DIRECCION` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `TELEFONO` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `FECHA_NACIMIENTO` date DEFAULT NULL,
   `FOTO` blob DEFAULT NULL,
-  `CORREO` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `CLAVE` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `CORREO` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
+  `CLAVE` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `HOJAVIDA` longblob DEFAULT NULL,
-  `AREA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `ESTADO` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'ACTIVO'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `AREA` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `ESTADO` varchar(10) CHARACTER SET latin1 NOT NULL DEFAULT 'ACTIVO'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `profesores`
 --
 
 INSERT INTO `profesores` (`PROFESOR`, `CEDULA`, `NOMBRES`, `DESCRIPCION`, `DIRECCION`, `TELEFONO`, `FECHA_NACIMIENTO`, `FOTO`, `CORREO`, `CLAVE`, `HOJAVIDA`, `AREA`, `ESTADO`) VALUES
-('PROF-03', '0123456789', 'prueba', '', '', '', '2023-03-02', 0x75706c6f6164732f363430626130653330353233342e706e67, 'asas@gmail.com', '1234profesor', 0x686f6a61766964612f363430626130653330353234352e706466, '', 'prompt'),
-('PROF-04', '0123456366', 'prueba2', '', '', '', '2023-03-02', 0x75706c6f6164732f363430626133393661333930372e706e67, 'prueba2@gmail.com', 'admin1234', 0x686f6a61766964612f363430626133393661333931382e706466, '', 'prompt'),
+('PROF-04', '0302164397', 'Carolina Aguaiza', '', '', '', '1983-03-01', NULL, 'caroag@gmail.com', '12345', NULL, '', 'ACTIVO'),
 ('PROF-05', '0102456678', 'Juan', 'as', 'Cuenca', '', NULL, 0x75706c6f6164732f363431306436636534333664352e6a7067, 'prueba@gmailcom', 'prueba1245', 0x686f6a61766964612f363431306436636534333666312e706466, '', 'ACTIVO'),
 ('PROF-06', '0102020345', 'Luis Vega', '', '', '', '1983-03-01', 0x75706c6f6164732f363431306463383465646332302e706e67, 'luisve@gmail.com', 'luisveg1234', 0x686f6a61766964612f363431306463383465646333312e706466, '', 'ACTIVO'),
-('PROF-1', '0302164397', 'Carolina Aguaiza', 'Breve descripción del profesor para su publicación en el sitio principal máximo 40 palabras', 'Calle Chimborazo', '0983942626', '1992-12-08', 0x75706c6f6164732f363430376262656637393166362e6a7067, 'adyverdugo@hotmail.com', '12345', 0x686f6a61766964612f363430376262656637393230342e706466, 'Lengua Extranjera', 'ACTIVO'),
 ('PROF-3', '0302164398', 'Martin', 'as', 'Cuenca', '7894554545', '1987-02-13', 0x75706c6f6164732f313637373838333631375f2e6a7067, 'martin@gmail.com', '12345', NULL, 'Lengua y Literatura', 'ACTIVO');
 
 -- --------------------------------------------------------
@@ -717,15 +712,15 @@ INSERT INTO `profesores` (`PROFESOR`, `CEDULA`, `NOMBRES`, `DESCRIPCION`, `DIREC
 --
 
 CREATE TABLE `quimestres` (
-  `QUIMESTRE` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `QUIMESTRE` varchar(5) CHARACTER SET latin1 NOT NULL,
   `MATRICULA` int(11) NOT NULL,
-  `MATERIA` varchar(45) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `MATERIA` varchar(45) CHARACTER SET latin1 NOT NULL,
   `PROMEDIOPARCIAL` decimal(6,2) DEFAULT 0.00,
   `OCHENTA` decimal(6,2) DEFAULT 0.00,
   `EXAMENQUIMESTRAL` decimal(6,2) DEFAULT 0.00,
   `VEINTE` decimal(6,2) DEFAULT 0.00,
   `NOTAQUIMESTRE` decimal(6,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -744,7 +739,7 @@ CREATE TABLE `user` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   `verification_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `user`
@@ -754,9 +749,7 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 (6, 'Admin', 'AMIigvNCelKYUShRETBY3l7v3TaPXT23', '$2y$13$5hWeSzwxY9N78ENkxsTjP.4FqpZi9gVtMbs/i2tGCB5Pozjwvh.n.', NULL, 'claudio.velecela.est@tecazuay.edu.ec', 10, 1675282062, 1675282062, 'KfKoGwbrHR2y5qiAoq8ZoYhSuf_gzZwy_1675282062'),
 (7, 'Admin2', 'cAh2p9hCCLDWiUQExaxEAj2T0Gk_JyeM', '$2y$13$AEHWBQ.WOO4Y2yBzkgf8S.peTVHaanRgLr7uq7GOQcpwXeEIFC7H.', NULL, 'admin@apecs.com', 10, 1675282185, 1675282185, 'xyh8n03UFF25xADMcf1RHoowa9pSGq_6_1675282185'),
 (8, 'Admin3', 'yCTzJY745BckTpWldTT_HkEr-73K4HLe', '$2y$13$e5nxFe/1bVCJBHngKrYnw.zclt4ul7TGJgvLT.qnPYdrkBFKx8Imu', NULL, 'admin@apecs3.com', 10, 1675461681, 1675461681, '1AfVJQyODNnNxXVVjo4eSHptYLhCJw-P_1675461681'),
-(9, '0123456366', ';<?UQ?+U?L??Άv?Zf?l??:\r|??P?', '$2y$13$4KcQVNcGqVK7dyAXBj1q7ufAK/su7p0rFevslPg0C17Yk2GtDyPGC', NULL, 'prueba2@gmail.com', 10, 1678484375, 1678484375, '?,\005??1r;??????fj\"??ׄe_1678484375'),
-(10, '0102456678', '1?]KP??hWa\0?s*???jS??X`w\r)9?Ϙ}s', '$2y$13$GJVTqY5i.RBvVWtbX9d0FOjng1yV23RY76cwYxzg07PvTSquStxOu', NULL, 'prueba@gmailcom', 10, 1678486666, 1678486666, '\n???.+F???K?i?~??\0!?ń6\'??_1678486666'),
-(11, '0102020345', 'uIy}lj?S?&@?s????i6??z?@?', '$2y$13$GDm1k71l.rYcH7HRSQnaluLOJvI.AbJcPlcJszPvwVOXgX0ZCxZbe', NULL, 'luisve@gmail.com', 10, 1678826602, 1678826629, 'sO?????/?????8?0?/E??+??is?_1678826602');
+(12, '0302164397', '9????Y??`Ŋj??????pd?kK?p\"3?5pi', '$2y$13$/7iQvc5ii/yj2frGkGCk/uBXu.m4Sc.X0J3ddF/Nt.DnlqH6s5C5i', NULL, 'caroag@gmail.com', 10, 1680034976, 1680034976, 's.??,?e?kd?O??B???W	x?oP???_1680034976');
 
 --
 -- Índices para tablas volcadas
@@ -780,7 +773,8 @@ ALTER TABLE `aopres`
 -- Indices de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD PRIMARY KEY (`ALUMNO`);
+  ADD PRIMARY KEY (`ALUMNO`,`MATRICULA`,`fecha`),
+  ADD KEY `MATRICULA` (`MATRICULA`);
 
 --
 -- Indices de la tabla `clubxprofesor`
@@ -922,7 +916,7 @@ ALTER TABLE `noticias`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
@@ -932,7 +926,8 @@ ALTER TABLE `user`
 -- Filtros para la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`ALUMNO`) REFERENCES `alumnos` (`ALUMNO`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`MATRICULA`) REFERENCES `matriculas` (`NUMEROMATRICULA`),
+  ADD CONSTRAINT `asistencia_ibfk_2` FOREIGN KEY (`ALUMNO`) REFERENCES `alumnos` (`ALUMNO`);
 
 --
 -- Filtros para la tabla `materiasxcurso`

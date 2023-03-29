@@ -12,11 +12,15 @@ use backend\models\Matriculas;
 use Yii;
 use yii\data\ActiveDataProvider;
 use backend\models\Alumnos;
+use yii\data\SqlDataProvider;
+use yii\helpers\VarDumper;
+
 /**
  * AsistenciaController implements the CRUD actions for Asistencia model.
  */
 class AsistenciaController extends Controller
 {
+    public $criterio;
     /**
      * @inheritDoc
      */
@@ -40,35 +44,21 @@ class AsistenciaController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($criterio)
     {
-        $searchModel = new AsistenciaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-//
-        $dataProvider2 = new ActiveDataProvider([
-        'query' => Alumnos::find(),
+        $this->criterio=$criterio;
+         $dataProvider = new SqlDataProvider([
+            'sql' => "SELECT a.alumno, a.nombres, a.apellidos 
+                      FROM alumnos a 
+                      INNER JOIN matriculas m ON a.ALUMNO = m.ALUMNO 
+                      WHERE m.CURSO = :criterio 
+                      ORDER BY a.apellidos",
+            'params' => [':criterio' => $criterio],
         ]);
 
-        // Agregar el nombre completo del alumno a los datos de la tabla
-        foreach ($dataProvider2->models as $model) {
-        $model->nombreCompleto = $model->NOMBRES . ' ' . $model->APELLIDOS;
-        }
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'dataProvider2' => $dataProvider2,
-            'model'=>$model,
-        ]);
-        // $materia = Yii::$app->request->post('categoria');
-
-        // $query = \backend\models\Materias::find()->where(['MATERIA' => $materia]);
-    
-        // $dataProvider = new ActiveDataProvider([
-        //     'query' => $query,
-        // ]);
-    
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'criterio' => $criterio,
         ]);
     }
 
@@ -91,7 +81,7 @@ class AsistenciaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate1()
     {
         $model = new Asistencia();
 
@@ -160,17 +150,33 @@ class AsistenciaController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-//Probar
-    public function actionItems($category_id)
+
+
+public function actionCreate()
 {
-    $dataProvider = new ActiveDataProvider([
-        'query' => \backend\models\Matricula::find()->where(['NUMEROMATRICULA' => $category_id]),
-        'pagination' => false,
-    ]);
-    
-    return $this->renderPartial('_item_table', [
-        'dataProvider' => $dataProvider,
-    ]);
+    $request = Yii::$app->request;
+    // Obtenemos los datos del formulario
+    $alumnos = $request->post('asistencia', []);
+    $fecha = date('Y-m-d');
+    // Recorremos los alumnos y guardamos la asistencia
+    foreach ($alumnos as $alumno) {
+        $asistencia = new Asistencia();
+        $asistencia->ALUMNO = $alumno;
+        $matricula = Matricula::findOne(['ALUMNO' => $alumno]);
+        $asistencia->MATRICULA =$matricula;
+        $asistencia->fecha = $fecha;
+        $asistencia->asiste = $request->post("asistencia_$alumno", 'no');
+        VarDumper::dump($asistencia);
+        if ($asistencia->validate()) {
+            $asistencia->save();
+        } else {
+            var_dump($asistencia->getErrors()); // Revisa los errores de validación
+        }
+    }
+    // Enviamos un mensaje de éxito
+    Yii::$app->session->setFlash('success', 'La asistencia se ha guardado correctamente');
+    // Redirigimos a la página de inicio
+    return $this->redirect(['index', 'criterio' => $request->get('criterio')]);
 }
 
 }
