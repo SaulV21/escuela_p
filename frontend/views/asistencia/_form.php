@@ -2,12 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use backend\models\Alumnos;
-use backend\models\Cursos;
-use backend\models\Matriculas;
-use kartik\select2\Select2;
-use yii\jui\DatePicker;
+
 /** @var yii\web\View $this */
 /** @var frontend\models\Asistencia $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -17,26 +12,16 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!-- Lista de alumnos -->
-    <?= $form->field($model, 'ALUMNO')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Alumnos::findBySql("SELECT a.alumno, CONCAT(a.nombres, ' ', a.apellidos) AS nombres_apellidos FROM alumnos a INNER JOIN matriculas m ON a.alumno = m.alumno")->asArray()->all(), 'alumno', 'nombres_apellidos'),
-    'language' => 'en',
-    'options' => ['placeholder' => 'Seleccione el alumno'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]); ?>
+    <?= $form->field($model, 'ALUMNO')->textInput(['maxlength' => true]) ?>
 
-  
-    <!-- <?= $form->field($model, 'MATRICULA')->textInput() ?> -->
-   
-    <!-- Fecha -->
-    <?=$form->field($model, 'fecha')->textInput(['readonly' => true, 'value' => date('Y-m-d')])?>
+    <?= $form->field($model, 'MATRICULA')->textInput() ?>
 
-    <!-- <?= $form->field($model, 'asiste')->textInput(['maxlength' => true]) ?> -->
-    <?= $form->field($model, 'asiste')->dropDownList(['prompt'=>'Seleccione el estado', 'SI' => 'Si','NO'=>'No']) ?>
+    <?= $form->field($model, 'fecha')->textInput() ?>
+
+    <?= $form->field($model, 'asiste')->textInput(['maxlength' => true]) ?>
+
     <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -23,10 +23,12 @@ $this->title = 'My Yii Application';
 
                     <p><?= $row['DESCRIPCION']?></p>
 
-                    <p><a class="btn btn-primary" href="http://www.yiiframework.com/doc/">CALIFICACIÓN</a>
+                    <p>
+                        <!-- <a class="btn btn-primary" href="http://www.yiiframework.com/doc/">CALIFICACIÓN</a> -->
 <!--                        <a class="btn btn-success" href="http://www.yiiframework.com/doc/">ASISTENCIA</a>-->
 
                         <?= Html::a('Asistencia',['/asistencia/index','criterio'=>$row['CURSO']],['class' => 'btn btn-primary'])?>
+                        <?= Html::a('CALIFICACIÓN',['/notasql/index','criterio'=>$row['CURSO']],['class' => 'btn btn-primary'])?>
                     </p>
                 </div>
 

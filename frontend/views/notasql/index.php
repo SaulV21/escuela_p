@@ -1,38 +1,49 @@
 <?php
+
+use frontend\models\Notasql;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
 use yii\widgets\ActiveForm;
+use yii\grid\GridView;
+use yii\bootstrap\Dropdown;
+use yii\web\JsExpression;
+use yii\helpers\ArrayHelper;
+use backend\models\Materias;
+use backend\models\Alumnos;
 
-$form = ActiveForm::begin(['id' => 'form']);
+
+/** @var yii\web\View $this */
+/** @var frontend\models\NotasqlSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
+
+$this->title = 'Registrar Notas';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="notasql-index">
 
-<?= $form->field($model, 'MATERIA')->dropDownList($materias, ['prompt' => 'Seleccionar materia']) ?>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-<?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>
-
-<table id="items-table" class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>MATERIA</th>
-            <th>MATRICULA</th>
-            <th>P1Q1</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-
-<?php ActiveForm::end(); ?>
-<?php
-$js = <<<JS
-$(document).ready(function() {
-    $('#form').on('submit', function(event) {
-        event.preventDefault();
-        var formData = $(this).serialize();
-        $.get('/NotasqlController/actionMat', formData, function(data) {
-            $('#items-table tbody').html(data);
-        });
-    });
-});
-JS;
-$this->registerJs($js);
-?>
+    
+        
+    <?=GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                'alumno',
+                'nombres',
+                'apellidos',
+                'MATERIA',
+                'P1Q1',
+                'P2Q1',
+                'EQUIV80',
+                'EV_QUIM',
+                'EQUIV20',
+                'PROM_QUI',
+                'EQ_CUAL',
+                'COMP',
+                'NF',
+            ],
+        ]);
+        ?>
+       <?= Html::a('Guardar', ['create', 'criterio' => $criterio], ['class' => 'btn btn-success']) ?>
+</div>

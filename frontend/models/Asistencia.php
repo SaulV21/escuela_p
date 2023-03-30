@@ -14,6 +14,7 @@ use backend\models\Alumnos;
  * @property string $fecha
  * @property string|null $asiste
  *
+ * @property Alumnos $aLUMNO
  * @property Matriculas $mATRICULA
  */
 class Asistencia extends \yii\db\ActiveRecord
@@ -32,14 +33,14 @@ class Asistencia extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ALUMNO', 'fecha'], 'required'],
-            [['MATRICULA'], 'safe'],
+            [['ALUMNO', 'MATRICULA', 'fecha'], 'required'],
             [['MATRICULA'], 'integer'],
             [['fecha'], 'safe'],
             [['ALUMNO'], 'string', 'max' => 50],
-            [['asiste'], 'string', 'max' => 5],
-            [['ALUMNO'], 'unique', 'targetAttribute' => ['ALUMNO']],
+            [['asiste'], 'string', 'max' => 2],
+            [['ALUMNO', 'MATRICULA', 'fecha'], 'unique', 'targetAttribute' => ['ALUMNO', 'MATRICULA', 'fecha']],
             [['MATRICULA'], 'exist', 'skipOnError' => true, 'targetClass' => Matriculas::class, 'targetAttribute' => ['MATRICULA' => 'NUMEROMATRICULA']],
+            [['ALUMNO'], 'exist', 'skipOnError' => true, 'targetClass' => Alumnos::class, 'targetAttribute' => ['ALUMNO' => 'ALUMNO']],
         ];
     }
 
@@ -54,6 +55,16 @@ class Asistencia extends \yii\db\ActiveRecord
             'fecha' => 'Fecha',
             'asiste' => 'Asiste',
         ];
+    }
+
+    /**
+     * Gets query for [[ALUMNO]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getALUMNO()
+    {
+        return $this->hasOne(Alumnos::class, ['ALUMNO' => 'ALUMNO']);
     }
 
     /**

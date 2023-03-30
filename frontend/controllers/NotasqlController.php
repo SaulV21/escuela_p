@@ -12,6 +12,7 @@ use yii\db\Query;
 use yii\data\ActiveDataProvider;
 use Yii;
 use yii\data\Pagination;
+use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
 /**
@@ -19,6 +20,7 @@ use yii\web\Response;
  */
 class NotasqlController extends Controller
 {
+    public $criterio;
     //Desactivamos la verificacion para la validacion
     public $enableCsrfValidation=false;
 
@@ -130,21 +132,39 @@ public function actionActualizar($matri, $mate)
      *
      * @return string
      */
-    public function actionIndex()
+    // public function actionIndex()
+    // {
+       
+    //     $model = new NotasqlSearch();
+    //     $dataProvider = $model->search(Yii::$app->request->queryParams);
+    
+    //     $materias = Materias::find()->all();
+    //     $materias = ArrayHelper::map($materias, 'MATERIA', 'NOMBRE');
+    
+    //     return $this->render('index', [
+    //         'model' => $model,
+    //         'dataProvider' => $dataProvider,
+    //         'materias' => $materias,
+    //     ]);
+       
+    // }
+
+    public function actionIndex($criterio)
     {
-       
-        $model = new NotasqlSearch();
-        $dataProvider = $model->search(Yii::$app->request->queryParams);
-    
-        $materias = Materias::find()->all();
-        $materias = ArrayHelper::map($materias, 'MATERIA', 'NOMBRE');
-    
-        return $this->render('index', [
-            'model' => $model,
-            'dataProvider' => $dataProvider,
-            'materias' => $materias,
+        $this->criterio=$criterio;
+         $dataProvider = new SqlDataProvider([
+            'sql' => "SELECT a.alumno, a.nombres, a.apellidos 
+                      FROM alumnos a 
+                      INNER JOIN matriculas m ON a.ALUMNO = m.ALUMNO 
+                      WHERE m.CURSO = :criterio 
+                      ORDER BY a.apellidos",
+            'params' => [':criterio' => $criterio],
         ]);
-       
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'criterio' => $criterio,
+        ]);
     }
 
     /**
