@@ -11,6 +11,7 @@ use frontend\models\AsistenciaForm;
 use yii\web\JsExpression;
 use yii\widgets\Pjax;
 use backend\assets\AppAsset;
+use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var frontend\models\AsistenciaSearch $searchModel */
 /** @var frontend\controllers\AsistenciaController $categories */
@@ -21,8 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="asistencia-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?= GridView::widget([
+<?php 
+
+$form = ActiveForm::begin(['action' => ['create', 'criterio' => $criterio]]);
+
+echo GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
@@ -31,16 +35,43 @@ $this->params['breadcrumbs'][] = $this->title;
             'apellidos',
             [  
                 'class' => 'yii\grid\CheckboxColumn',
-                'name'=>'asiste',
-                 'checkboxOptions' => function($model, $key, $index, $column) {
+                'checkboxOptions' => function($model, $key, $index, $column) {
                 return [
-                    'checked' => true
+                    'checked' => true,
                 ];}
             ],
         ],
-    ]); ?>
-<!-- <?= Html::a('Guardar', ['create', 'criterio' => $criterio], ['class' => 'btn btn-success']) ?> -->
-<?= Html::button('Guardar', ['class' => 'btn btn-success', 'id' => 'guardar-asistencia']) ?>
+    ]);
+
+echo Html::submitButton('Guardar', ['class' => 'btn btn-success']);
+
+ActiveForm::end(); 
+$script = <<< JS
+    function guardarDatos() {
+        var asistencia = {};
+$("input[type=checkbox]").each(function(){
+    var alumno = $(this).closest("tr").find("td:eq(1)").text().trim();
+    var matricula = $(this).closest("tr").find("td:eq(2)").text().trim();
+    var asiste = $(this).is(":checked") ? 1 : 0;
+    asistencia[alumno] = {matricula: matricula, asiste: asiste};
+});
+        
+        $.ajax({
+            url: 'create',
+            type: 'post',
+            //data: {asistencia: asistencia},
+            data: {asistencia: JSON.stringify(asistencia)},
+            success: function(response) {
+                $("#msg").html(response);
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    }
+JS;
+$this->registerJs($script);
+?>
 
 </div>
 

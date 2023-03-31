@@ -26,6 +26,18 @@ class AsistenciaController extends Controller
      */
     public function behaviors()
     {
+        // return [
+        //     'pjax' => [
+        //         'class' => \yii\base\Behavior::class,
+        //         'widgets' => [
+        //             'yii\grid\GridView' => [
+        //                 'class' => Pjax::class,
+        //                 'timeout' => 10000,
+        //                 'enablePushState' => false,
+        //             ],
+        //         ],
+        //     ],
+        // ];
         return array_merge(
             parent::behaviors(),
             [
@@ -48,7 +60,7 @@ class AsistenciaController extends Controller
     {
         $this->criterio=$criterio;
          $dataProvider = new SqlDataProvider([
-            'sql' => "SELECT a.alumno, m.numeromatricula, a.nombres, a.apellidos 
+            'sql' => "SELECT a.alumno, a.nombres, a.apellidos 
                       FROM alumnos a 
                       INNER JOIN matriculas m ON a.ALUMNO = m.ALUMNO 
                       WHERE m.CURSO = :criterio 
@@ -155,36 +167,38 @@ class AsistenciaController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionCreate()
+    public function actionCreate2($criterio)
 {
-    $request = Yii::$app->request;
-    if (Yii::$app->request->isPost) {
-        $alumnos = Yii::$app->request->post('asistencia', []);
-    // Obtenemos los datos del formulario
-   // $alumnos = $request->post('asistencia', []);
-     // Creamos un nuevo modelo de formulario y verificamos si se ha enviado el formulario
+   // Crear un nuevo modelo de Asistencia
+   $model = new Asistencia();
+
+//    // Verificar si se ha enviado el formulario y se ha validado correctamente
+//    if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post()) && $model->validate()) {
+
+//        // Obtener los modelos del proveedor de datos
+//        foreach ($model->dataProvider->getModels() as $model) {
+//            $alumno = $model['alumno'];
+//            $fecha = date('Y-m-d');
+//            $asiste = isset($_POST['selection'][$alumno]) ? 1 : 0;
+//            // Consulta SQL para obtener numeromatricula
+//            $matricula = Yii::$app->db->createCommand('SELECT numeromatricula FROM matriculas, alumnos WHERE matriculas.ALUMNO = alumnos.ALUMNO AND alumnos.ALUMNO = :alumno')
+//                ->bindValue(':alumno', $alumno)
+//                ->queryScalar();
+//            Yii::$app->db->createCommand()->insert('asistencia', [
+//                'alumno' => $alumno,
+//                'matricula' => $matricula,
+//                'fecha'=>$fecha,
+//                'asiste' => $asiste,
+//            ])->execute();
+//        }
+
+//        // Redireccionar a la página de visualización de asistencia
+//        return $this->redirect(['view', 'criterio' => $criterio]);
+//    }
+        // Redireccionar a la página de visualización de asistencia
+        return $this->redirect(['view', 'criterio' => $criterio]);
     
-    $fecha = date('Y-m-d');
-    // Recorremos los alumnos y guardamos la asistencia
-    foreach ($alumnos as $alumno) {
-        $asistencia = new Asistencia();
-        $asistencia->ALUMNO = $alumno;
-        $matricula = Matricula::findOne(['ALUMNO' => $alumno]);
-        $asistencia->MATRICULA =$matricula;
-        $asistencia->fecha = $fecha;
-        $asistencia->asiste = $request->post("asistencia_$alumno", 'no');
-        VarDumper::dump($asistencia);
-        if ($asistencia->validate()) {
-            $asistencia->save();
-        } else {
-            var_dump($asistencia->getErrors()); // Revisa los errores de validación
-        }
-    }
-}
-    // Enviamos un mensaje de éxito
-    Yii::$app->session->setFlash('success', 'La asistencia se ha guardado correctamente');
-    // Redirigimos a la página de inicio
-    return $this->redirect(['index', 'criterio' => $request->get('criterio')]);
+    
 }
 
 public function actionCreate3()
@@ -251,5 +265,41 @@ public function actionGuardar()
     }
 }
 
+public function actionCreate($criterio)
+{
+    $query = Matriculas::find()->where(['CURSO' => $criterio]);
+    $request = Yii::$app->request;
+    $dataProvider = new ActiveDataProvider([
+        'query' => $query,
+        'pagination' => [
+            'pageSize' => 10,
+        ],
+    ]);
+
+    if (Yii::$app->request->isPost) {
+        //$asistencia = Yii::$app->request->post('asistencia');
+        $asistencia = json_decode($request->post('asistencia'), true);
+        $fecha = date('Y-m-d');
+        foreach ($dataProvider->getModels() as $model) {
+            $alumno = $model['ALUMNO'];
+            $asiste = isset($asistencia[$alumno]) ? $asistencia[$alumno]['asiste'] : 0;
+            //$asiste = isset(Yii::$app->request->post('asistencia')[$alumno]) ? 1 : 0;
+            // Consulta SQL para obtener numeromatricula
+            $matricula = Yii::$app->db->createCommand('SELECT numeromatricula FROM matriculas, alumnos WHERE matriculas.ALUMNO = alumnos.ALUMNO AND alumnos.ALUMNO = :alumno')
+                ->bindValue(':alumno', $alumno)
+                ->queryScalar();
+            Yii::$app->db->createCommand()->insert('asistencia', [
+                'alumno' => $alumno,
+                'matricula' => $matricula,
+                'fecha'=>$fecha,
+                'asiste' => $asiste,
+            ])->execute();
+        }
+        Yii::$app->session->setFlash('success', 'Datos guardados correctamente');
+        return $this->redirect(['index', 'criterio' => $request->get('criterio')]);
+    }
+
+    return $this->redirect(['index', 'criterio' => $request->get('criterio')]);
+}
 
 }
