@@ -1,7 +1,8 @@
 <?php
 
 namespace frontend\controllers;
-
+use yii2mod\editable\EditableAction;
+use kartik\grid\EditableColumn;
 use frontend\models\Notasql;
 use frontend\models\NotasqlSearch;
 use backend\models\Materias;
@@ -15,6 +16,9 @@ use yii\data\Pagination;
 use yii\data\SqlDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
+use backend\models\Profesor;
+use kartik\editable\Editable;
+use yii\helpers\Url;
 /**
  * NotasqlController implements the CRUD actions for Notasql model.
  */
@@ -151,14 +155,25 @@ public function actionActualizar($matri, $mate)
 
     public function actionIndex($criterio)
     {
+        $profesor= Profesor::findOne(['CEDULA' => Yii::$app->user->identity->username]);
+        $profe=Profesor::find()->select('PROFESOR')->where(['CEDULA'=>$profesor->CEDULA])->scalar();
         $this->criterio=$criterio;
-         $dataProvider = new SqlDataProvider([
-            'sql' => "SELECT a.alumno, a.nombres, a.apellidos 
-                      FROM alumnos a 
-                      INNER JOIN matriculas m ON a.ALUMNO = m.ALUMNO 
-                      WHERE m.CURSO = :criterio 
-                      ORDER BY a.apellidos",
-            'params' => [':criterio' => $criterio],
+                      $dataProvider = new SqlDataProvider([
+                        'sql'=>"SELECT  COUNT(DISTINCT a.alumno) AS total, a.alumno, a.nombres, a.apellidos, n.materia,
+                        COALESCE(ns.p1q1, '0.0') AS '1 parcial', COALESCE(ns.p2q1, '0.0') AS '2 parcial', COALESCE(ns.equiv80, '0.0') AS equiv80, 
+                        COALESCE(ns.ev_quim, '0.0') AS 'Examen', COALESCE(ns.equiv20, '0.0') AS equiv20,
+                        COALESCE(ns.prom_qui, '0.0') AS 'Promedio', COALESCE(ns.eq_cual, 'NAAR') AS eq_cual, COALESCE(ns.comp, 'E') AS 'Comportamiento', 
+                        COALESCE(ns.nf, '0.0') AS 'Nota Final'
+                        FROM alumnos a 
+                        INNER JOIN matriculas m ON a.ALUMNO = m.ALUMNO
+                        INNER JOIN materiasxcurso n ON n.CURSO = m.CURSO
+                        INNER JOIN profesores p ON n.PROFESOR = p.PROFESOR
+                        LEFT JOIN notasql ns ON m.numeromatricula = ns.matricula AND n.MATERIA=ns.MATERIA
+                        WHERE m.CURSO = :criterio AND p.PROFESOR=:prof
+                        GROUP BY m.numeromatricula, a.alumno, a.nombres, a.apellidos, n.materia, ns.p1q1, ns.p2q1, ns.equiv80, ns.ev_quim, ns.equiv20,
+                        ns.prom_qui, ns.eq_cual, ns.comp, ns.nf
+                        ORDER BY a.apellidos",
+            'params' => [':criterio' => $criterio, ':prof'=>$profe],
         ]);
 
         return $this->render('index', [
@@ -256,15 +271,7 @@ public function actionActualizar($matri, $mate)
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actions()
-{
-    return [
-        'change-username' => [
-            'class' => EditableAction::class,
-            'modelClass' => UserModel::class,
-        ],
-    ];
-}
+
 
 public function actionMateria($category_id)
 {
@@ -296,4 +303,37 @@ public function actionMat()
         'items' => $items,
     ]);
 }
+
+public function actionEditable($id)
+{
+    $model = $this->findModel($id);
+
+    if (Yii::$app->request->post('hasEditable')) {
+        $nota = Yii::$app->request->post('editableAttribute');
+        $valor = Yii::$app->request->post('Notasql')[$nota];
+
+        // Validar el valor y actualizar el modelo
+        if ($valor < 0 || $valor > 20) {
+            return Json::encode(['output' => '', 'message' => 'La nota debe estar entre 0 y 20.']);
+        } else {
+            $model->$nota = $valor;
+            $model->save();
+            return Json::encode(['output' => $valor, 'message' => '']);
+        }
+    }
+
+    return $this->render('editable', [
+        'model' => $model,
+    ]);
+}
+
+public function actions()
+    {
+        return [
+            'editable' => [
+                'class' => EditableAction::class,
+                'modelClass' => Notasql::class, // Clase de modelo correspondiente a la tabla de notas
+            ],
+        ];
+    }
 }

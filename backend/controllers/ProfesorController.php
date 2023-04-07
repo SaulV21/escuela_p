@@ -51,6 +51,13 @@ public function actionListarprof()
     ->asArray()->all();
     return json_encode($model);
 }
+
+public function actionIdprof($ced)
+{
+    $model=Profesor::find()->select(["PROFESOR","NOMBRES"])
+    ->where(["CEDULA"=>$ced])->asArray()->one();
+    return json_encode($model);
+}
     /**
      * Lists all Profesor models.
      *

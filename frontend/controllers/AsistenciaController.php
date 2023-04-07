@@ -277,13 +277,11 @@ public function actionCreate($criterio)
     ]);
 
     if (Yii::$app->request->isPost) {
-        //$asistencia = Yii::$app->request->post('asistencia');
-        $asistencia = json_decode($request->post('asistencia'), true);
+        $selections = Yii::$app->request->post('selection', []);
         $fecha = date('Y-m-d');
         foreach ($dataProvider->getModels() as $model) {
             $alumno = $model['ALUMNO'];
-            $asiste = isset($asistencia[$alumno]) ? $asistencia[$alumno]['asiste'] : 0;
-            //$asiste = isset(Yii::$app->request->post('asistencia')[$alumno]) ? 1 : 0;
+            $asiste = isset($selections[$alumno]) ? 1 : 0;
             // Consulta SQL para obtener numeromatricula
             $matricula = Yii::$app->db->createCommand('SELECT numeromatricula FROM matriculas, alumnos WHERE matriculas.ALUMNO = alumnos.ALUMNO AND alumnos.ALUMNO = :alumno')
                 ->bindValue(':alumno', $alumno)
@@ -295,11 +293,41 @@ public function actionCreate($criterio)
                 'asiste' => $asiste,
             ])->execute();
         }
-        Yii::$app->session->setFlash('success', 'Datos guardados correctamente');
+       Yii::$app->session->setFlash('success', 'Datos guardados correctamente');
+       //Yii::$app->session->set('succes', $selections);
+
         return $this->redirect(['index', 'criterio' => $request->get('criterio')]);
     }
 
     return $this->redirect(['index', 'criterio' => $request->get('criterio')]);
 }
+
+public function actionGuardarAsistencia()
+{
+    Yii::$app->response->format = Response::FORMAT_JSON;
+    
+    $request = Yii::$app->request;
+    $asistencia = json_decode($request->post('asistencia'), true);
+
+  
+        foreach ($asistencia as $alumno => $datos) {
+            $asiste = $datos['asiste'];
+            
+            // Consulta SQL para obtener numeromatricula
+            $matricula = Yii::$app->db->createCommand('SELECT numeromatricula FROM matriculas, alumnos WHERE matriculas.ALUMNO = alumnos.ALUMNO AND alumnos.ALUMNO = :alumno')
+                ->bindValue(':alumno', $alumno)
+                ->queryScalar();
+            
+            Yii::$app->db->createCommand()->insert('asistencia', [
+                'alumno' => $alumno,
+                'matricula' => $matricula,
+                'fecha' => $fecha,
+                'asiste' => $asiste,
+            ])->execute();
+        }
+        
+        return 'ok';
+       
+    }
 
 }

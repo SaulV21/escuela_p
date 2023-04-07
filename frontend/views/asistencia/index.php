@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php 
 
 $form = ActiveForm::begin(['action' => ['create', 'criterio' => $criterio]]);
-
+//$form = ActiveForm::begin();
 echo GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -38,39 +38,49 @@ echo GridView::widget([
                 'checkboxOptions' => function($model, $key, $index, $column) {
                 return [
                     'checked' => true,
-                ];}
+                    'name' => 'selection[]',
+                    ];
+                }
             ],
         ],
     ]);
 
 echo Html::submitButton('Guardar', ['class' => 'btn btn-success']);
-
+//echo Html::button('Guardar datos', ['onclick' => 'guardarDatos()']);
 ActiveForm::end(); 
 $script = <<< JS
     function guardarDatos() {
         var asistencia = {};
-$("input[type=checkbox]").each(function(){
-    var alumno = $(this).closest("tr").find("td:eq(1)").text().trim();
-    var matricula = $(this).closest("tr").find("td:eq(2)").text().trim();
-    var asiste = $(this).is(":checked") ? 1 : 0;
-    asistencia[alumno] = {matricula: matricula, asiste: asiste};
-});
-        
+        $("input[type=checkbox]").each(function(){
+            var alumno = $(this).closest("tr").find("td:eq(1)").text().trim();
+            var asiste = $(this).is(":checked") ? 1 : 0;
+            asistencia[alumno] = {asiste: asiste};
+        });
         $.ajax({
-            url: 'create',
-            type: 'post',
-            //data: {asistencia: asistencia},
+            type: "POST",
+            url: "guardarasistencia",
             data: {asistencia: JSON.stringify(asistencia)},
-            success: function(response) {
-                $("#msg").html(response);
+            success: function (response) {
+                if (response === "ok") {
+                    $.pjax.reload({container: "#asistencia-grid"});
+                    $.notify({
+                        message: "Datos guardados correctamente",
+                    },{
+                        type: "success",
+                    });
+                } else {
+                    $.notify({
+                        message: "Ocurrió un error al guardar los datos",
+                    },{
+                        type: "danger",
+                    });
+                }
             },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
-            }
         });
     }
 JS;
 $this->registerJs($script);
+
 ?>
 
 </div>

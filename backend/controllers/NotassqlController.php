@@ -25,8 +25,19 @@ class NotassqlController extends \yii\web\Controller
 //BUSCAR DATOS notas
 public function actionBuscarnot($nota)
 {
+    $model=Notasql::find()->select(['a.alumno','a.nombres', 'a.apellidos'])
+    ->from('alumnos a')
+    ->join('INNER JOIN', 'matriculas m', 'a.ALUMNO = m.ALUMNO')
+    ->where(['m.CURSO' => $curso])
+    ->asArray()
+    ->all();
+    return json_encode($model);
+}
+
+public function actionNotxalum($nota)
+{
     $model=Notasql::find()->select(["MATRICULA","MATERIA","P1Q1","P2Q1","EQUIV80","EV_QUIM","EQUIV20","PROM_QUI","EQ_CUAL","COMP","NF"])
-        ->where(["ID_NOTAS"=>$nota])->asArray()->one();
+        ->where(["MATRICULA"=>$nota])->asArray()->one();
     return json_encode($model);
 }
 

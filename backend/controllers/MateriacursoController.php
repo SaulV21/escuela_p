@@ -32,11 +32,15 @@ class MateriacursoController extends Controller
     }
 
          //BUSCAR DATOS MATERIAxCURSO
-public function actionBuscarmxc($mat)
+public function actionBuscarmxc($curso,$prof)
 {
 
-    $model=MateriaCurso::find()->select(["MATERIA","PROFESOR","PERIODO"])
-        ->where(["CURSO"=>$mat])->asArray()->one();
+    $model=MateriaCurso::find()->select(['MATERIA'])
+    ->where(['CURSO' => $curso, 'PROFESOR'=>$prof])
+    ->asArray()
+    ->all();
+    /*select(["MATERIA","PROFESOR","PERIODO"])
+        ->where(["CURSO"=>$mat])->asArray()->all();*/
     return json_encode($model);
 }
 

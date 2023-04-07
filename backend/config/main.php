@@ -54,7 +54,26 @@ return [
             'actualizar-asistencia' => 'asistencia/actualizar-asistencia',
             ],
         ],*/
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'sourcePath' => '@npm/bootstrap/dist',
+                    'css' => [
+                        'css/bootstrap.min.css',
+                    ],
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'sourcePath' => '@npm/bootstrap/dist',
+                    'js' => [
+                        'js/bootstrap.bundle.min.js',
+                    ],
+                ],
+            ],
+        ],
         
+        'editable' => [
+            'class' => 'kartik\editable\EditableConfig',
+        ],
     ],
     'params' => $params,
 ];

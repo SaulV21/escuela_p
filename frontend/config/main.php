@@ -1,4 +1,6 @@
 <?php
+use yii\filters\AccessControl;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -48,21 +50,26 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
+        'editable' => [
+            'class' => 'kartik\editable\EditableConfig',
         ],
-        */
-
- //para ver el debug
-            // 'debug' => [
-            //     'class' => 'yii\debug\Module',
-            //     // 'allowedIPs' => ['127.0.0.1', '::1'],
-            // ],
-        
     ],
     'params' => $params,
+    'controllerMap' => [
+        'grid' => [
+            'class' => 'kartik\grid\GridView',
+            'behaviors' => [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['grid-data'], // acción a controlar
+                    'rules' => [
+                        [
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];
