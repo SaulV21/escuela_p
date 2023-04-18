@@ -46,7 +46,7 @@ public function actionBuscarmatri($matri)
 
 public function actionMatrixalum($alum)
 {
-    $model=Matriculas::find()->select(["NUMEROMATRICULA"])
+    $model=Matriculas::find()->select(["max(NUMEROMATRICULA) as NUMEROMATRICULA"])
         ->where(["ALUMNO"=>$alum])->asArray()->one();
     return json_encode($model);
 }
@@ -108,7 +108,7 @@ public function actionListarmatri()
         $model = new Matriculas();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $count = Matriculas::find()->where(['ALUMNO' => $model->ALUMNO])->count();
+            $count = Matriculas::find()->where(['ALUMNO' => $model->ALUMNO, 'PERIODO' => $model->PERIODO])->count();
            
             if ($count > 0) {
                 Yii::$app->session->setFlash('error', 'El estudiante ya esta matriculado.');

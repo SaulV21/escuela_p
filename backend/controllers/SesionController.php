@@ -36,10 +36,11 @@ class SesionController extends \yii\web\Controller
 
     public function actionListaralumnos($curso){
         $model = Alumnos::find()
-        ->select(['a.alumno','a.nombres', 'a.apellidos'])
+        ->select(['MAX(m.NUMEROMATRICULA) as m','a.alumno','a.nombres', 'a.apellidos'])
         ->from('alumnos a')
         ->join('INNER JOIN', 'matriculas m', 'a.ALUMNO = m.ALUMNO')
         ->where(['m.CURSO' => $curso])
+        ->groupBy(['a.alumno','a.nombres','a.apellidos'])
         ->asArray()
         ->all();
     
