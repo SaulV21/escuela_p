@@ -40,8 +40,8 @@ public function actionBuscarprof($prof)
     // if (Yii::$app->user->isGuest) {
     //     return $this->redirect(['site/login']);
     // }
-    $model=Profesor::find()->select(["CEDULA","NOMBRES","DESCRIPCION","DIRECCION","TELEFONO","FECHA_NACIMIENTO","FOTO","CORREO","CLAVE","HOJAVIDA","AREA","ESTADO"])
-        ->where(["PROFESOR"=>$prof])->asArray()->one();
+    $model=Profesor::find()->select(["CEDULA","NOMBRES","DESCRIPCION","DIRECCION","TELEFONO","FECHA_NACIMIENTO","CORREO","AREA"])
+        ->where(["CEDULA"=>$prof])->asArray()->one();
     return json_encode($model);
 }
 

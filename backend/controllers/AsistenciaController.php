@@ -74,13 +74,13 @@ public function actionCrear()
     }
 }
 ///////////
-public function actionActualizar($alum, $mat)
+public function actionActualizar($fecha, $mat)
 {
     $request = Yii::$app->request;
     $response = Yii::$app->response;
     $response->format = Response::FORMAT_JSON;
 
-    $model = $this->findModel($alum, $mat);
+    $model = $this->findModel($fecha, $mat);
 
     if ($request->isPut) {
         $data = json_decode($request->getRawBody(), true);
@@ -109,9 +109,9 @@ public function actionActualizar($alum, $mat)
     }
 }
 
-    protected function findModel($ALUMNO, $MATRICULA)
+    protected function findModel($fecha, $MATRICULA)
     {
-        if (($model = Asistencia::findOne(['ALUMNO' => $ALUMNO, 'MATRICULA' => $MATRICULA])) !== null) {
+        if (($model = Asistencia::findOne(['fecha' => $fecha, 'MATRICULA' => $MATRICULA])) !== null) {
             return $model;
         }
 

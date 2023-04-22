@@ -41,7 +41,7 @@ public function actionBuscarcur($cur)
     return json_encode($model);
 }
 
-public function actioncurxprof($prof)
+public function actionCurxprof($prof)
 {
     $model = Cursos::find()
     ->select('c.CURSO, c.DESCRIPCION')->from('cursos c')->innerJoin('materiasxcurso m', 'c.CURSO=m.CURSO')

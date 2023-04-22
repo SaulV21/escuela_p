@@ -40,20 +40,11 @@ class NotassqlController extends \yii\web\Controller
         return 'false';
     }
 }
-
 //BUSCAR DATOS notas
 public function actionBuscarnot($matri, $mate)
 {
     $model=Notasql::find()->select(["P1Q1","P2Q1","EQUIV80","EV_QUIM","EQUIV20","PROM_QUI","EQ_CUAL","COMP"])
         ->where(["MATRICULA"=>$matri,"MATERIA"=>$mate])->asArray()->one();
-    return json_encode($model);
-    }
-    
-
-public function actionNotxalum($nota)
-{
-    $model=Notasql::find()->select(["MATRICULA","MATERIA","P1Q1","P2Q1","EQUIV80","EV_QUIM","EQUIV20","PROM_QUI","EQ_CUAL","COMP","NF"])
-        ->where(["MATRICULA"=>$nota])->asArray()->one();
     return json_encode($model);
 }
 

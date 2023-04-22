@@ -44,13 +44,6 @@ public function actionBuscarmatri($matri)
     return json_encode($model);
 }
 
-public function actionMatrixalum($alum)
-{
-    $model=Matriculas::find()->select(["max(NUMEROMATRICULA) as NUMEROMATRICULA"])
-        ->where(["ALUMNO"=>$alum])->asArray()->one();
-    return json_encode($model);
-}
-
 public function actionListarmatri()
 {
     $model=Matriculas::find()->select(["ALUMNO","PERIODO","CURSO","CICLO","ESPECIALIDAD","FECHA","OBSERVACION","REFERENCIA","SYSRES"])
@@ -58,6 +51,12 @@ public function actionListarmatri()
     return json_encode($model);
 }
 
+public function actionMatrixalum($alum)
+{
+    $model=Matriculas::find()->select(["max(NUMEROMATRICULA) as NUMEROMATRICULA"])
+        ->where(["ALUMNO"=>$alum])->asArray()->one();
+    return json_encode($model);
+}
     /**
      * Lists all Matriculas models.
      *
